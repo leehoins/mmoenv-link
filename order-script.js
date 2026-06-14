@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 최소 날짜 설정
     function setMinDates() {
         const today = new Date();
-        const minDate = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)); // 일주일 후
+        const minDate = new Date(today.getTime() + (3 * 24 * 60 * 60 * 1000)); // 3일 후 (실제 사용일 기준)
         const maxDate = new Date(today.getTime() + (90 * 24 * 60 * 60 * 1000)); // 90일 후
         
         const minDateStr = minDate.toISOString().split('T')[0];
@@ -97,23 +97,137 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 모엔브 상품 데이터
+    // 모엔브 상품 데이터 (2026.06.13 블로그 기준)
     const MMOENV_PRODUCTS = {
         helium: [
-            { value: 'bubble-lettering-24', text: '24인치 버블인버블 레터링 (37,000원)', hasLettering: true, hasQuantity: false },
-            { value: 'macaron-lettering-24', text: '24인치 마카롱 레터링 (35,000원)', hasLettering: true, hasQuantity: false },
-            { value: 'mini-shape-24', text: '24인치 미니쉐입 (37,000원)', hasLettering: false, hasQuantity: false },
-            { value: 'bouquet-round', text: '다발풍선(라운드)', hasLettering: false, hasQuantity: true, unitPrice: 4000, priceText: '4,000원/개' },
-            { value: 'heart-in-heart-20', text: '20인치 하트인하트 (33,000원)', hasLettering: false, hasQuantity: false },
-            { value: 'number-foil-large-helium', text: '숫자은박(대형) - 헬륨 (31,000원)', hasLettering: false, hasQuantity: false },
-            { value: 'clear-balloon', text: '클리어 풍선', hasLettering: false, hasQuantity: true, unitPrice: 8000, priceText: '8,000원/개' }
+            { 
+                value: 'bubble-lettering-24', 
+                text: '24인치 버블인버블 레터링풍선', 
+                hasLettering: true, 
+                hasQuantity: false, 
+                price: 37000, 
+                priceText: '37,000원',
+                options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원'
+            },
+            { 
+                value: 'macaron-lettering-24', 
+                text: '24인치 마카롱 레터링풍선', 
+                hasLettering: true, 
+                hasQuantity: false, 
+                price: 35000, 
+                priceText: '35,000원',
+                options: '리본 + 무게추 포함'
+            },
+            { 
+                value: 'mini-shape-24', 
+                text: '24인치 미니쉐입', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 37000, 
+                priceText: '37,000원',
+                options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지'
+            },
+            { 
+                value: 'bouquet-round', 
+                text: '다발풍선(라운드)', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                unitPrice: 4000, 
+                priceText: '4,000원/개',
+                options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개'
+            },
+            { 
+                value: 'heart-in-heart-20', 
+                text: '20인치 하트인하트', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 33000, 
+                priceText: '33,000원',
+                options: '리본 + 무게추 포함'
+            },
+            { 
+                value: 'number-foil-large-helium', 
+                text: '숫자은박(대형) - 헬륨', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 31000, 
+                priceText: '31,000원',
+                options: '높이 약 90cm, 택배 불가, 픽업만 가능'
+            },
+            { 
+                value: 'clear-balloon', 
+                text: '클리어 풍선', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                unitPrice: 8000, 
+                priceText: '8,000원/개',
+                options: '택배 불가, 픽업 및 퀵 가능'
+            },
+            { 
+                value: 'ombre-mini', 
+                text: '미니옹브레', 
+                hasLettering: true, 
+                hasQuantity: false, 
+                price: 6000, 
+                priceText: '6,000원 (레터링 추가시 7,500원)',
+                options: '레터링 추가 가능'
+            },
+            { 
+                value: 'circus-balloon', 
+                text: '서커스풍선', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 20000, 
+                priceText: '20,000원',
+                options: '숫자풍선 개당 3,000원 추가'
+            }
         ],
         air: [
-            { value: 'flower-balloon-daisy', text: '꽃풍선 - 데이지 (상담 후 결정)', hasLettering: false, hasQuantity: false },
-            { value: 'flower-balloon-tulip', text: '꽃풍선 - 튤립 (상담 후 결정)', hasLettering: false, hasQuantity: false },
-            { value: 'balloon-cake-basic', text: '풍선케이크 - 기본 (상담 후 결정)', hasLettering: false, hasQuantity: false },
-            { value: 'balloon-cake-mini', text: '풍선케이크 - 미니 (상담 후 결정)', hasLettering: false, hasQuantity: false },
-            { value: 'number-foil-large-air', text: '숫자은박(대형) - 공기 (9,000원)', hasLettering: false, hasQuantity: false }
+            { 
+                value: 'flower-balloon-daisy', 
+                text: '꽃풍선 - 데이지', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                unitPrice: 5000, 
+                priceText: '3송이 14,000원 / 5송이 23,000원 / 이후 1송이당 5,000원',
+                options: '7송이까지 택배 가능'
+            },
+            { 
+                value: 'flower-balloon-tulip', 
+                text: '꽃풍선 - 튤립', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                unitPrice: 5000, 
+                priceText: '3송이 14,000원 / 5송이 23,000원 / 이후 1송이당 5,000원',
+                options: '7송이까지 택배 가능'
+            },
+            { 
+                value: 'balloon-cake-basic', 
+                text: '풍선케이크(기본)', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 21000, 
+                priceText: '21,000원',
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+            },
+            { 
+                value: 'balloon-cake-mini', 
+                text: '풍선케이크(미니)', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 14000, 
+                priceText: '14,000원',
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+            },
+            { 
+                value: 'number-foil-large-air', 
+                text: '숫자은박(대형) - 공기', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 9000, 
+                priceText: '9,000원',
+                options: '높이 약 90cm, DIY 택배 가능'
+            }
         ],
         consultation: [
             { value: 'custom-design', text: '맞춤 디자인 상담', hasLettering: true, hasQuantity: false },
@@ -135,10 +249,8 @@ document.addEventListener('DOMContentLoaded', function() {
             products.forEach(product => {
                 const option = document.createElement('option');
                 option.value = product.value;
-                // 개수 상품이면 가격 텍스트만 표시, 아니면 전체 텍스트 표시
-                option.textContent = product.hasQuantity ? 
-                    `${product.text} (${product.priceText})` : 
-                    product.text;
+                // 가격 정보 포함하여 표시
+                option.textContent = `${product.text} (${product.priceText})`;
                 option.dataset.hasLettering = product.hasLettering;
                 option.dataset.hasQuantity = product.hasQuantity;
                 if (product.unitPrice) {
@@ -159,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleProductSelection() {
         toggleLetteringOptions();
         toggleQuantityOptions();
+        toggleSpecialNotices();
         updateOrderSummary();
     }
     
@@ -210,6 +323,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 customQuantityInput.removeAttribute('required');
                 customQuantityInput.value = '';
             }
+        }
+    }
+    
+    // 특별 안내사항 표시/숨김
+    function toggleSpecialNotices() {
+        const balloonTypeSelect = document.getElementById('balloonType');
+        const balloonBouquetNotice = document.getElementById('balloonBouquetNotice');
+        const clearBalloonNotice = document.getElementById('clearBalloonNotice');
+        
+        // 모든 안내사항 숨기기
+        if (balloonBouquetNotice) balloonBouquetNotice.style.display = 'none';
+        if (clearBalloonNotice) clearBalloonNotice.style.display = 'none';
+        
+        const selectedValue = balloonTypeSelect.value;
+        
+        // 다발풍선 안내사항 표시
+        if (selectedValue === 'bouquet-round' && balloonBouquetNotice) {
+            balloonBouquetNotice.style.display = 'block';
+        }
+        
+        // 클리어풍선 안내사항 표시
+        if (selectedValue === 'clear-balloon' && clearBalloonNotice) {
+            clearBalloonNotice.style.display = 'block';
         }
     }
     

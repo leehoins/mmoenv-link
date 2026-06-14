@@ -84,6 +84,36 @@
   margin: 0.25rem 0;
 }
 
+/* 특별 안내사항 스타일 */
+.balloon-bouquet-notice, .clear-balloon-notice {
+  margin: 1rem 0;
+}
+
+.warning-box {
+  background: #fff5f5;
+  border: 2px solid #fed7d7;
+  border-left: 5px solid #f56565;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.warning-box h4 {
+  margin: 0 0 0.75rem 0;
+  color: #c53030;
+  font-weight: 600;
+}
+
+.warning-box ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.warning-box li {
+  margin: 0.5rem 0;
+  color: #2d3748;
+  line-height: 1.5;
+}
+
 .order-page {
   max-width: 800px;
   margin: 0 auto;
