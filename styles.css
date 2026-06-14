@@ -43,15 +43,27 @@ a {
   padding: 28px 18px 30px;
 }
 
+.hero-logo-standalone {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.logo-image-standalone {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
 .hero {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 22px;
-  align-items: end;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .hero-copy {
   padding: 12px 2px 0;
+  text-align: center;
 }
 
 .eyebrow {
@@ -80,39 +92,14 @@ h1 {
 
 .summary {
   max-width: 38rem;
-  margin: 14px 0 0;
+  margin: 14px auto 0;
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.65;
   word-break: keep-all;
+  text-align: center;
 }
 
-.hero-visual {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.hero-visual::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 46%, rgba(251, 250, 248, 0.28) 100%);
-  pointer-events: none;
-}
-
-.hero-visual img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 .link-list {
   display: grid;
@@ -142,6 +129,17 @@ h1 {
   box-shadow: 0 16px 34px rgba(66, 44, 38, 0.11);
   transform: translateY(-2px);
   outline: none;
+}
+
+.link-card.featured {
+  border-color: rgba(255, 107, 157, 0.4);
+  background: linear-gradient(135deg, #ff6b9d15 0%, #ffffff 50%, #ffa72615 100%);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.15);
+}
+
+.link-card.featured .icon {
+  background: linear-gradient(135deg, #ff6b9d, #ffa726);
+  color: white;
 }
 
 .link-card.primary {
@@ -222,6 +220,155 @@ h1 {
   background: rgba(23, 21, 20, 0.32);
 }
 
+/* 인스타그램 피드 섹션 */
+.instagram-feed-section {
+  margin-top: 60px;
+  padding: 40px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin: 0 0 8px 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.section-subtitle {
+  text-align: center;
+  margin: 0 0 40px 0;
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.instagram-widget {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 플레이스홀더 스타일 */
+.instagram-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background: linear-gradient(135deg, #ff6b9d08 0%, #ffffff 50%, #ffa72608 100%);
+  border: 2px dashed rgba(255, 107, 157, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.placeholder-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.instagram-icon {
+  width: 60px;
+  height: 60px;
+  fill: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.placeholder-content p {
+  margin: 0 0 1.5rem 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #ff6b9d, #ffa726);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.instagram-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+  color: white;
+}
+
+/* 실제 인스타그램 위젯 스타일 조정 */
+.instagram-widget iframe,
+.instagram-widget > div {
+  width: 100% !important;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* EmbedSocial 타이틀 및 헤더 숨기기 - 안전한 방법 */
+.embedsocial-hashtag .es-header,
+.embedsocial-hashtag .es-account-info,
+.embedsocial-hashtag .es-account-header,
+.embedsocial-hashtag .es-widget-header,
+.embedsocial-hashtag .esu-title,
+.esu-title {
+  display: none !important;
+}
+
+/* "풍선 장식" 텍스트 포함 요소 숨기기 */
+.embedsocial-hashtag h1,
+.embedsocial-hashtag h2, 
+.embedsocial-hashtag h3,
+.embedsocial-hashtag [class*="title"],
+.embedsocial-hashtag .text-2xl,
+.embedsocial-hashtag .text-3xl {
+  display: none !important;
+}
+
+/* 제목 부분을 가리는 오버레이 */
+.instagram-widget {
+  position: relative;
+}
+
+.instagram-widget::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: var(--paper);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* EmbedSocial 위젯 상단 여백 조정 */
+.embedsocial-hashtag {
+  margin-top: -120px !important;
+  padding-top: 120px !important;
+}
+
+/* 모바일에서 오버레이 높이 조정 */
+@media (max-width: 768px) {
+  .instagram-widget::before {
+    height: 140px;
+  }
+  
+  .embedsocial-hashtag {
+    margin-top: -140px !important;
+    padding-top: 140px !important;
+  }
+}
+
+/* EmbedSocial 위젯의 상단 여백 제거 */
+.embedsocial-hashtag {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
 @media (min-width: 760px) {
   .page-shell {
     display: grid;
@@ -238,9 +385,6 @@ h1 {
     padding-top: 0;
   }
 
-  .hero-visual {
-    border-radius: 34px;
-  }
 
   .link-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));

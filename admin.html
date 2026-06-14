@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>관리자 페이지 | m.moenv</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+  </head>
+  <body>
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <h2>관리자 로그인</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" required>
+          </div>
+          <button type="submit">로그인</button>
+        </form>
+      </div>
+    </div>
+
+    <main class="admin-page" id="adminPage" style="display: none;">
+      <header class="admin-header">
+        <h1>모엔브 관리자 페이지</h1>
+        <div class="header-actions">
+          <a href="index.html" class="btn-preview">미리보기</a>
+          <button id="logoutBtn" class="btn-logout">로그아웃</button>
+        </div>
+      </header>
+
+      <section class="admin-section">
+        <h2>주문 관리</h2>
+        <div class="order-stats" id="orderStats">
+          <div class="stat-card">
+            <h3>전체 주문</h3>
+            <span class="stat-number" id="totalOrders">-</span>
+          </div>
+          <div class="stat-card">
+            <h3>대기 중</h3>
+            <span class="stat-number" id="pendingOrders">-</span>
+          </div>
+          <div class="stat-card">
+            <h3>진행 중</h3>
+            <span class="stat-number" id="inProgressOrders">-</span>
+          </div>
+          <div class="stat-card">
+            <h3>완료</h3>
+            <span class="stat-number" id="completedOrders">-</span>
+          </div>
+        </div>
+        
+        <div class="order-controls">
+          <button id="refreshOrdersBtn" class="btn btn-primary">새로고침</button>
+          <button id="exportOrdersBtn" class="btn btn-secondary">내보내기</button>
+        </div>
+
+        <div class="order-list" id="orderList">
+          <p>Supabase 연결 확인 중...</p>
+        </div>
+      </section>
+
+      <section class="admin-section">
+        <h2>메뉴 관리</h2>
+        
+        <div class="menu-controls">
+          <button id="addMenuBtn" class="btn btn-primary">+ 새 메뉴 추가</button>
+          <button id="saveChangesBtn" class="btn btn-success">변경사항 저장</button>
+          <button id="resetMenuBtn" class="btn btn-danger">기본값으로 복원</button>
+        </div>
+
+        <div class="menu-list" id="menuList">
+          <!-- 메뉴 아이템들이 동적으로 생성됩니다 -->
+        </div>
+      </section>
+
+      <!-- 메뉴 추가/편집 모달 -->
+      <div id="menuModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="modalTitle">메뉴 추가</h3>
+            <button class="modal-close" id="closeModal">&times;</button>
+          </div>
+          
+          <form id="menuForm">
+            <div class="form-group">
+              <label for="menuTitle">메뉴 제목 <span class="required">*</span></label>
+              <input type="text" id="menuTitle" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="menuSubtitle">부제목</label>
+              <input type="text" id="menuSubtitle">
+            </div>
+            
+            <div class="form-group">
+              <label for="menuUrl">링크 URL <span class="required">*</span></label>
+              <input type="url" id="menuUrl" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="menuTarget">링크 열기 방식</label>
+              <select id="menuTarget">
+                <option value="_self">현재 창</option>
+                <option value="_blank">새 창</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="menuStyle">스타일</label>
+              <select id="menuStyle">
+                <option value="normal">일반</option>
+                <option value="featured">강조 (그라데이션)</option>
+                <option value="primary">중요 (핑크 테두리)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="menuIcon">아이콘 SVG</label>
+              <textarea id="menuIcon" placeholder="SVG path 또는 전체 SVG 코드를 입력하세요" rows="3"></textarea>
+              <small>예: M9 11H7v2h2v-2Z 또는 전체 SVG 태그</small>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">저장</button>
+              <button type="button" id="cancelModal" class="btn btn-secondary">취소</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div class="success-message" id="successMessage" style="display: none;">
+      변경사항이 저장되었습니다!
+    </div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+    
+    <!-- Supabase 설정 및 주문 관리 -->
+    <script src="supabase-config.js"></script>
+    <script src="supabase-orders.js"></script>
+    
+    <!-- 관리자 스크립트 -->
+    <script src="admin-script.js"></script>
+  </body>
+</html>

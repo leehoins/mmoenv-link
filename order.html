@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>주문하기 | m.moenv</title>
+    <meta
+      name="description"
+      content="m.moenv 풍선 주문 양식 - 픽업, 배송, 맞춤 제작 상담"
+    >
+    <meta name="theme-color" content="#fbfbfa">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="주문하기 | m.moenv">
+    <meta
+      property="og:description"
+      content="풍선 상품 주문과 맞춤 제작 상담을 위한 양식"
+    >
+    <meta property="og:image" content="https://link.mmoenv.com/assets/hero.jpg">
+    <meta property="og:url" content="https://link.mmoenv.com/order.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="order-styles.css">
+  </head>
+  <body>
+    <!-- 주문 전 안내사항 모달 -->
+    <div id="noticeModal" class="notice-modal">
+      <div class="notice-content">
+        <div class="notice-header">
+          <h2>🎈 주문 전 필수 안내사항</h2>
+          <button class="notice-close" id="closeNotice">&times;</button>
+        </div>
+        <div class="notice-body">
+          <div class="notice-section">
+            <h3>📋 주문 필독사항</h3>
+            <ul>
+              <li>주문은 최소 <strong>일주일 전에</strong> 해주세요</li>
+              <li>급한 주문은 상담 후 진행합니다</li>
+              <li>카카오채널 '<strong>모엔브</strong>'로 문의주세요</li>
+              <li>노쇼방지를 위해 모든 주문 입금 확인 후 제작됩니다</li>
+            </ul>
+          </div>
+          
+          <div class="notice-section">
+            <h3>🚚 배송 안내</h3>
+            <ul>
+              <li><strong>택배/픽업/직접배송</strong> 특성상 배송 4일 전부터 취소 및 환불이 불가합니다</li>
+              <li>모엔브의 모든 상품은 <strong>꼼꼼한 검수 후 출고</strong> 됩니다</li>
+              <li>수령 후 파손에 대한 교환 및 환불은 불가합니다</li>
+            </ul>
+          </div>
+
+          <div class="notice-section">
+            <h3>🎯 주의사항</h3>
+            <ul>
+              <li>풍선은 직사광선을 피해 <strong>서늘한 실내 공간에서 보관</strong>해주세요</li>
+              <li>차량 이동시 뒷좌석에 눕혀서 이동해주시고, 장시간 보관은 피해주세요. <strong>트렁크 보관X</strong></li>
+              <li>헬륨 풍선의 경우 추운 날씨에 수축, 더운 날씨에 팽창하기 때문에 낮은 온도로 인해 수축된 풍선은 실내 공간에 두시면 다시 복원됩니다</li>
+              <li>레터링 풍선 속 하얀 가루, 하얀 얼룩은 풍선을 보호해주는 가루이므로 이로 인한 교환, 환불은 불가능합니다</li>
+              <li>고무풍선은 외부 공기와 접촉시 산화되어 광택을 잃고 딱딱해지기 때문에 포장되어 있는 비닐에서 보관하시고 사용 직전 꺼내주세요</li>
+            </ul>
+          </div>
+        </div>
+        <div class="notice-footer">
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeNotice" required>
+            <span class="checkbox-custom"></span>
+            위 안내사항을 모두 확인했으며 동의합니다
+          </label>
+          <button class="btn btn-primary" id="startOrder" disabled>주문 시작하기</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="page-shell order-page" aria-label="m.moenv 주문 양식" style="display: none;" id="orderPage">
+      <header class="order-header">
+        <a href="index.html" class="back-link" aria-label="메인으로 돌아가기">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </a>
+        <div class="header-content">
+          <h1>주문하기</h1>
+          <p class="header-desc">풍선 상품 주문과 맞춤 제작 상담을 도와드려요</p>
+        </div>
+      </header>
+
+      <form class="order-form" id="orderForm">
+        <section class="form-section">
+          <h2>고객 정보</h2>
+          <div class="form-group">
+            <label for="customerName">이름 <span class="required">*</span></label>
+            <input type="text" id="customerName" name="customerName" required>
+          </div>
+          <div class="form-group">
+            <label for="customerPhone">연락처 <span class="required">*</span></label>
+            <input type="tel" id="customerPhone" name="customerPhone" placeholder="010-1234-5678" required>
+          </div>
+          <div class="form-group">
+            <label for="customerEmail">이메일</label>
+            <input type="email" id="customerEmail" name="customerEmail" placeholder="example@email.com">
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>주문 정보</h2>
+          <div class="form-group">
+            <label for="orderType">주문 유형 <span class="required">*</span></label>
+            <select id="orderType" name="orderType" required>
+              <option value="">선택해주세요</option>
+              <option value="helium">헬륨 풍선</option>
+              <option value="air">공기 풍선</option>
+              <option value="consultation">상담 후 결정</option>
+            </select>
+            <small class="form-hint">헬륨 풍선은 떠다니는 풍선, 공기 풍선은 장식용 풍선입니다</small>
+          </div>
+
+          <!-- 상품 선택 -->
+          <div class="form-group" id="productSelection">
+            <label for="balloonType">상품 선택 <span class="required">*</span></label>
+            <select id="balloonType" name="balloonType" required>
+              <option value="">먼저 주문 유형을 선택해주세요</option>
+            </select>
+            <small class="form-hint">주문 유형에 따라 선택 가능한 상품이 달라집니다</small>
+          </div>
+
+          <!-- 개수 선택 옵션 -->
+          <div class="quantity-options" id="quantityOptions" style="display: none;">
+            <div class="form-group">
+              <label for="balloonQuantity">수량 <span class="required">*</span></label>
+              <div class="quantity-selector">
+                <select id="balloonQuantity" name="balloonQuantity">
+                  <option value="">수량 선택</option>
+                  <option value="1">1개</option>
+                  <option value="2">2개</option>
+                  <option value="3">3개</option>
+                  <option value="4">4개</option>
+                  <option value="5">5개</option>
+                  <option value="6">6개</option>
+                  <option value="7">7개</option>
+                  <option value="8">8개</option>
+                  <option value="9">9개</option>
+                  <option value="10">10개</option>
+                  <option value="custom">10개 이상 (직접입력)</option>
+                </select>
+              </div>
+              <div class="custom-quantity" id="customQuantity" style="display: none;">
+                <input type="number" id="customQuantityInput" name="customQuantityInput" min="11" max="100" placeholder="개수 입력">
+              </div>
+              <div class="price-display" id="priceDisplay" style="display: none;">
+                <span class="calculated-price"></span>
+              </div>
+              <small class="form-hint">10개 이상 주문시 할인 혜택이 있습니다</small>
+            </div>
+          </div>
+
+          <!-- 레터링 관련 옵션 -->
+          <div class="lettering-options" id="letteringOptions" style="display: none;">
+            <div class="form-group">
+              <label for="letteringText">레터링 문구 <span class="required">*</span></label>
+              <textarea 
+                id="letteringText" 
+                name="letteringText" 
+                placeholder="풍선에 새길 문구를 정확히 입력해주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
+                rows="3"
+              ></textarea>
+              <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해주세요</small>
+            </div>
+
+            <div class="form-group">
+              <label for="fontType">폰트 선택</label>
+              <select id="fontType" name="fontType">
+                <option value="">기본 폰트</option>
+                <option value="elegant">고급형 폰트</option>
+                <option value="cute">귀여운 폰트</option>
+                <option value="bold">굵은 폰트</option>
+                <option value="script">필기체 폰트</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fontColor">폰트 색상</label>
+              <div class="color-options">
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="black">
+                  <span class="color-preview" style="background: #000;"></span>
+                  블랙
+                </label>
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="white">
+                  <span class="color-preview" style="background: #fff; border: 1px solid #ddd;"></span>
+                  화이트
+                </label>
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="gold">
+                  <span class="color-preview" style="background: #ffd700;"></span>
+                  골드
+                </label>
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="silver">
+                  <span class="color-preview" style="background: #c0c0c0;"></span>
+                  실버
+                </label>
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="pink">
+                  <span class="color-preview" style="background: #ff69b4;"></span>
+                  핑크
+                </label>
+                <label class="color-option">
+                  <input type="radio" name="fontColor" value="blue">
+                  <span class="color-preview" style="background: #1e90ff;"></span>
+                  블루
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 추가 옵션 -->
+          <div class="form-group">
+            <label>추가 옵션</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="extraOptions" value="surprise-box">
+                <span class="checkbox-custom"></span>
+                서프라이즈 박스 (+10,000원)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="extraOptions" value="clay-addon">
+                <span class="checkbox-custom"></span>
+                클레이 추가 (+5,000원)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="extraOptions" value="ribbon-addon">
+                <span class="checkbox-custom"></span>
+                리본 장식 (+3,000원)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="extraOptions" value="led-addon">
+                <span class="checkbox-custom"></span>
+                LED 조명 (+8,000원)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="orderDetails">상세 요청사항 <span class="required">*</span></label>
+            <textarea 
+              id="orderDetails" 
+              name="orderDetails" 
+              placeholder="원하시는 디자인, 색상, 테마 등에 대해 자세히 알려주세요.&#10;예: 생일 파티용, 색상: 핑크/골드 조합, 1세 돌잔치 컨셉"
+              required
+              rows="4"
+            ></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="budget">예산 범위</label>
+            <select id="budget" name="budget">
+              <option value="">선택해주세요</option>
+              <option value="under-30">3만원 이하</option>
+              <option value="30-50">3-5만원</option>
+              <option value="50-100">5-10만원</option>
+              <option value="100-200">10-20만원</option>
+              <option value="over-200">20만원 이상</option>
+              <option value="discuss">상담 후 결정</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>수령 방법</h2>
+          <div class="form-group radio-group">
+            <label class="radio-label">
+              <input type="radio" name="deliveryMethod" value="pickup" required>
+              <span class="radio-custom"></span>
+              픽업 (동탄)
+              <span class="delivery-note">🏪 매장 방문 수령</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deliveryMethod" value="delivery" required>
+              <span class="radio-custom"></span>
+              택배 배송
+              <span class="delivery-note">📦 CJ대한통운 (배송비 별도)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="deliveryMethod" value="direct" required>
+              <span class="radio-custom"></span>
+              직접배송 (동탄/오산)
+              <span class="delivery-note">🚗 7만원 이상 무료, 이하 배송비 별도</span>
+            </label>
+          </div>
+          
+          <div class="delivery-details" id="pickupDetails" style="display: none;">
+            <div class="form-group">
+              <label for="pickupLocation">픽업 장소 <span class="required">*</span></label>
+              <select id="pickupLocation" name="pickupLocation">
+                <option value="">선택해주세요</option>
+                <option value="dongtan">동탄 지점</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pickupTime">희망 픽업 시간대</label>
+              <select id="pickupTime" name="pickupTime">
+                <option value="">선택해주세요</option>
+                <option value="morning">오전 (9시-12시)</option>
+                <option value="afternoon">오후 (12시-18시)</option>
+                <option value="evening">저녁 (18시-21시)</option>
+              </select>
+              <small class="form-hint">픽업 1시간 이후 파손에 대한 책임지지 않습니다</small>
+            </div>
+          </div>
+
+          <div class="delivery-details" id="deliveryDetails" style="display: none;">
+            <div class="form-group">
+              <label for="deliveryAddress">배송 주소 <span class="required">*</span></label>
+              <textarea 
+                id="deliveryAddress" 
+                name="deliveryAddress" 
+                placeholder="우편번호와 상세주소를 모두 입력해주세요&#10;예: 12345 경기도 오산시 ○○로 123, ○○아파트 101동 502호"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="deliveryPhone">받을 분 연락처</label>
+              <input type="tel" id="deliveryPhone" name="deliveryPhone" placeholder="주문자와 다른 경우">
+            </div>
+          </div>
+
+          <div class="delivery-details" id="directDetails" style="display: none;">
+            <div class="form-group">
+              <label for="directAddress">직접배송 주소 <span class="required">*</span></label>
+              <textarea 
+                id="directAddress" 
+                name="directAddress" 
+                placeholder="동탄/오산 지역 상세주소를 입력해주세요"
+                rows="3"
+              ></textarea>
+            </div>
+            <small class="form-hint">동탄/오산 지역 7만원 이상 주문시 무료 직접배송 가능합니다</small>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>일정</h2>
+          <div class="form-group">
+            <label for="usageDate">실제 사용날짜 or 방문수령일 <span class="required">*</span></label>
+            <input type="date" id="usageDate" name="usageDate" required>
+            <small class="form-hint">행사일 또는 픽업 예정일을 선택해주세요</small>
+          </div>
+          <div class="form-group">
+            <label for="desiredDate">희망 출고일 <span class="required">*</span></label>
+            <input type="date" id="desiredDate" name="desiredDate" required>
+            <small class="form-hint">최소 일주일 전 주문 부탁드립니다</small>
+          </div>
+          
+          <!-- 풍선 배송일정 안내 -->
+          <div class="delivery-schedule-info">
+            <h3>🎈 풍선 배송일정</h3>
+            <p class="schedule-description">
+              언제 주문하셔도 괜찮아요! 사용하시는 날에 맞춰서 제작해드릴게요 😊<br>
+              미리 주문하셔도 사용일 직전에 만들어서 바람 빠질 걱정 없어요!<br>
+              택배는 보통 하루만에 도착해요~ (가끔 이틀 걸릴 수도 있어요)
+            </p>
+            
+            <div class="schedule-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>월~수요일 사용</th>
+                    <th>목요일 사용</th>
+                    <th>금요일 사용</th>
+                    <th>토요일 사용</th>
+                    <th>일요일 사용</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>상담 후 결정</td>
+                    <td>월요일에 보내드려요</td>
+                    <td>화요일에 보내드려요</td>
+                    <td>수요일에 보내드려요</td>
+                    <td>목요일에 보내드려요</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="timePreference">픽업 시간</label>
+            <div class="time-selector">
+              <div class="time-field-group">
+                <label for="preferredHour">시간</label>
+                <select id="preferredHour" name="preferredHour">
+                  <option value="">선택</option>
+                  <option value="09">09시</option>
+                  <option value="10">10시</option>
+                  <option value="11">11시</option>
+                  <option value="12">12시</option>
+                  <option value="13">13시</option>
+                  <option value="14">14시</option>
+                  <option value="15">15시</option>
+                  <option value="16">16시</option>
+                  <option value="17">17시</option>
+                  <option value="18">18시</option>
+                  <option value="19">19시</option>
+                  <option value="20">20시</option>
+                </select>
+              </div>
+              <div class="time-field-group">
+                <label for="preferredMinute">분</label>
+                <select id="preferredMinute" name="preferredMinute">
+                  <option value="">선택</option>
+                  <option value="00">00분</option>
+                  <option value="30">30분</option>
+                </select>
+              </div>
+              <div class="time-options">
+                <p style="color: #666; font-size: 0.85rem; margin: 0.5rem 0 0 0;">
+                  💡 시간을 선택하지 않으시면 영업시간 내 적절한 시간으로 연락드립니다
+                </p>
+              </div>
+            </div>
+            <small class="form-hint">영업시간: 09:00 - 20:00 (픽업 가능시간)</small>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>추가 요청사항</h2>
+          <div class="form-group">
+            <label for="additionalNotes">특별 요청사항</label>
+            <textarea 
+              id="additionalNotes" 
+              name="additionalNotes" 
+              placeholder="배송 시 주의사항, 특별한 디자인 요구, 포장 방법 등이 있으시면 알려주세요"
+              rows="3"
+            ></textarea>
+          </div>
+        </section>
+
+        <!-- 최종 확인 체크박스 -->
+        <section class="form-section">
+          <div class="final-checks">
+            <label class="checkbox-label">
+              <input type="checkbox" name="confirmInfo" required>
+              <span class="checkbox-custom"></span>
+              입력한 정보가 정확함을 확인합니다
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="confirmTerms" required>
+              <span class="checkbox-custom"></span>
+              주문 안내사항 및 취소/환불 정책에 동의합니다
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="confirmContact" required>
+              <span class="checkbox-custom"></span>
+              상담을 위한 연락 받기에 동의합니다
+            </label>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <div class="order-summary" id="orderSummary">
+            <h3>📋 주문 요약</h3>
+            <div class="summary-content">
+              <p>선택사항을 모두 입력하시면 여기에 주문 요약이 표시됩니다.</p>
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 4.2c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7l-.7 2.8c-.1.4.3.7.6.4l3.2-2.2c.5.1.9.1 1.4.1 4.7 0 8.5-3 8.5-6.8S16.7 4.2 12 4.2Z"/>
+            </svg>
+            주문 문의 전송하기
+          </button>
+          <p class="submit-note">
+            제출하시면 카카오톡 채널로 주문 내용이 전달되며, 빠른 시간 내에 상담 연락드립니다.<br>
+            <strong>📞 즉시 상담: 010-2719-3467 모엔브</strong>
+          </p>
+        </div>
+      </form>
+    </main>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+    
+    <!-- Supabase 설정 및 주문 관리 -->
+    <script src="supabase-config.js"></script>
+    <script src="supabase-orders.js"></script>
+    
+    <!-- 메인 주문 스크립트 -->
+    <script src="order-script.js"></script>
+  </body>
+</html>
