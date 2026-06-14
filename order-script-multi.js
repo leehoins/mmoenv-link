@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '클리어 풍선', 
                 hasLettering: false, 
                 hasQuantity: true, 
-                price: 3500, 
-                priceText: '3,500원/개',
+                price: 8000, 
+                priceText: '8,000원/개',
                 options: '택배 불가, 픽업 및 퀵 가능',
                 special: 'clear'
             },
