@@ -349,3 +349,21 @@
 ::1 - - [14/Jun/2026 21:14:03] "GET /index.html HTTP/1.1" 304 -
 ::1 - - [14/Jun/2026 21:14:03] "GET /menu-loader.js HTTP/1.1" 304 -
 ::1 - - [14/Jun/2026 21:14:03] "GET /logo.png HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:51:45] "GET /index.html HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:52:19] "GET /index.html HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:52:19] "GET /assets/hero.jpg HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:52:30] "GET /index.html HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:52:46] "GET /index.html HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:52:51] code 404, message File not found
+::1 - - [14/Jun/2026 21:52:51] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+::1 - - [14/Jun/2026 21:52:51] code 404, message File not found
+::1 - - [14/Jun/2026 21:52:51] "GET /favicon.svg HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:52:51] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [14/Jun/2026 21:52:51] code 404, message File not found
+::1 - - [14/Jun/2026 21:52:51] "GET /apple-touch-icon.png HTTP/1.1" 404 -
+::1 - - [14/Jun/2026 21:53:02] "GET /index.html HTTP/1.1" 200 -
+::1 - - [14/Jun/2026 21:53:02] "GET /styles.css HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:53:02] "GET /logo.png HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:53:02] "GET /assets/hero.jpg HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:53:02] "GET /menu-loader.js HTTP/1.1" 304 -
+::1 - - [14/Jun/2026 21:53:37] "GET /index.html HTTP/1.1" 304 -
