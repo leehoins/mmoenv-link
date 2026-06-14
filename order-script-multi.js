@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsSummary = document.getElementById('productsSummary');
     const orderType = document.getElementById('orderType');
     
-    // MMOENV 상품 데이터
+    // MMOENV 상품 데이터 (블로그 기준 정확 업데이트)
     const MMOENV_PRODUCTS = {
         helium: [
             { 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             { 
                 value: 'heart-lettering-24', 
-                text: '24인치 하트 레터링풍선', 
+                text: '24인치 마카롱 레터링 풍선', 
                 hasLettering: true, 
                 hasQuantity: false, 
                 price: 35000, 
@@ -37,116 +37,116 @@ document.addEventListener('DOMContentLoaded', function() {
                 options: '리본 + 무게추 포함'
             },
             { 
-                value: 'standard-lettering-18', 
-                text: '18인치 일반 레터링풍선', 
-                hasLettering: true, 
+                value: 'mini-shape-24', 
+                text: '24인치 미니쉐입', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 37000, 
+                priceText: '37,000원',
+                options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지'
+            },
+            { 
+                value: 'balloon-bouquet-round', 
+                text: '다발풍선(라운드)', 
+                hasLettering: false, 
                 hasQuantity: true, 
                 price: 4000, 
                 priceText: '4,000원/개',
-                options: '개당 가격, 10개 이상 할인'
-            },
-            { 
-                value: 'number-balloon', 
-                text: '숫자풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 13000, 
-                priceText: '13,000원/개',
-                options: '0~9 숫자 선택 가능'
-            },
-            { 
-                value: 'alphabet-balloon', 
-                text: '알파벳풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 13000, 
-                priceText: '13,000원/개',
-                options: 'A~Z 알파벳 선택 가능'
-            },
-            { 
-                value: 'heart-balloon-18', 
-                text: '18인치 하트풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 3000, 
-                priceText: '3,000원/개',
-                options: '다양한 색상 선택 가능'
-            },
-            { 
-                value: 'round-balloon-12', 
-                text: '12인치 라운드풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 2500, 
-                priceText: '2,500원/개',
-                options: '기본형, 다량 주문 할인'
-            },
-            { 
-                value: 'balloon-bouquet', 
-                text: '다발풍선 (고무풍선)', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 15000, 
-                priceText: '15,000원~',
-                options: '당일 제작, 택배 불가',
+                options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개',
                 special: 'bouquet'
             },
             { 
-                value: 'clear-balloon', 
-                text: '클리어풍선', 
+                value: 'heart-in-heart-20', 
+                text: '20인치 하트인하트', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 33000, 
+                priceText: '33,000원',
+                options: '리본 + 무게추 포함'
+            },
+            { 
+                value: 'number-foil-large', 
+                text: '숫자은박(대형)', 
                 hasLettering: false, 
                 hasQuantity: true, 
-                price: 3500, 
-                priceText: '3,500원/개',
-                options: '투명, 픽업만 가능',
+                price: 31000, 
+                priceText: '31,000원/개 (헬륨)',
+                options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)'
+            },
+            { 
+                value: 'clear-balloon', 
+                text: '클리어 풍선', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                price: 8000, 
+                priceText: '8,000원/개',
+                options: '택배 불가, 픽업 및 퀵 가능',
                 special: 'clear'
+            },
+            { 
+                value: 'mini-ombre', 
+                text: '미니옹브레', 
+                hasLettering: true, 
+                hasQuantity: true, 
+                price: 6000, 
+                priceText: '6,000원/개',
+                options: '레터링 추가시 7,500원/개'
+            },
+            { 
+                value: 'circus-balloon', 
+                text: '서커스풍선', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 20000, 
+                priceText: '20,000원',
+                options: '숫자풍선 개당 3,000원 추가'
             }
         ],
         air: [
             { 
-                value: 'foil-birthday', 
-                text: '생일 은박풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 2000, 
-                priceText: '2,000원/개',
-                options: '다양한 디자인 선택'
-            },
-            { 
-                value: 'foil-character', 
-                text: '캐릭터 은박풍선', 
+                value: 'daisy-flower', 
+                text: '데이지 꽃풍선', 
                 hasLettering: false, 
                 hasQuantity: true, 
                 price: 5000, 
-                priceText: '5,000원/개',
-                options: '인기 캐릭터 다수'
+                priceText: '5,000원/송이',
+                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능'
             },
             { 
-                value: 'air-balloon-arch', 
-                text: '풍선 아치', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 50000, 
-                priceText: '50,000원~',
-                options: '사이즈별 견적, 설치 포함'
-            },
-            { 
-                value: 'air-balloon-wall', 
-                text: '풍선 벽 장식', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 30000, 
-                priceText: '30,000원~',
-                options: '크기별 견적'
-            },
-            { 
-                value: 'air-table-decoration', 
-                text: '테이블 장식', 
+                value: 'tulip-flower', 
+                text: '튤립 꽃풍선', 
                 hasLettering: false, 
                 hasQuantity: true, 
-                price: 15000, 
-                priceText: '15,000원/세트',
-                options: '테이블당 세트 가격'
+                price: 5000, 
+                priceText: '5,000원/송이',
+                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능'
+            },
+            { 
+                value: 'balloon-cake-basic', 
+                text: '풍선케이크(기본)', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 21000, 
+                priceText: '21,000원',
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+            },
+            { 
+                value: 'balloon-cake-mini', 
+                text: '풍선케이크(미니)', 
+                hasLettering: false, 
+                hasQuantity: false, 
+                price: 14000, 
+                priceText: '14,000원',
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+            },
+            { 
+                value: 'number-foil-air', 
+                text: '숫자은박(공기)', 
+                hasLettering: false, 
+                hasQuantity: true, 
+                price: 9000, 
+                priceText: '9,000원/개',
+                options: '높이 약 90cm, DIY 택배 가능'
             }
         ]
     };
