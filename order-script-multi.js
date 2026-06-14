@@ -1,4 +1,4 @@
-// 다중 상품 주문 시스템
+// 다중 상품 주문 시스템 - 클리어풍선 8000원 수정버전
 document.addEventListener('DOMContentLoaded', function() {
     let productCount = 0;
     let products = [];
