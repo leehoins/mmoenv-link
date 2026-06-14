@@ -44,8 +44,8 @@
           <div class="notice-section">
             <h3>🚚 배송 안내</h3>
             <ul>
-              <li>로젠택배로 발송되며 <strong>95% 이상 다음날 발송으로 계서요~</strong></li>
-              <li>송장 입력시 다음날 오전 확인이 가능합니다</li>
+              <li>로젠택배로 발송되며 <strong>95% 이상 다음날 배송으로 도착합니다</strong></li>
+              <li>송장번호 입력 후 다음날 오전에 확인 가능합니다</li>
               <li><strong>택배/픽업/직접배송</strong> 특성상 배송 4일 전부터 취소 및 환불이 불가합니다</li>
               <li>모엔브의 모든 상품은 <strong>꼼꼼한 검수 후 출고</strong> 됩니다</li>
               <li>수령 후 파손에 대한 교환 및 환불은 불가합니다</li>
@@ -90,6 +90,27 @@
       </header>
 
       <form class="order-form" id="orderForm">
+        <!-- 주문방법 안내 -->
+        <section class="form-section">
+          <h2>📝 주문방법</h2>
+          <div class="order-method-guide">
+            <p><strong>1. 실제사용날짜 or 방문수령일을 입력해주세요.</strong></p>
+            <p style="margin-left: 1rem; color: #666;">적어주신 날짜 3~4일 전에 발송해드리니 꼭! 실제사용날짜를 적어주세요. 방문 수령시에는 방문일자를 적어주세요.</p>
+
+            <p><strong>2. 레터링 문구를 작성해주세요.</strong></p>
+            <p style="margin-left: 1rem; color: #666;">적어주신 문구를 복사하여 사용하기 때문에 오타가 없는지 다시한번 확인해주세요.</p>
+
+            <p><strong>3. 폰트와 폰트색상을 적어주세요.</strong></p>
+            <p style="margin-left: 1rem; color: #666;">폰트와 폰트 색상을 선택해주시면 더욱 예쁘게 제작해드립니다.</p>
+
+            <p><strong>4. 풍선 종류/사이즈를 선택해주세요.</strong></p>
+            <p style="margin-left: 1rem; color: #666;">원하시는 풍선의 종류와 사이즈를 선택해주시면 맞춤 제작이 가능합니다.</p>
+
+            <p><strong>5. 추가옵션을 선택해주세요.</strong></p>
+            <p style="margin-left: 1rem; color: #666;">서프라이즈박스, 클레이 추가 등 추가로 필요한 제품을 선택해주세요.</p>
+          </div>
+        </section>
+
         <section class="form-section">
           <h2>고객 정보</h2>
           <div class="form-group">
@@ -99,10 +120,6 @@
           <div class="form-group">
             <label for="customerPhone">연락처 <span class="required">*</span></label>
             <input type="tel" id="customerPhone" name="customerPhone" placeholder="010-1234-5678" required>
-          </div>
-          <div class="form-group">
-            <label for="customerEmail">이메일</label>
-            <input type="email" id="customerEmail" name="customerEmail" placeholder="example@email.com">
           </div>
         </section>
 
@@ -119,159 +136,162 @@
             <small class="form-hint">헬륨 풍선은 떠다니는 풍선, 공기 풍선은 장식용 풍선입니다</small>
           </div>
 
-          <!-- 상품 선택 -->
-          <div class="form-group" id="productSelection">
-            <label for="balloonType">상품 선택 <span class="required">*</span></label>
-            <select id="balloonType" name="balloonType" required>
-              <option value="">먼저 주문 유형을 선택해주세요</option>
-            </select>
-            <small class="form-hint">주문 유형에 따라 선택 가능한 상품이 달라집니다</small>
-          </div>
-
-          <!-- 개수 선택 옵션 -->
-          <div class="quantity-options" id="quantityOptions" style="display: none;">
-            <div class="form-group">
-              <label for="balloonQuantity">수량 <span class="required">*</span></label>
-              <div class="quantity-selector">
-                <select id="balloonQuantity" name="balloonQuantity">
-                  <option value="">수량 선택</option>
-                  <option value="1">1개</option>
-                  <option value="2">2개</option>
-                  <option value="3">3개</option>
-                  <option value="4">4개</option>
-                  <option value="5">5개</option>
-                  <option value="6">6개</option>
-                  <option value="7">7개</option>
-                  <option value="8">8개</option>
-                  <option value="9">9개</option>
-                  <option value="10">10개</option>
-                  <option value="custom">10개 이상 (직접입력)</option>
+          <!-- 주문 상품 목록 -->
+          <div class="products-container" id="productsContainer">
+            <div class="product-section" data-product-index="0">
+              <div class="product-header">
+                <h3>상품 1</h3>
+              </div>
+              
+              <!-- 상품 선택 -->
+              <div class="form-group" id="productSelection">
+                <label for="balloonType_0">상품 선택 <span class="required">*</span></label>
+                <select id="balloonType_0" name="balloonType_0" required class="balloon-type-select">
+                  <option value="">먼저 주문 유형을 선택해주세요</option>
                 </select>
+                <small class="form-hint">주문 유형에 따라 선택 가능한 상품이 달라집니다</small>
               </div>
-              <div class="custom-quantity" id="customQuantity" style="display: none;">
-                <input type="number" id="customQuantityInput" name="customQuantityInput" min="11" max="100" placeholder="개수 입력">
+
+              <!-- 개수 선택 옵션 -->
+              <div class="quantity-options" id="quantityOptions_0" style="display: none;">
+                <div class="form-group">
+                  <label for="balloonQuantity_0">수량 <span class="required">*</span></label>
+                  <div class="quantity-selector">
+                    <select id="balloonQuantity_0" name="balloonQuantity_0" class="balloon-quantity-select">
+                      <option value="">수량 선택</option>
+                      <option value="1">1개</option>
+                      <option value="2">2개</option>
+                      <option value="3">3개</option>
+                      <option value="4">4개</option>
+                      <option value="5">5개</option>
+                      <option value="6">6개</option>
+                      <option value="7">7개</option>
+                      <option value="8">8개</option>
+                      <option value="9">9개</option>
+                      <option value="10">10개</option>
+                      <option value="custom">10개 이상 (직접입력)</option>
+                    </select>
+                  </div>
+                  <div class="custom-quantity" id="customQuantity_0" style="display: none;">
+                    <input type="number" id="customQuantityInput_0" name="customQuantityInput_0" min="11" max="100" placeholder="개수 입력">
+                  </div>
+                  <div class="price-display" id="priceDisplay_0" style="display: none;">
+                    <span class="calculated-price"></span>
+                  </div>
+                  <small class="form-hint">10개 이상 주문시 할인 혜택이 있습니다</small>
+                </div>
               </div>
-              <div class="price-display" id="priceDisplay" style="display: none;">
-                <span class="calculated-price"></span>
+
+              <!-- 다발풍선 특별 안내사항 -->
+              <div class="balloon-bouquet-notice" id="balloonBouquetNotice_0" style="display: none;">
+                <div class="warning-box">
+                  <h4>🚨 다발풍선 중요 안내사항</h4>
+                  <ul>
+                    <li><strong>고무풍선 특성상 채공시간이 매우 짧습니다!</strong></li>
+                    <li>유지용액 넣지 않을경우 최대 <strong>4-5시간 이내</strong></li>
+                    <li>유지용액 넣을경우 최대 <strong>12시간 이내</strong></li>
+                    <li><strong>당일제작, 당일사용</strong> 하셔야 하며, <strong>택배 불가능</strong> 상품입니다</li>
+                    <li>유지용액은 무료로 넣어 드립니다</li>
+                    <li>유지용액 넣을경우 투명 풍선의 경우 얼룩처럼 보일 수 있습니다</li>
+                    <li>코팅풍선 변경 시에만 택배 가능합니다</li>
+                  </ul>
+                </div>
               </div>
-              <small class="form-hint">10개 이상 주문시 할인 혜택이 있습니다</small>
+
+              <!-- 클리어풍선 특별 안내사항 -->
+              <div class="clear-balloon-notice" id="clearBalloonNotice_0" style="display: none;">
+                <div class="warning-box">
+                  <h4>💎 클리어풍선 안내사항</h4>
+                  <ul>
+                    <li><strong>택배 불가, 픽업 및 퀵 가능</strong></li>
+                    <li>투명하고 맑지만 대략 최소 <strong>3-7일 정도 유지</strong> 가능합니다</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 레터링 관련 옵션 -->
+              <div class="lettering-options" id="letteringOptions_0" style="display: none;">
+                <div class="form-group">
+                  <label for="letteringText_0">레터링 문구 <span class="required">*</span></label>
+                  <textarea 
+                    id="letteringText_0" 
+                    name="letteringText_0" 
+                    placeholder="풍선에 새길 문구를 정확히 입력해주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
+                    rows="3"
+                  ></textarea>
+                  <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해주세요</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="fontType_0">폰트 선택</label>
+                  <select id="fontType_0" name="fontType_0">
+                    <option value="">기본 폰트</option>
+                    <option value="elegant">고급형 폰트</option>
+                    <option value="cute">귀여운 폰트</option>
+                    <option value="bold">굵은 폰트</option>
+                    <option value="script">필기체 폰트</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="fontColor_0">폰트 색상</label>
+                  <div class="color-options">
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="black">
+                      <span class="color-preview" style="background: #000;"></span>
+                      블랙
+                    </label>
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="white">
+                      <span class="color-preview" style="background: #fff; border: 1px solid #ddd;"></span>
+                      화이트
+                    </label>
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="gold">
+                      <span class="color-preview" style="background: #ffd700;"></span>
+                      골드
+                    </label>
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="silver">
+                      <span class="color-preview" style="background: #c0c0c0;"></span>
+                      실버
+                    </label>
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="pink">
+                      <span class="color-preview" style="background: #ff69b4;"></span>
+                      핑크
+                    </label>
+                    <label class="color-option">
+                      <input type="radio" name="fontColor_0" value="blue">
+                      <span class="color-preview" style="background: #1e90ff;"></span>
+                      블루
+                    </label>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- 다발풍선 특별 안내사항 -->
-          <div class="balloon-bouquet-notice" id="balloonBouquetNotice" style="display: none;">
-            <div class="warning-box">
-              <h4>🚨 다발풍선 중요 안내사항</h4>
-              <ul>
-                <li><strong>고무풍선 특성상 채공시간이 매우 짧습니다!</strong></li>
-                <li>유지용액 넣지 않을경우 최대 <strong>4-5시간 이내</strong></li>
-                <li>유지용액 넣을경우 최대 <strong>12시간 이내</strong></li>
-                <li><strong>당일제작, 당일사용</strong> 하셔야 하며, <strong>택배 불가능</strong> 상품입니다</li>
-                <li>유지용액은 무료로 넣어 드립니다</li>
-                <li>유지용액 넣을경우 투명 풍선의 경우 얼룩처럼 보일 수 있습니다</li>
-                <li>코팅풍선 변경 시에만 택배 가능합니다</li>
-              </ul>
-            </div>
+          <!-- 상품 추가 버튼 -->
+          <div class="add-product-section">
+            <button type="button" class="add-product-btn" id="addProductBtn">
+              <span class="plus-icon">+</span>
+              상품 추가하기
+            </button>
           </div>
 
-          <!-- 클리어풍선 특별 안내사항 -->
-          <div class="clear-balloon-notice" id="clearBalloonNotice" style="display: none;">
-            <div class="warning-box">
-              <h4>💎 클리어풍선 안내사항</h4>
-              <ul>
-                <li><strong>택배 불가, 픽업 및 퀵 가능</strong></li>
-                <li>투명하고 맑지만 대략 최소 <strong>3-7일 정도 유지</strong> 가능합니다</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- 레터링 관련 옵션 -->
-          <div class="lettering-options" id="letteringOptions" style="display: none;">
-            <div class="form-group">
-              <label for="letteringText">레터링 문구 <span class="required">*</span></label>
-              <textarea 
-                id="letteringText" 
-                name="letteringText" 
-                placeholder="풍선에 새길 문구를 정확히 입력해주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
-                rows="3"
-              ></textarea>
-              <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해주세요</small>
-            </div>
-
-            <div class="form-group">
-              <label for="fontType">폰트 선택</label>
-              <select id="fontType" name="fontType">
-                <option value="">기본 폰트</option>
-                <option value="elegant">고급형 폰트</option>
-                <option value="cute">귀여운 폰트</option>
-                <option value="bold">굵은 폰트</option>
-                <option value="script">필기체 폰트</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="fontColor">폰트 색상</label>
-              <div class="color-options">
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="black">
-                  <span class="color-preview" style="background: #000;"></span>
-                  블랙
-                </label>
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="white">
-                  <span class="color-preview" style="background: #fff; border: 1px solid #ddd;"></span>
-                  화이트
-                </label>
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="gold">
-                  <span class="color-preview" style="background: #ffd700;"></span>
-                  골드
-                </label>
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="silver">
-                  <span class="color-preview" style="background: #c0c0c0;"></span>
-                  실버
-                </label>
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="pink">
-                  <span class="color-preview" style="background: #ff69b4;"></span>
-                  핑크
-                </label>
-                <label class="color-option">
-                  <input type="radio" name="fontColor" value="blue">
-                  <span class="color-preview" style="background: #1e90ff;"></span>
-                  블루
-                </label>
+          <!-- 상품 목록 총 합계 -->
+          <div class="products-summary" id="productsSummary" style="display: none;">
+            <div class="summary-box">
+              <h3>🛒 주문 상품 목록</h3>
+              <div class="products-list" id="productsListSummary"></div>
+              <div class="total-price">
+                <strong>총 예상 금액: <span id="totalPrice">0원</span></strong>
               </div>
             </div>
           </div>
 
-          <!-- 추가 옵션 -->
-          <div class="form-group">
-            <label>추가 옵션</label>
-            <div class="checkbox-group">
-              <label class="checkbox-label">
-                <input type="checkbox" name="extraOptions" value="surprise-box">
-                <span class="checkbox-custom"></span>
-                서프라이즈 박스 (+10,000원)
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="extraOptions" value="clay-addon">
-                <span class="checkbox-custom"></span>
-                클레이 추가 (+5,000원)
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="extraOptions" value="ribbon-addon">
-                <span class="checkbox-custom"></span>
-                리본 장식 (+3,000원)
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="extraOptions" value="led-addon">
-                <span class="checkbox-custom"></span>
-                LED 조명 (+8,000원)
-              </label>
-            </div>
-          </div>
 
           <div class="form-group">
             <label for="orderDetails">상세 요청사항 <span class="required">*</span></label>
@@ -282,19 +302,6 @@
               required
               rows="4"
             ></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label for="budget">예산 범위</label>
-            <select id="budget" name="budget">
-              <option value="">선택해주세요</option>
-              <option value="under-30">3만원 이하</option>
-              <option value="30-50">3-5만원</option>
-              <option value="50-100">5-10만원</option>
-              <option value="100-200">10-20만원</option>
-              <option value="over-200">20만원 이상</option>
-              <option value="discuss">상담 후 결정</option>
-            </select>
           </div>
         </section>
 
@@ -390,7 +397,7 @@
             <p class="schedule-description">
               언제 주문하셔도 괜찮아요! 사용하시는 날에 맞춰서 제작해드릴게요 😊<br>
               미리 주문하셔도 사용일 직전에 만들어서 바람 빠질 걱정 없어요!<br>
-              <strong>로젠택배로 95% 이상 다음날 배송으로 계서요~</strong>
+              <strong>로젠택배로 95% 이상 다음날 배송으로 도착합니다~</strong>
             </p>
             
             <div class="schedule-table">
@@ -435,7 +442,7 @@
             <div class="delivery-note">
               <p><strong>📌 중요사항:</strong></p>
               <ul>
-                <li><strong>토요일 발송은 지역의 어려움 상황 소요될 수 있습니다.</strong></li>
+                <li><strong>토요일 발송은 지역에 따라 어려움이 있을 수 있습니다.</strong></li>
                 <li>배송 지역에 따라 1-3일 정도 소요될 수 있습니다.</li>
               </ul>
             </div>
@@ -542,27 +549,6 @@
           </div>
         </section>
 
-        <!-- 주문방법 안내 -->
-        <section class="form-section">
-          <h2>📝 주문방법</h2>
-          <div class="order-method-guide">
-            <p><strong>1. 실제사용날짜 or 방문수령일을 입력해주세요.</strong></p>
-            <p style="margin-left: 1rem; color: #666;">적어주신 햅사실 3~4일전에 발송해드리니 꼭! 실제사용날짜를 적어주세요. 방문 수령시에는 방문일자를 적어주세요.</p>
-
-            <p><strong>2. 레터링 문구를 작성해주세요.</strong></p>
-            <p style="margin-left: 1rem; color: #666;">적어주신 문구를 복사하여 사용하기 때문에 오타가 없는지 다시한번 확인해주세요.</p>
-
-            <p><strong>3. 폰트와 폰트색상을 적어주세요.</strong></p>
-            <p style="margin-left: 1rem; color: #666;">적어주신 문구를 복사하여 사용하기 때문에 오타가 없는지 다시한번 확인해주세요.</p>
-
-            <p><strong>4. 풍선 종류/사이즈를 선택해주세요.</strong></p>
-            <p style="margin-left: 1rem; color: #666;">직접입력간을 모두적어주셔야 디자인을 선택하실 수 있고, 모든 선택 하시면글씨가 나와 경제가 가능하십니다.</p>
-
-            <p><strong>5. 추가옵션을 선택해주세요.</strong></p>
-            <p style="margin-left: 1rem; color: #666;">서프라이즈박스, 클레이 추가 등 추가로 필요한 제품을 선택해주세요.</p>
-          </div>
-        </section>
-
         <section class="form-section">
           <div class="final-checks">
             <label class="checkbox-label">
@@ -613,6 +599,6 @@
     <script src="supabase-orders.js"></script>
     
     <!-- 메인 주문 스크립트 -->
-    <script src="order-script.js"></script>
+    <script src="order-script-multi.js"></script>
   </body>
 </html>
