@@ -1,5 +1,89 @@
 /* 주문 페이지 전용 스타일 */
 
+/* FAQ 스타일 */
+.faq-container {
+  margin-top: 1rem;
+}
+
+.faq-item {
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  padding: 1rem;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  border: none;
+  outline: none;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.faq-item summary:hover {
+  background: #e9ecef;
+}
+
+.faq-item[open] summary {
+  background: #ff6b9d;
+  color: white;
+}
+
+.faq-answer {
+  padding: 1rem;
+  background: white;
+  border-top: 1px solid #e1e5e9;
+  line-height: 1.6;
+}
+
+.faq-answer p {
+  margin: 0.5rem 0;
+}
+
+/* 주문방법 안내 스타일 */
+.order-method-guide {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #ff6b9d;
+}
+
+.order-method-guide p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.order-method-guide strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* 배송 일정 안내 스타일 개선 */
+.delivery-note {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.delivery-note p {
+  margin: 0.5rem 0;
+}
+
+.delivery-note ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.delivery-note li {
+  margin: 0.25rem 0;
+}
+
 .order-page {
   max-width: 800px;
   margin: 0 auto;
