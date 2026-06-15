@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 37000, 
                 priceText: '37,000원',
                 options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원',
-                imageUrl: 'https://via.placeholder.com/150x150/ff6b9d/ffffff?text=버블인버블'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTk2/MDAxNzgwOTgyMDEwOTYw.11C5e6zfiXVmwdPaJVRtDU_1Ei9I1RpAothB6omtJxwg.DarqQVPbxpASdALAl2mGZlW2fbvrGNgintqZey4ayzwg.JPEG/SE-bcd6b9d4-cfb6-4ba1-8c59-bb4581d75f70.jpg?type=w200'
             },
             { 
                 value: 'heart-lettering-24', 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 35000, 
                 priceText: '35,000원',
                 options: '리본 + 무게추 포함',
-                imageUrl: 'https://via.placeholder.com/150x150/ffa8cc/ffffff?text=마카롱레터링'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfODAg/MDAxNzgwOTgxOTU0NTUz.vs4JFsoILVvyd6kAV19w5Ow9HfbGVYhYX_vximeKbywg.4KXs2vOFj2dFTgSxHU_4t2thGdSqCXQHps8xAiQ_-JYg.JPEG/SE-c5de0ef4-378d-4625-9b80-a991a3ef73db.jpg?type=w200'
             },
             { 
                 value: 'mini-shape-24', 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 37000, 
                 priceText: '37,000원',
                 options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지',
-                imageUrl: 'https://via.placeholder.com/150x150/87ceeb/ffffff?text=미니쉐입'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfNzIg/MDAxNzgwOTgyMDEyOTAz.N8ejXailbW7sVaborIv6ZEK-3R2ddAgcmWA3fO57XH4g.XdCOQy9S1SrS6aSPMEuBoFWsqNhVq_nZSgDT6jMGSwsg.JPEG/SE-f3001600-4d7f-484d-8cca-c8030ecaf2bf.jpg?type=w200'
             },
             { 
                 value: 'balloon-bouquet-round', 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 priceText: '4,000원/개',
                 options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개',
                 special: 'bouquet',
-                imageUrl: 'https://via.placeholder.com/150x150/98fb98/ffffff?text=다발풍선'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTU2/MDAxNzgwOTgxOTIyNzU5.JfdqPRJMFAQTNYw5HrkBgguXr09pk-m-8XnfT5YJBQUg.EhTTWut4lrGXlahbZwHgoMc1yV-X65YH4-RPr_PSggIg.JPEG/344CB9AF-3A73-4FCB-BA27-873166365F61.JPG?type=w200'
             },
             { 
                 value: 'heart-in-heart-20', 
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 33000, 
                 priceText: '33,000원',
                 options: '리본 + 무게추 포함',
-                imageUrl: 'https://via.placeholder.com/150x150/ff69b4/ffffff?text=하트인하트'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfNiAg/MDAxNzgwOTgyMDA5NzYw.bey6zEzCBKKe2s2kv5xbZD8sCB9TsrcM1hZatxd3ksog.jgoUs9TlX8AbtdYAfGFNwlOrQ9dwt9ETObdFLI1V7ccg.JPEG/SE-9fc341e0-ac8e-4545-a4b1-31616cbf2714.jpg?type=w200'
             },
             { 
                 value: 'number-foil-large', 
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 31000, 
                 priceText: '31,000원/개 (헬륨)',
                 options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)',
-                imageUrl: 'https://via.placeholder.com/150x150/ffd700/000000?text=숫자은박'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc3/MDAxNzgwOTgxMzAwMjI2.1iBuIAdH7cTPjwKiZ3U6-Ht5hNjUl5YzRe8BgQUwYJgg.P6xQr2qceh0qgWRrBpvpDXep3iRGp4-zRZ7GsREhZG0g.JPEG/SE-b767c894-43f1-49f7-b86c-28c53cd4b7fe.jpg?type=w200'
             },
             { 
                 value: 'clear-balloon', 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 priceText: '8,000원/개',
                 options: '택배 불가, 픽업 및 퀵 가능',
                 special: 'clear',
-                imageUrl: 'https://via.placeholder.com/150x150/f0f8ff/666666?text=클리어풍선'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMzEg/MDAxNzgwOTgxMjYxODA3.E-67lG52kf6ExCFE5zONZ0zzkvL7_TZyI1cmrRiqYgMg._bPuI4Haul2i1FxHRQc_uT47Vj6Jq0-ojjoLr5x0irog.JPEG/FC368DCF-E90E-4AA9-8621-906D6A81F7ED.JPG?type=w200'
             },
             { 
                 value: 'mini-ombre', 
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 6000, 
                 priceText: '6,000원/개',
                 options: '레터링 추가시 7,500원/개',
-                imageUrl: 'https://via.placeholder.com/150x150/dda0dd/ffffff?text=미니옹브레'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjQw/MDAxNzgwOTgzNTYxOTQ5.tPi3-yD77GpWjiS5u-aIAD8CrbPxJFxgz0JBMppV9AIg.AuBoKDWj_8Ltgx7mgQ1OdiZqr4n0CNMLhe4G9aSeQ70g.JPEG/SE-b8e86e0c-25d4-43ee-992a-2510e52331c1.jpg?type=w200'
             },
             { 
                 value: 'circus-balloon', 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 20000, 
                 priceText: '20,000원',
                 options: '숫자풍선 개당 3,000원 추가',
-                imageUrl: 'https://via.placeholder.com/150x150/ff7f50/ffffff?text=서커스풍선'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc0/MDAxNzgwOTgyNjcwODA0.iDEn30oudByMKY58TGc1RkRmApDTfBFE2GYNE0nZ7Aog.rYy8yfkwllE0Bk64ijzT8ijjUUlrmvA4PBiiHl6z2Y8g.JPEG/SE-3696bf1f-7c7c-42bf-8a1b-abc94676cc36.jpg?type=w200'
             }
         ],
         air: [
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 5000, 
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
-                imageUrl: 'https://via.placeholder.com/150x150/ffb6c1/ffffff?text=데이지꽃풍선'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTky/MDAxNzgxNDE3ODU2MDAx.SY5vjaDXUnr6tKZKzh-5fGz8t_pmXyhFfHJUxyI82Acg.jkpS3mbNSd4uxdROSUxycpgXoP8meO6WDQ3vj2kslFcg.JPEG/E51587FE-A00D-451A-B6C9-80189C00A38E.JPG?type=w200'
             },
             { 
                 value: 'tulip-flower', 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 5000, 
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
-                imageUrl: 'https://via.placeholder.com/150x150/ff1493/ffffff?text=튤립꽃풍선'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTAw/MDAxNzgxNDE3ODU2MTQ0.1dkhrjG87dbydL_5JTtQreFNdGJybvsy6t4HFlz8ttEg.8E_ARmzQlMLC9r7mcmH_Ky2yNSiTP4Y8oxBgJYpY7hsg.JPEG/IMG_2367.JPG?type=w200'
             },
             { 
                 value: 'balloon-cake-basic', 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 21000, 
                 priceText: '21,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
-                imageUrl: 'https://via.placeholder.com/150x150/ffd700/000000?text=풍선케이크'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg?type=w200'
             },
             { 
                 value: 'balloon-cake-mini', 
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 14000, 
                 priceText: '14,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
-                imageUrl: 'https://via.placeholder.com/150x150/ff8c69/ffffff?text=미니케이크'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTg3/MDAxNzgxNDE3OTE0NjM1.BqzT9b39V24Efr1GG7HHMqHnUjJXMpK2G6HRfsIGTGcg.Wb_xj6hA_HfJB9PgSEnQudPR1CmCgnXPcUilCvSgGIQg.JPEG/SE-f463a61b-9c15-417d-b58d-2d10339f72e7.jpg?type=w200'
             },
             { 
                 value: 'number-foil-air', 
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 9000, 
                 priceText: '9,000원/개',
                 options: '높이 약 90cm, DIY 택배 가능',
-                imageUrl: 'https://via.placeholder.com/150x150/c0c0c0/000000?text=숫자은박'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjkx/MDAxNzgwOTg3MjQ0NDQ5.n5Pt2uCpW8biMeIIZXqbrnHN80i68KZZDfZWs6mKxRUg.4SmyCmjh2PuQbMUBQoBc-X2Ga5NvlPXtDjia6fecfpgg.JPEG/SE-00a36727-ec08-414b-9287-d671e5e997f3.jpg?type=w200'
             }
         ]
     };
