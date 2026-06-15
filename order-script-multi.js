@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 37000, 
                 priceText: '37,000원',
-                options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원'
+                options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원',
+                imageUrl: 'https://via.placeholder.com/150x150/ff6b9d/ffffff?text=버블인버블'
             },
             { 
                 value: 'heart-lettering-24', 
@@ -34,7 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 35000, 
                 priceText: '35,000원',
-                options: '리본 + 무게추 포함'
+                options: '리본 + 무게추 포함',
+                imageUrl: 'https://via.placeholder.com/150x150/ffa8cc/ffffff?text=마카롱레터링'
             },
             { 
                 value: 'mini-shape-24', 
@@ -43,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 37000, 
                 priceText: '37,000원',
-                options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지'
+                options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지',
+                imageUrl: 'https://via.placeholder.com/150x150/87ceeb/ffffff?text=미니쉐입'
             },
             { 
                 value: 'balloon-bouquet-round', 
@@ -53,7 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 4000, 
                 priceText: '4,000원/개',
                 options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개',
-                special: 'bouquet'
+                special: 'bouquet',
+                imageUrl: 'https://via.placeholder.com/150x150/98fb98/ffffff?text=다발풍선'
             },
             { 
                 value: 'heart-in-heart-20', 
@@ -62,7 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 33000, 
                 priceText: '33,000원',
-                options: '리본 + 무게추 포함'
+                options: '리본 + 무게추 포함',
+                imageUrl: 'https://via.placeholder.com/150x150/ff69b4/ffffff?text=하트인하트'
             },
             { 
                 value: 'number-foil-large', 
@@ -71,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 31000, 
                 priceText: '31,000원/개 (헬륨)',
-                options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)'
+                options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)',
+                imageUrl: 'https://via.placeholder.com/150x150/ffd700/000000?text=숫자은박'
             },
             { 
                 value: 'clear-balloon', 
@@ -81,7 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 8000, 
                 priceText: '8,000원/개',
                 options: '택배 불가, 픽업 및 퀵 가능',
-                special: 'clear'
+                special: 'clear',
+                imageUrl: 'https://via.placeholder.com/150x150/f0f8ff/666666?text=클리어풍선'
             },
             { 
                 value: 'mini-ombre', 
@@ -90,7 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 6000, 
                 priceText: '6,000원/개',
-                options: '레터링 추가시 7,500원/개'
+                options: '레터링 추가시 7,500원/개',
+                imageUrl: 'https://via.placeholder.com/150x150/dda0dd/ffffff?text=미니옹브레'
             },
             { 
                 value: 'circus-balloon', 
@@ -99,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 20000, 
                 priceText: '20,000원',
-                options: '숫자풍선 개당 3,000원 추가'
+                options: '숫자풍선 개당 3,000원 추가',
+                imageUrl: 'https://via.placeholder.com/150x150/ff7f50/ffffff?text=서커스풍선'
             }
         ],
         air: [
@@ -110,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 5000, 
                 priceText: '5,000원/송이',
-                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능'
+                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
+                imageUrl: 'https://via.placeholder.com/150x150/ffb6c1/ffffff?text=데이지꽃풍선'
             },
             { 
                 value: 'tulip-flower', 
@@ -119,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 5000, 
                 priceText: '5,000원/송이',
-                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능'
+                options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
+                imageUrl: 'https://via.placeholder.com/150x150/ff1493/ffffff?text=튤립꽃풍선'
             },
             { 
                 value: 'balloon-cake-basic', 
@@ -128,7 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 21000, 
                 priceText: '21,000원',
-                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
+                imageUrl: 'https://via.placeholder.com/150x150/ffd700/000000?text=풍선케이크'
             },
             { 
                 value: 'balloon-cake-mini', 
@@ -137,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false, 
                 price: 14000, 
                 priceText: '14,000원',
-                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원'
+                options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
+                imageUrl: 'https://via.placeholder.com/150x150/ff8c69/ffffff?text=미니케이크'
             },
             { 
                 value: 'number-foil-air', 
@@ -146,7 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 9000, 
                 priceText: '9,000원/개',
-                options: '높이 약 90cm, DIY 택배 가능'
+                options: '높이 약 90cm, DIY 택배 가능',
+                imageUrl: 'https://via.placeholder.com/150x150/c0c0c0/000000?text=숫자은박'
             }
         ]
     };
@@ -159,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setupNoticeModal();
         setupEventListeners();
         updateProductOptions(0); // 첫 번째 상품의 옵션 초기화
+        setupProductEventListeners(0); // 첫 번째 상품의 이벤트 리스너 설정
     }
 
     function setupNoticeModal() {
@@ -232,9 +247,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <!-- 상품 선택 -->
                 <div class="form-group">
                     <label for="balloonType_${index}">상품 선택 <span class="required">*</span></label>
-                    <select id="balloonType_${index}" name="balloonType_${index}" required class="balloon-type-select" data-index="${index}">
-                        <option value="">먼저 주문 유형을 선택해주세요</option>
-                    </select>
+                    <div class="product-selection-container">
+                        <select id="balloonType_${index}" name="balloonType_${index}" required class="balloon-type-select" data-index="${index}">
+                            <option value="">먼저 주문 유형을 선택해주세요</option>
+                        </select>
+                        <div class="product-thumbnail" id="productThumbnail_${index}" style="display: none;">
+                            <img id="productImage_${index}" src="" alt="상품 이미지" />
+                            <div class="thumbnail-info">
+                                <span class="thumbnail-name" id="thumbnailName_${index}"></span>
+                                <span class="thumbnail-price" id="thumbnailPrice_${index}"></span>
+                            </div>
+                        </div>
+                    </div>
                     <small class="form-hint">주문 유형에 따라 선택 가능한 상품이 달라집니다</small>
                 </div>
 
@@ -431,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const letteringOptions = document.getElementById(`letteringOptions_${index}`);
         const balloonBouquetNotice = document.getElementById(`balloonBouquetNotice_${index}`);
         const clearBalloonNotice = document.getElementById(`clearBalloonNotice_${index}`);
+        const productThumbnail = document.getElementById(`productThumbnail_${index}`);
         
         if (!balloonTypeSelect) return;
         
@@ -442,11 +467,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (letteringOptions) letteringOptions.style.display = 'none';
         if (balloonBouquetNotice) balloonBouquetNotice.style.display = 'none';
         if (clearBalloonNotice) clearBalloonNotice.style.display = 'none';
+        if (productThumbnail) productThumbnail.style.display = 'none';
         
         if (selectedValue && orderTypeValue && MMOENV_PRODUCTS[orderTypeValue]) {
             const selectedProduct = MMOENV_PRODUCTS[orderTypeValue].find(p => p.value === selectedValue);
             
             if (selectedProduct) {
+                // 상품 섬네일 표시
+                showProductThumbnail(index, selectedProduct);
+                
                 // 수량 옵션 표시
                 if (selectedProduct.hasQuantity && quantityOptions) {
                     quantityOptions.style.display = 'block';
@@ -466,6 +495,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearBalloonNotice.style.display = 'block';
                 }
             }
+        }
+    }
+
+    function showProductThumbnail(index, product) {
+        const productThumbnail = document.getElementById(`productThumbnail_${index}`);
+        const productImage = document.getElementById(`productImage_${index}`);
+        const thumbnailName = document.getElementById(`thumbnailName_${index}`);
+        const thumbnailPrice = document.getElementById(`thumbnailPrice_${index}`);
+        
+        if (productThumbnail && productImage && thumbnailName && thumbnailPrice) {
+            productImage.src = product.imageUrl;
+            productImage.alt = product.text;
+            thumbnailName.textContent = product.text;
+            thumbnailPrice.textContent = product.priceText;
+            productThumbnail.style.display = 'block';
+            
+            // 이미지 로드 에러 처리
+            productImage.onerror = function() {
+                this.src = 'https://via.placeholder.com/150x150/cccccc/666666?text=이미지+없음';
+            };
         }
     }
 

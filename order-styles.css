@@ -5,6 +5,64 @@
   margin-bottom: 2rem;
 }
 
+/* 상품 선택 컨테이너 */
+.product-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 상품 섬네일 */
+.product-thumbnail {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.product-thumbnail:hover {
+  border-color: #ff6b9d;
+  box-shadow: 0 4px 16px rgba(255, 107, 157, 0.2);
+  transform: translateY(-2px);
+}
+
+.product-thumbnail img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #e1e5e9;
+  transition: border-color 0.3s ease;
+}
+
+.product-thumbnail:hover img {
+  border-color: #ff6b9d;
+}
+
+.thumbnail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.thumbnail-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.thumbnail-price {
+  font-weight: 500;
+  color: #ff6b9d;
+  font-size: 1.1rem;
+}
+
 .product-section {
   border: 2px solid #e1e5e9;
   border-radius: 12px;
@@ -598,6 +656,24 @@
   .order-page {
     padding: 1rem;
     background: linear-gradient(135deg, #f8faff 0%, #fff5f7 100%);
+  }
+
+  /* 모바일에서 섬네일 최적화 */
+  .product-thumbnail {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .product-thumbnail img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .thumbnail-info {
+    align-items: center;
+    text-align: center;
   }
   
   .order-header {

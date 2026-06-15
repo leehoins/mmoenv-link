@@ -25,7 +25,7 @@
     <meta property="og:url" content="https://link.mmoenv.com/order.html">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="order-styles.css?v=products-updated-2026&nocache=1781444700">
+    <link rel="stylesheet" href="order-styles.css?v=thumbnails-styling&nocache=1781446200">
   </head>
   <body>
     <!-- 주문 전 안내사항 모달 -->
@@ -147,9 +147,18 @@
               <!-- 상품 선택 -->
               <div class="form-group" id="productSelection">
                 <label for="balloonType_0">상품 선택 <span class="required">*</span></label>
-                <select id="balloonType_0" name="balloonType_0" required class="balloon-type-select">
-                  <option value="">먼저 주문 유형을 선택해주세요</option>
-                </select>
+                <div class="product-selection-container">
+                  <select id="balloonType_0" name="balloonType_0" required class="balloon-type-select" data-index="0">
+                    <option value="">먼저 주문 유형을 선택해주세요</option>
+                  </select>
+                  <div class="product-thumbnail" id="productThumbnail_0" style="display: none;">
+                    <img id="productImage_0" src="" alt="상품 이미지" />
+                    <div class="thumbnail-info">
+                      <span class="thumbnail-name" id="thumbnailName_0"></span>
+                      <span class="thumbnail-price" id="thumbnailPrice_0"></span>
+                    </div>
+                  </div>
+                </div>
                 <small class="form-hint">주문 유형에 따라 선택 가능한 상품이 달라집니다</small>
               </div>
 
@@ -603,6 +612,6 @@
     <script src="supabase-orders.js"></script>
     
     <!-- 메인 주문 스크립트 -->
-    <script src="order-script-multi.js?v=clear8000-force&nocache=1781445800&ts=20260614"></script>
+    <script src="order-script-multi.js?v=thumbnails-added&nocache=1781446200&feature=thumbnails"></script>
   </body>
 </html>
