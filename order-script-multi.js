@@ -921,8 +921,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 새 탭으로 포커스가 넘어가면서 클립보드 쓰기가 브라우저에 의해 막힌다.
     function copyAndOpenKakao(message, submitBtn, originalBtnText) {
         const kakaoUrl = 'https://pf.kakao.com/_wDixjX';
+        let settled = false;
 
         const finish = (copied) => {
+            // 카카오톡 인앱 브라우저 등 일부 환경에서는 클립보드 Promise가
+            // 성공도 실패도 응답하지 않고 멈춰버릴 수 있어, 타임아웃이 먼저
+            // fallback을 실행한 뒤 원래 Promise가 늦게 응답해도 중복 실행 방지
+            if (settled) return;
+            settled = true;
+
             window.open(kakaoUrl, '_blank');
 
             const successMsg = copied
@@ -938,20 +945,21 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = originalBtnText;
         };
 
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(message).then(() => finish(true)).catch(() => {
-                const copied = copyWithFallback(message);
-                if (!copied) {
-                    window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
-                }
-                finish(copied);
-            });
-        } else {
+        const fallbackCopy = () => {
             const copied = copyWithFallback(message);
             if (!copied) {
                 window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
             }
             finish(copied);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            // 일부 인앱 브라우저는 클립보드 권한 요청이 응답 없이 멈추는 경우가
+            // 있어, 1.2초 안에 끝나지 않으면 바로 폴백으로 넘어간다
+            setTimeout(fallbackCopy, 1200);
+            navigator.clipboard.writeText(message).then(() => finish(true)).catch(fallbackCopy);
+        } else {
+            fallbackCopy();
         }
     }
 
