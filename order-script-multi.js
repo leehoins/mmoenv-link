@@ -172,6 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEventListeners();
         updateProductOptions(0); // 첫 번째 상품의 옵션 초기화
         setupProductEventListeners(0); // 첫 번째 상품의 이벤트 리스너 설정
+        if (typeof initOrderManager === 'function') {
+            initOrderManager();
+        }
     }
 
     function setupNoticeModal() {
@@ -703,46 +706,258 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
-        
-        const formData = new FormData(form);
-        const orderData = {
-            customer: {
-                name: formData.get('customerName'),
-                phone: formData.get('customerPhone')
-            },
-            products: [],
-            delivery: {
-                method: formData.get('deliveryMethod'),
-                address: formData.get('deliveryAddress') || formData.get('directAddress'),
-                phone: formData.get('deliveryPhone')
-            },
-            schedule: {
-                usageDate: formData.get('usageDate'),
-                desiredDate: formData.get('desiredDate'),
-                pickupTime: formData.get('preferredHour') && formData.get('preferredMinute') 
-                    ? `${formData.get('preferredHour')}:${formData.get('preferredMinute')}` 
-                    : ''
-            },
-            notes: formData.get('orderDetails'),
-            additionalNotes: formData.get('additionalNotes')
-        };
 
-        // 상품 정보 수집
-        const productSections = document.querySelectorAll('.product-section');
-        productSections.forEach(section => {
-            const index = section.dataset.productIndex;
-            const productData = getProductData(index, formData);
-            if (productData) {
-                orderData.products.push(productData);
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '전송 중...';
+
+        try {
+            const formData = new FormData(form);
+            const orderData = {
+                customer: {
+                    name: formData.get('customerName'),
+                    phone: formData.get('customerPhone')
+                },
+                products: [],
+                delivery: {
+                    method: formData.get('deliveryMethod'),
+                    pickupLocation: formData.get('pickupLocation'),
+                    pickupTimeSlot: formData.get('pickupTime'),
+                    address: formData.get('deliveryAddress') || formData.get('directAddress'),
+                    phone: formData.get('deliveryPhone')
+                },
+                schedule: {
+                    usageDate: formData.get('usageDate'),
+                    desiredDate: formData.get('desiredDate'),
+                    pickupTime: formData.get('preferredHour') && formData.get('preferredMinute')
+                        ? `${formData.get('preferredHour')}:${formData.get('preferredMinute')}`
+                        : ''
+                },
+                notes: formData.get('orderDetails'),
+                additionalNotes: formData.get('additionalNotes')
+            };
+
+            // 상품 정보 수집
+            const productSections = document.querySelectorAll('.product-section');
+            productSections.forEach(section => {
+                const index = section.dataset.productIndex;
+                const productData = getProductData(index, formData);
+                if (productData) {
+                    orderData.products.push(productData);
+                }
+            });
+
+            console.log('주문 데이터:', orderData);
+
+            // Supabase에 저장 시도 (실패해도 카카오톡 전송은 계속 진행)
+            let orderNumber = null;
+            try {
+                const dbResult = await submitOrderToDatabase(buildDbPayload(orderData, formData));
+                if (dbResult.success) {
+                    orderNumber = dbResult.orderNumber;
+                    console.log(`✅ 데이터베이스 저장 완료: ${orderNumber}`);
+                } else {
+                    console.log('📝 데이터베이스 저장 실패, 카카오톡으로만 전송:', dbResult.error || dbResult.reason);
+                }
+            } catch (dbError) {
+                console.log('📝 데이터베이스 연결 실패, 카카오톡으로만 전송:', dbError);
+            }
+
+            const message = formatKakaoMessage(orderData, orderNumber);
+            sendToKakao(message, orderNumber, submitBtn, originalBtnText);
+        } catch (error) {
+            console.error('주문 제출 중 오류:', error);
+            alert('주문 제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
+    }
+
+    // 다중 상품 주문 데이터를 단일상품 기준 DB 스키마에 맞게 변환
+    function buildDbPayload(orderData, formData) {
+        const productSummary = orderData.products
+            .map(p => p.quantity ? `${p.type} x${p.quantity}` : p.type)
+            .join(', ');
+        const letteringSummary = orderData.products
+            .filter(p => p.lettering && p.lettering.text)
+            .map(p => `[${p.type}] ${p.lettering.text}`)
+            .join('\n');
+        const firstLettering = orderData.products.find(p => p.lettering && p.lettering.text);
+        const productDetailsText = orderData.products
+            .map((p, i) => {
+                let line = `${i + 1}. ${p.type}`;
+                if (p.quantity) line += ` x${p.quantity}`;
+                if (p.totalPrice) line += ` = ${Math.round(p.totalPrice).toLocaleString()}원`;
+                return line;
+            })
+            .join('\n');
+
+        return {
+            customerName: orderData.customer.name,
+            customerPhone: orderData.customer.phone,
+            orderType: orderType.value,
+            balloonType: productSummary.slice(0, 100),
+            letteringText: letteringSummary || null,
+            fontType: firstLettering ? firstLettering.lettering.font : null,
+            fontColor: firstLettering ? firstLettering.lettering.color : null,
+            extraOptions: orderData.products,
+            orderDetails: `[주문 상품]\n${productDetailsText}\n\n[상세 요청사항]\n${orderData.notes || ''}`,
+            deliveryMethod: orderData.delivery.method,
+            pickupLocation: formData.get('pickupLocation') || null,
+            pickupTime: formData.get('pickupTime') || null,
+            deliveryAddress: formData.get('deliveryAddress') || null,
+            deliveryPhone: formData.get('deliveryPhone') || null,
+            directAddress: formData.get('directAddress') || null,
+            usageDate: orderData.schedule.usageDate,
+            desiredDate: orderData.schedule.desiredDate,
+            timePreference: orderData.schedule.pickupTime || null,
+            additionalNotes: orderData.additionalNotes || null
+        };
+    }
+
+    // 카카오톡 메시지 포맷팅
+    function formatKakaoMessage(orderData, orderNumber) {
+        let message = `🎈 모엔브 새 주문 문의\n\n`;
+
+        if (orderNumber) {
+            message += `📋 주문번호: ${orderNumber}\n\n`;
+        }
+
+        message += `👤 고객 정보\n`;
+        message += `이름: ${orderData.customer.name}\n`;
+        message += `연락처: ${orderData.customer.phone}\n`;
+
+        message += `\n📋 주문 유형: ${getOrderTypeText(orderType.value)}\n`;
+
+        message += `\n🎈 주문 상품\n`;
+        orderData.products.forEach((p, i) => {
+            let line = `${i + 1}. ${p.type}`;
+            if (p.quantity) line += ` × ${p.quantity}개`;
+            if (p.totalPrice) {
+                line += ` = ${Math.round(p.totalPrice).toLocaleString()}원${p.discount ? ' (10% 할인 적용)' : ''}`;
+            } else {
+                line += ` (${p.price.toLocaleString()}원)`;
+            }
+            message += line + '\n';
+            if (p.lettering && p.lettering.text) {
+                message += `   ✏️ 레터링: "${p.lettering.text}"`;
+                if (p.lettering.font) message += ` / 폰트: ${getFontTypeText(p.lettering.font)}`;
+                if (p.lettering.color) message += ` / 색상: ${getFontColorText(p.lettering.color)}`;
+                message += '\n';
             }
         });
 
-        console.log('주문 데이터:', orderData);
-        
-        // 여기서 실제 주문 처리 로직 구현
-        alert('주문이 접수되었습니다! 곧 연락드리겠습니다.');
+        message += `\n📝 상세 요청사항\n${orderData.notes || '(없음)'}\n`;
+
+        if (orderData.additionalNotes) {
+            message += `\n📝 추가 요청사항\n${orderData.additionalNotes}\n`;
+        }
+
+        message += `\n🚚 수령 방법\n`;
+        if (orderData.delivery.method === 'pickup') {
+            message += `픽업 (${orderData.delivery.pickupLocation ? getLocationText(orderData.delivery.pickupLocation) : '장소 미선택'})\n`;
+            if (orderData.delivery.pickupTimeSlot) {
+                message += `픽업 희망시간: ${getPickupTimeText(orderData.delivery.pickupTimeSlot)}\n`;
+            }
+        } else if (orderData.delivery.method === 'delivery') {
+            message += `택배 배송\n주소: ${orderData.delivery.address}\n`;
+            if (orderData.delivery.phone) {
+                message += `받을 분 연락처: ${orderData.delivery.phone}\n`;
+            }
+        } else if (orderData.delivery.method === 'direct') {
+            message += `직접배송\n주소: ${orderData.delivery.address}\n`;
+        }
+
+        message += `\n📅 일정\n`;
+        if (orderData.schedule.usageDate) {
+            message += `사용/수령일: ${formatOrderDate(orderData.schedule.usageDate)}\n`;
+        }
+        if (orderData.schedule.desiredDate) {
+            message += `희망 출고일: ${formatOrderDate(orderData.schedule.desiredDate)}\n`;
+        }
+        message += `픽업 시간: ${orderData.schedule.pickupTime ? orderData.schedule.pickupTime : '영업시간 내 연락 후 조율'}\n`;
+
+        message += `\n✅ 확인사항\n- 주문 안내사항 확인 및 동의\n- 취소/환불 정책 동의\n- 상담 연락 동의\n`;
+
+        return message;
+    }
+
+    function formatOrderDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        return `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(2, '0')}월 ${String(date.getDate()).padStart(2, '0')}일 (${weekdays[date.getDay()]})`;
+    }
+
+    function getOrderTypeText(value) {
+        const types = { helium: '헬륨 풍선', air: '공기 풍선', consultation: '상담 후 결정' };
+        return types[value] || value;
+    }
+
+    function getFontTypeText(value) {
+        const types = { '': '기본 폰트', elegant: '고급형 폰트', cute: '귀여운 폰트', bold: '굵은 폰트', script: '필기체 폰트' };
+        return types[value] || value;
+    }
+
+    function getFontColorText(value) {
+        const colors = { black: '블랙', white: '화이트', gold: '골드', silver: '실버', pink: '핑크', blue: '블루' };
+        return colors[value] || value;
+    }
+
+    function getLocationText(value) {
+        const locations = { dongtan: '동탄 지점' };
+        return locations[value] || value;
+    }
+
+    function getPickupTimeText(value) {
+        const times = { morning: '오전 (9시-12시)', afternoon: '오후 (12시-18시)', evening: '저녁 (18시-21시)' };
+        return times[value] || value;
+    }
+
+    // 카카오톡 채널로 전송 (채팅창 열기 + 메시지 클립보드 자동 복사)
+    function sendToKakao(message, orderNumber, submitBtn, originalBtnText) {
+        const kakaoUrl = 'https://pf.kakao.com/_wDixjX';
+        window.open(kakaoUrl, '_blank');
+
+        const finish = () => {
+            const successMsg = orderNumber
+                ? `주문번호 ${orderNumber}로 접수되었습니다!\n주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기하여 전송해주세요.`
+                : '주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기하여 전송해주세요.';
+            alert(`✅ 주문 문의가 접수되었습니다!\n\n${successMsg}\n\n📞 즉시 상담이 필요하시면 010-2719-3467 모엔브로 연락주세요.\n\n빠른 시간 내에 연락드리겠습니다! 🎈`);
+
+            if (confirm('새로운 주문을 위해 폼을 초기화하시겠습니까?')) {
+                form.reset();
+                toggleDeliveryDetails();
+            }
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(message).then(finish).catch(() => {
+                copyWithFallback(message);
+                finish();
+            });
+        } else {
+            copyWithFallback(message);
+            finish();
+        }
+    }
+
+    function copyWithFallback(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('클립보드 복사 실패:', err);
+        }
+        document.body.removeChild(textarea);
     }
 
     function getProductData(index, formData) {
