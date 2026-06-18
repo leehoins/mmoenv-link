@@ -281,6 +281,8 @@ class AdminOrderManager {
 // 전역 인스턴스 생성
 const adminOrderManager = new AdminOrderManager();
 
+// 기본 설정 - 비밀번호 해시값 (실제 비밀번호: mmoenv1!!)
+const ADMIN_PASSWORD_HASH = '63e21e5b';
 const STORAGE_KEY = 'mmoenv_menu_items';
 
 // 기본 메뉴 데이터
@@ -328,38 +330,27 @@ let editingMenuIndex = -1;
 let draggedElement = null;
 
 // 초기화
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
     setupEventListeners();
     loadMenuItems();
-    await checkAuth();
+    
+    // 주문 관리 시스템 초기화 (로그인 후에 실행됨)
+    setTimeout(async () => {
+        if (sessionStorage.getItem('admin_authenticated')) {
+            await adminOrderManager.initialize();
+        }
+    }, 1000);
 });
 
-// 인증 확인 (Supabase Auth 세션 기준)
-async function checkAuth() {
-    await initSupabase();
-
-    if (!supabase) {
-        showLoginModal();
-        return;
-    }
-
-    const { data } = await supabase.auth.getSession();
-    if (data && data.session) {
-        await onAuthenticated();
+// 인증 확인
+function checkAuth() {
+    const isAuthenticated = sessionStorage.getItem('admin_authenticated');
+    if (isAuthenticated) {
+        showAdminPage();
     } else {
         showLoginModal();
     }
-
-    supabase.auth.onAuthStateChange((event) => {
-        if (event === 'SIGNED_OUT') {
-            location.reload();
-        }
-    });
-}
-
-async function onAuthenticated() {
-    showAdminPage();
-    await adminOrderManager.initialize();
 }
 
 // 로그인 모달 표시
@@ -377,47 +368,51 @@ function showAdminPage() {
 function setupEventListeners() {
     // 로그인 폼
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
-
+    
     // 로그아웃
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
-
+    
     // 메뉴 관리 버튼들
     document.getElementById('addMenuBtn').addEventListener('click', () => openMenuModal());
     document.getElementById('saveChangesBtn').addEventListener('click', saveChanges);
     document.getElementById('resetMenuBtn').addEventListener('click', resetToDefault);
-
+    
     // 모달 관련
     document.getElementById('closeModal').addEventListener('click', closeMenuModal);
     document.getElementById('cancelModal').addEventListener('click', closeMenuModal);
     document.getElementById('menuForm').addEventListener('submit', handleMenuSave);
 }
 
-// 로그인 처리 (Supabase Auth)
-async function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-
-    submitBtn.disabled = true;
-    await initSupabase();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    submitBtn.disabled = false;
-    document.getElementById('password').value = '';
-
-    if (error) {
-        alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-        return;
+// 간단한 해시 함수 (MD5 기반)
+function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
     }
+    return Math.abs(hash).toString(16);
+}
 
-    await onAuthenticated();
+// 로그인 처리  
+function handleLogin(e) {
+    e.preventDefault();
+    const password = document.getElementById('password').value;
+    const hashedPassword = simpleHash(password + 'mmoenv-salt-2024');
+    
+    if (hashedPassword === ADMIN_PASSWORD_HASH) {
+        sessionStorage.setItem('admin_authenticated', 'true');
+        showAdminPage();
+        document.getElementById('password').value = '';
+    } else {
+        alert('비밀번호가 올바르지 않습니다.');
+        document.getElementById('password').value = '';
+    }
 }
 
 // 로그아웃 처리
-async function handleLogout() {
-    if (supabase) {
-        await supabase.auth.signOut();
-    }
+function handleLogout() {
+    sessionStorage.removeItem('admin_authenticated');
     location.reload();
 }
 
