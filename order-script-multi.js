@@ -718,16 +718,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const today = new Date();
         const threeDaysLater = new Date(today);
         threeDaysLater.setDate(today.getDate() + 3);
-        
+
         const usageDateInput = document.getElementById('usageDate');
         const desiredDateInput = document.getElementById('desiredDate');
-        
+
         if (usageDateInput) {
             usageDateInput.min = threeDaysLater.toISOString().split('T')[0];
+            usageDateInput.addEventListener('change', updateDesiredDateBounds);
         }
-        
+
         if (desiredDateInput) {
             desiredDateInput.min = today.toISOString().split('T')[0];
+            desiredDateInput.addEventListener('change', updateDesiredDateBounds);
+        }
+
+        updateDesiredDateBounds();
+    }
+
+    // 희망 출고일(픽업/발송일)은 실제사용일보다 늦을 수 없고, 최소 2일 전이어야 함
+    function updateDesiredDateBounds() {
+        const usageDateInput = document.getElementById('usageDate');
+        const desiredDateInput = document.getElementById('desiredDate');
+        if (!usageDateInput || !desiredDateInput || !usageDateInput.value) return;
+
+        const maxDesiredDate = new Date(usageDateInput.value);
+        maxDesiredDate.setDate(maxDesiredDate.getDate() - 2);
+        const maxStr = maxDesiredDate.toISOString().split('T')[0];
+
+        desiredDateInput.max = maxStr;
+
+        if (desiredDateInput.value && desiredDateInput.value > maxStr) {
+            desiredDateInput.value = '';
+            alert('희망 출고일은 실제사용일보다 최소 2일 전이어야 합니다. 출고일을 다시 선택해주세요.');
         }
     }
 
