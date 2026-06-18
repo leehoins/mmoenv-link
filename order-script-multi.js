@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 37000, 
                 priceText: '37,000원',
                 options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTk2/MDAxNzgwOTgyMDEwOTYw.11C5e6zfiXVmwdPaJVRtDU_1Ei9I1RpAothB6omtJxwg.DarqQVPbxpASdALAl2mGZlW2fbvrGNgintqZey4ayzwg.JPEG/SE-bcd6b9d4-cfb6-4ba1-8c59-bb4581d75f70.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTk2/MDAxNzgwOTgyMDEwOTYw.11C5e6zfiXVmwdPaJVRtDU_1Ei9I1RpAothB6omtJxwg.DarqQVPbxpASdALAl2mGZlW2fbvrGNgintqZey4ayzwg.JPEG/SE-bcd6b9d4-cfb6-4ba1-8c59-bb4581d75f70.jpg'
             },
             { 
                 value: 'heart-lettering-24', 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 35000, 
                 priceText: '35,000원',
                 options: '리본 + 무게추 포함',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfODAg/MDAxNzgwOTgxOTU0NTUz.vs4JFsoILVvyd6kAV19w5Ow9HfbGVYhYX_vximeKbywg.4KXs2vOFj2dFTgSxHU_4t2thGdSqCXQHps8xAiQ_-JYg.JPEG/SE-c5de0ef4-378d-4625-9b80-a991a3ef73db.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc3/MDAxNzgwOTgxMzAwMjI2.1iBuIAdH7cTPjwKiZ3U6-Ht5hNjUl5YzRe8BgQUwYJgg.P6xQr2qceh0qgWRrBpvpDXep3iRGp4-zRZ7GsREhZG0g.JPEG/SE-b767c894-43f1-49f7-b86c-28c53cd4b7fe.jpg'
             },
             { 
                 value: 'mini-shape-24', 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 37000, 
                 priceText: '37,000원',
                 options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfNzIg/MDAxNzgwOTgyMDEyOTAz.N8ejXailbW7sVaborIv6ZEK-3R2ddAgcmWA3fO57XH4g.XdCOQy9S1SrS6aSPMEuBoFWsqNhVq_nZSgDT6jMGSwsg.JPEG/SE-f3001600-4d7f-484d-8cca-c8030ecaf2bf.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjQw/MDAxNzgwOTgzNTYxOTQ5.tPi3-yD77GpWjiS5u-aIAD8CrbPxJFxgz0JBMppV9AIg.AuBoKDWj_8Ltgx7mgQ1OdiZqr4n0CNMLhe4G9aSeQ70g.JPEG/SE-b8e86e0c-25d4-43ee-992a-2510e52331c1.jpg'
             },
             { 
                 value: 'balloon-bouquet-round', 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 priceText: '4,000원/개',
                 options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개',
                 special: 'bouquet',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTU2/MDAxNzgwOTgxOTIyNzU5.JfdqPRJMFAQTNYw5HrkBgguXr09pk-m-8XnfT5YJBQUg.EhTTWut4lrGXlahbZwHgoMc1yV-X65YH4-RPr_PSggIg.JPEG/344CB9AF-3A73-4FCB-BA27-873166365F61.JPG?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc0/MDAxNzgwOTgyNjcwODA0.iDEn30oudByMKY58TGc1RkRmApDTfBFE2GYNE0nZ7Aog.rYy8yfkwllE0Bk64ijzT8ijjUUlrmvA4PBiiHl6z2Y8g.JPEG/SE-3696bf1f-7c7c-42bf-8a1b-abc94676cc36.jpg'
             },
             { 
                 value: 'heart-in-heart-20', 
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 33000, 
                 priceText: '33,000원',
                 options: '리본 + 무게추 포함',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfNiAg/MDAxNzgwOTgyMDA5NzYw.bey6zEzCBKKe2s2kv5xbZD8sCB9TsrcM1hZatxd3ksog.jgoUs9TlX8AbtdYAfGFNwlOrQ9dwt9ETObdFLI1V7ccg.JPEG/SE-9fc341e0-ac8e-4545-a4b1-31616cbf2714.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTky/MDAxNzgxNDE3ODU2MDAx.SY5vjaDXUnr6tKZKzh-5fGz8t_pmXyhFfHJUxyI82Acg.jkpS3mbNSd4uxdROSUxycpgXoP8meO6WDQ3vj2kslFcg.JPEG/E51587FE-A00D-451A-B6C9-80189C00A38E.JPG'
             },
             { 
                 value: 'number-foil-large', 
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 31000, 
                 priceText: '31,000원/개 (헬륨)',
                 options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc3/MDAxNzgwOTgxMzAwMjI2.1iBuIAdH7cTPjwKiZ3U6-Ht5hNjUl5YzRe8BgQUwYJgg.P6xQr2qceh0qgWRrBpvpDXep3iRGp4-zRZ7GsREhZG0g.JPEG/SE-b767c894-43f1-49f7-b86c-28c53cd4b7fe.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
             },
             { 
                 value: 'clear-balloon', 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 priceText: '8,000원/개',
                 options: '택배 불가, 픽업 및 퀵 가능',
                 special: 'clear',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMzEg/MDAxNzgwOTgxMjYxODA3.E-67lG52kf6ExCFE5zONZ0zzkvL7_TZyI1cmrRiqYgMg._bPuI4Haul2i1FxHRQc_uT47Vj6Jq0-ojjoLr5x0irog.JPEG/FC368DCF-E90E-4AA9-8621-906D6A81F7ED.JPG?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTg3/MDAxNzgxNDE3OTE0NjM1.BqzT9b39V24Efr1GG7HHMqHnUjJXMpK2G6HRfsIGTGcg.Wb_xj6hA_HfJB9PgSEnQudPR1CmCgnXPcUilCvSgGIQg.JPEG/SE-f463a61b-9c15-417d-b58d-2d10339f72e7.jpg'
             },
             { 
                 value: 'mini-ombre', 
@@ -97,18 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: true, 
                 price: 6000, 
                 priceText: '6,000원/개',
-                options: '레터링 추가시 7,500원/개',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjQw/MDAxNzgwOTgzNTYxOTQ5.tPi3-yD77GpWjiS5u-aIAD8CrbPxJFxgz0JBMppV9AIg.AuBoKDWj_8Ltgx7mgQ1OdiZqr4n0CNMLhe4G9aSeQ70g.JPEG/SE-b8e86e0c-25d4-43ee-992a-2510e52331c1.jpg?type=w200'
+                options: '레터링 추가시 7,500원/개'
             },
-            { 
-                value: 'circus-balloon', 
-                text: '서커스풍선', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 20000, 
+            {
+                value: 'circus-balloon',
+                text: '서커스풍선',
+                hasLettering: false,
+                hasQuantity: false,
+                price: 20000,
                 priceText: '20,000원',
-                options: '숫자풍선 개당 3,000원 추가',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc0/MDAxNzgwOTgyNjcwODA0.iDEn30oudByMKY58TGc1RkRmApDTfBFE2GYNE0nZ7Aog.rYy8yfkwllE0Bk64ijzT8ijjUUlrmvA4PBiiHl6z2Y8g.JPEG/SE-3696bf1f-7c7c-42bf-8a1b-abc94676cc36.jpg?type=w200'
+                options: '숫자풍선 개당 3,000원 추가'
             }
         ],
         air: [
@@ -120,47 +118,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 5000, 
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTky/MDAxNzgxNDE3ODU2MDAx.SY5vjaDXUnr6tKZKzh-5fGz8t_pmXyhFfHJUxyI82Acg.jkpS3mbNSd4uxdROSUxycpgXoP8meO6WDQ3vj2kslFcg.JPEG/E51587FE-A00D-451A-B6C9-80189C00A38E.JPG?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjA5/MDAxNzgwOTg3MjI3MTcz.9pKnBnRz_B8QlhYzDGUwPWEKCc_vidGJrYBQxmI5qAkg.XHPd7oKjOQDCLDsVn71MWuHP9fnalQ0WzuA4uTb2pY4g.JPEG/IMG_9731.JPG'
             },
-            { 
-                value: 'tulip-flower', 
-                text: '튤립 꽃풍선', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 5000, 
+            {
+                value: 'tulip-flower',
+                text: '튤립 꽃풍선',
+                hasLettering: false,
+                hasQuantity: true,
+                price: 5000,
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTAw/MDAxNzgxNDE3ODU2MTQ0.1dkhrjG87dbydL_5JTtQreFNdGJybvsy6t4HFlz8ttEg.8E_ARmzQlMLC9r7mcmH_Ky2yNSiTP4Y8oxBgJYpY7hsg.JPEG/IMG_2367.JPG?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjE4/MDAxNzgwOTg3MjgyOTAz.D6WCByBlq56k4MNQ4YOH9vaBsyy0EILIg_WaH5PaW9cg.aOHhsXh_2ZOs8sYjuE3y0f586l6RU6Gbweio0P0Y1dQg.JPEG/SE-2913a741-17f4-4291-96c3-d08f258d2ba3.jpg'
             },
-            { 
-                value: 'balloon-cake-basic', 
-                text: '풍선케이크(기본)', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 21000, 
+            {
+                value: 'balloon-cake-basic',
+                text: '풍선케이크(기본)',
+                hasLettering: false,
+                hasQuantity: false,
+                price: 21000,
                 priceText: '21,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTUx/MDAxNzgwOTgzMTc5MDE4.JqHScV-AJypD9HP5uTEpoQbVLgx7gbOsID3Q9f7bUFog.EHn2_xsIqLAVtL9U_j0wH8-1SWGvcIfAH44qz5XGdHog.JPEG/SE-e19c8ba8-9ec0-40ad-82bc-08300042aa76.jpg'
             },
-            { 
-                value: 'balloon-cake-mini', 
-                text: '풍선케이크(미니)', 
-                hasLettering: false, 
-                hasQuantity: false, 
-                price: 14000, 
+            {
+                value: 'balloon-cake-mini',
+                text: '풍선케이크(미니)',
+                hasLettering: false,
+                hasQuantity: false,
+                price: 14000,
                 priceText: '14,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTg3/MDAxNzgxNDE3OTE0NjM1.BqzT9b39V24Efr1GG7HHMqHnUjJXMpK2G6HRfsIGTGcg.Wb_xj6hA_HfJB9PgSEnQudPR1CmCgnXPcUilCvSgGIQg.JPEG/SE-f463a61b-9c15-417d-b58d-2d10339f72e7.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjAg/MDAxNzgwOTgzMjEzNjM5.LwXFuNkaCPmxUO8w6gOvoUoYn2hCUlEXrYLbfiBbsiIg.m__200fJ9PSobJtHrD8vsLG1l5Y8U521MpE3L3vE_3Ig.JPEG/SE-2eb3d341-bbd1-48ad-ba97-1e8767f162b7.jpg'
             },
-            { 
-                value: 'number-foil-air', 
-                text: '숫자은박(공기)', 
-                hasLettering: false, 
-                hasQuantity: true, 
-                price: 9000, 
+            {
+                value: 'number-foil-air',
+                text: '숫자은박(공기)',
+                hasLettering: false,
+                hasQuantity: true,
+                price: 9000,
                 priceText: '9,000원/개',
                 options: '높이 약 90cm, DIY 택배 가능',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjkx/MDAxNzgwOTg3MjQ0NDQ5.n5Pt2uCpW8biMeIIZXqbrnHN80i68KZZDfZWs6mKxRUg.4SmyCmjh2PuQbMUBQoBc-X2Ga5NvlPXtDjia6fecfpgg.JPEG/SE-00a36727-ec08-414b-9287-d671e5e997f3.jpg?type=w200'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
             }
         ]
     };
@@ -252,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <option value="">먼저 주문 유형을 선택해주세요</option>
                         </select>
                         <div class="product-thumbnail" id="productThumbnail_${index}" style="display: none;">
-                            <img id="productImage_${index}" src="" alt="상품 이미지" />
+                            <img id="productImage_${index}" src="" alt="상품 이미지" referrerpolicy="no-referrer" />
                             <div class="thumbnail-info">
                                 <span class="thumbnail-name" id="thumbnailName_${index}"></span>
                                 <span class="thumbnail-price" id="thumbnailPrice_${index}"></span>
@@ -505,16 +503,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const thumbnailPrice = document.getElementById(`thumbnailPrice_${index}`);
         
         if (productThumbnail && productImage && thumbnailName && thumbnailPrice) {
-            productImage.src = product.imageUrl;
+            const noImagePlaceholder = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="#cccccc"/><text x="50%" y="50%" font-size="14" fill="#666666" text-anchor="middle" dominant-baseline="middle">이미지 없음</text></svg>'
+            );
+            // 이미지 로드 에러 처리 (src 대입 전에 등록해야 즉시 실패도 잡힘)
+            productImage.onerror = function() {
+                this.onerror = null;
+                this.src = noImagePlaceholder;
+            };
+            productImage.src = product.imageUrl || noImagePlaceholder;
             productImage.alt = product.text;
             thumbnailName.textContent = product.text;
             thumbnailPrice.textContent = product.priceText;
             productThumbnail.style.display = 'block';
-            
-            // 이미지 로드 에러 처리
-            productImage.onerror = function() {
-                this.src = 'https://via.placeholder.com/150x150/cccccc/666666?text=이미지+없음';
-            };
         }
     }
 
