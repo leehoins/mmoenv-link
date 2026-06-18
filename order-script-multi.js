@@ -916,22 +916,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return times[value] || value;
     }
 
-    // 클립보드 복사를 먼저 끝내고(포커스/사용자 동작이 살아있을 때), 그 다음에
-    // 카카오 채널 채팅창을 연다. 순서를 바꾸면(특히 window.open을 먼저 하면)
-    // 새 탭으로 포커스가 넘어가면서 클립보드 쓰기가 브라우저에 의해 막힌다.
+    // 클립보드 복사 "호출"과 팝업 열기를 같은 클릭 흐름 안에서 곧바로 잇달아
+    // 실행한다. window.open이 결과를 기다린 뒤(.then 콜백 등) 비동기로 실행되면
+    // 브라우저가 "사용자가 직접 일으킨 동작"으로 보지 않아 빈 창만 띄우고
+    // 실제 페이지 이동은 막아버리는 경우가 있다(특히 모바일/인앱 브라우저).
     function copyAndOpenKakao(message, submitBtn, originalBtnText) {
         const kakaoUrl = 'https://pf.kakao.com/_wDixjX';
-        let settled = false;
+
+        const clipboardPromise = (navigator.clipboard && navigator.clipboard.writeText)
+            ? navigator.clipboard.writeText(message)
+            : Promise.reject(new Error('clipboard api unavailable'));
+
+        // 결과를 기다리지 않고 클릭 직후 곧바로 팝업을 연다
+        window.open(kakaoUrl, '_blank');
 
         const finish = (copied) => {
-            // 카카오톡 인앱 브라우저 등 일부 환경에서는 클립보드 Promise가
-            // 성공도 실패도 응답하지 않고 멈춰버릴 수 있어, 타임아웃이 먼저
-            // fallback을 실행한 뒤 원래 Promise가 늦게 응답해도 중복 실행 방지
-            if (settled) return;
-            settled = true;
-
-            window.open(kakaoUrl, '_blank');
-
             const successMsg = copied
                 ? '주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기(Ctrl/Cmd+V)하여 전송해주세요.'
                 : '클립보드 복사에 실패해 입력창에 주문 내용을 띄워드렸어요.\n전체 선택 후 복사해서 카카오톡 채널 채팅창에 붙여넣어 전송해주세요.';
@@ -945,22 +944,19 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = originalBtnText;
         };
 
-        const fallbackCopy = () => {
-            const copied = copyWithFallback(message);
-            if (!copied) {
-                window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
-            }
-            finish(copied);
-        };
+        // 일부 인앱 브라우저는 클립보드 권한 요청이 응답 없이 멈추는 경우가
+        // 있어, 1.2초 안에 끝나지 않으면 바로 폴백으로 넘어간다
+        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('clipboard timeout')), 1200));
 
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            // 일부 인앱 브라우저는 클립보드 권한 요청이 응답 없이 멈추는 경우가
-            // 있어, 1.2초 안에 끝나지 않으면 바로 폴백으로 넘어간다
-            setTimeout(fallbackCopy, 1200);
-            navigator.clipboard.writeText(message).then(() => finish(true)).catch(fallbackCopy);
-        } else {
-            fallbackCopy();
-        }
+        Promise.race([clipboardPromise, timeout])
+            .then(() => finish(true))
+            .catch(() => {
+                const copied = copyWithFallback(message);
+                if (!copied) {
+                    window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
+                }
+                finish(copied);
+            });
     }
 
     function copyWithFallback(text) {
