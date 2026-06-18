@@ -1156,6 +1156,60 @@
   line-height: 1.5;
 }
 
+.summary-order-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.summary-order-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.6rem;
+  margin-top: 0.4rem;
+  color: #e91e63;
+  font-size: 1rem;
+}
+
+.kakao-copy-status {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0.5rem 0;
+}
+
+.kakao-message-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #333;
+  background: #f8f9fa;
+  margin-bottom: 1rem;
+}
+
+.kakao-send-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  margin-bottom: 0.75rem;
+}
+
+.kakao-reset-btn {
+  display: block;
+  width: 100%;
+  background: #f1f1f1;
+  color: #555;
+}
+
 @media (max-width: 768px) {
   .notice-content {
     margin: 0.5rem;

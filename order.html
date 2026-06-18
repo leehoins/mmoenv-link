@@ -604,6 +604,24 @@
       </form>
     </main>
 
+    <!-- 주문 접수 완료 후 카카오 전송 안내 모달 -->
+    <div id="kakaoSendModal" class="notice-modal" style="display: none;">
+      <div class="notice-content">
+        <div class="notice-header">
+          <h2>✅ 주문 문의가 접수되었습니다!</h2>
+          <button type="button" class="notice-close" id="closeKakaoModal">&times;</button>
+        </div>
+        <div class="notice-body">
+          <p>아래 <strong>"카카오톡 채널에서 전송하기"</strong> 버튼을 눌러 채팅창이 열리면, 채팅창에 <strong>붙여넣기(Ctrl/Cmd+V)</strong> 하신 뒤 전송해주세요.</p>
+          <p class="kakao-copy-status" id="kakaoCopyStatus"></p>
+          <textarea id="kakaoMessageText" class="kakao-message-textarea" rows="10" readonly></textarea>
+          <a id="kakaoChannelLink" href="https://pf.kakao.com/_wDixjX" target="_blank" rel="noopener" class="btn btn-primary kakao-send-btn">💬 카카오톡 채널에서 전송하기</a>
+          <p class="submit-note">📞 즉시 상담이 필요하시면 010-2719-3467 모엔브로 연락주세요.</p>
+          <button type="button" id="resetFormAfterKakao" class="btn kakao-reset-btn">새 주문 작성하기</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
     

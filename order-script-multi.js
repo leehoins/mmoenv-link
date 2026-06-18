@@ -214,6 +214,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 폼 제출
         form.addEventListener('submit', handleFormSubmit);
+
+        // 카카오 전송 안내 모달
+        document.getElementById('closeKakaoModal').addEventListener('click', closeKakaoSendModal);
+        document.getElementById('resetFormAfterKakao').addEventListener('click', function() {
+            closeKakaoSendModal();
+            form.reset();
+            toggleDeliveryDetails();
+        });
     }
 
     function addProduct() {
@@ -612,6 +620,46 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             productsSummary.style.display = 'none';
         }
+
+        updateOrderSummary();
+    }
+
+    // 제출 버튼 위 "📋 주문 요약" 박스 갱신
+    function updateOrderSummary() {
+        const summaryContent = document.querySelector('#orderSummary .summary-content');
+        if (!summaryContent) return;
+
+        const productSections = document.querySelectorAll('.product-section');
+        const items = [];
+        let totalPrice = 0;
+        productSections.forEach(section => {
+            const index = section.dataset.productIndex;
+            const summary = getProductSummary(index);
+            if (summary) {
+                items.push(summary);
+                totalPrice += summary.price;
+            }
+        });
+
+        if (items.length === 0) {
+            summaryContent.innerHTML = '<p>선택사항을 모두 입력하시면 여기에 주문 요약이 표시됩니다.</p>';
+            return;
+        }
+
+        const itemsHtml = items.map(item => `
+            <div class="summary-order-item">
+                <span>${item.name}</span>
+                <span>${Math.round(item.price).toLocaleString()}원</span>
+            </div>
+        `).join('');
+
+        summaryContent.innerHTML = `
+            ${itemsHtml}
+            <div class="summary-order-total">
+                <strong>총 합계</strong>
+                <strong>${Math.round(totalPrice).toLocaleString()}원</strong>
+            </div>
+        `;
     }
 
     function getProductSummary(index) {
@@ -751,11 +799,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('주문 데이터:', orderData);
 
             const message = formatKakaoMessage(orderData, null);
-
-            // 클립보드 복사는 클릭 직후(아무 await 없이) 곧바로 시도해야 함.
-            // window.open이 새 탭 포커스를 가져가버리거나, 그 전에 await로 시간이
-            // 지나버리면 브라우저가 클립보드 쓰기 권한을 막아버림.
-            copyAndOpenKakao(message, submitBtn, originalBtnText);
+            showKakaoSendModal(message, submitBtn, originalBtnText);
 
             // Supabase 저장은 카카오 전송 흐름을 막지 않도록 별도로 진행 (실패해도 무관)
             submitOrderToDatabase(buildDbPayload(orderData, formData))
@@ -916,65 +960,37 @@ document.addEventListener('DOMContentLoaded', function() {
         return times[value] || value;
     }
 
-    // 클립보드 복사 "호출"과 팝업 열기를 같은 클릭 흐름 안에서 곧바로 잇달아
-    // 실행한다. window.open이 결과를 기다린 뒤(.then 콜백 등) 비동기로 실행되면
-    // 브라우저가 "사용자가 직접 일으킨 동작"으로 보지 않아 빈 창만 띄우고
-    // 실제 페이지 이동은 막아버리는 경우가 있다(특히 모바일/인앱 브라우저).
-    function copyAndOpenKakao(message, submitBtn, originalBtnText) {
-        const kakaoUrl = 'https://pf.kakao.com/_wDixjX';
+    // window.open으로 카카오 채팅창을 자동으로 띄우는 방식은 브라우저/인앱
+    // 웹뷰마다 동작이 들쭉날쭉해서(빈 화면만 뜨거나 팝업이 막히는 경우가 있음)
+    // 안내 모달 안의 실제 <a href target="_blank"> 링크를 직접 클릭하게 한다.
+    // 클립보드 복사는 되면 좋은 보조 기능일 뿐, 텍스트는 항상 textarea에도
+    // 그대로 보여줘서 클립보드가 안 되더라도 직접 선택해 복사할 수 있게 한다.
+    function showKakaoSendModal(message, submitBtn, originalBtnText) {
+        const modal = document.getElementById('kakaoSendModal');
+        const textarea = document.getElementById('kakaoMessageText');
+        const statusEl = document.getElementById('kakaoCopyStatus');
 
-        const clipboardPromise = (navigator.clipboard && navigator.clipboard.writeText)
-            ? navigator.clipboard.writeText(message)
-            : Promise.reject(new Error('clipboard api unavailable'));
+        textarea.value = message;
+        statusEl.textContent = '';
+        modal.style.display = 'flex';
 
-        // 결과를 기다리지 않고 클릭 직후 곧바로 팝업을 연다
-        window.open(kakaoUrl, '_blank');
-
-        const finish = (copied) => {
-            const successMsg = copied
-                ? '주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기(Ctrl/Cmd+V)하여 전송해주세요.'
-                : '클립보드 복사에 실패해 입력창에 주문 내용을 띄워드렸어요.\n전체 선택 후 복사해서 카카오톡 채널 채팅창에 붙여넣어 전송해주세요.';
-            alert(`✅ 주문 문의가 접수되었습니다!\n\n${successMsg}\n\n📞 즉시 상담이 필요하시면 010-2719-3467 모엔브로 연락주세요.\n\n빠른 시간 내에 연락드리겠습니다! 🎈`);
-
-            if (confirm('새로운 주문을 위해 폼을 초기화하시겠습니까?')) {
-                form.reset();
-                toggleDeliveryDetails();
-            }
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
-        };
-
-        // 일부 인앱 브라우저는 클립보드 권한 요청이 응답 없이 멈추는 경우가
-        // 있어, 1.2초 안에 끝나지 않으면 바로 폴백으로 넘어간다
-        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('clipboard timeout')), 1200));
-
-        Promise.race([clipboardPromise, timeout])
-            .then(() => finish(true))
-            .catch(() => {
-                const copied = copyWithFallback(message);
-                if (!copied) {
-                    window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
-                }
-                finish(copied);
-            });
-    }
-
-    function copyWithFallback(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
-        let success = false;
-        try {
-            success = document.execCommand('copy');
-        } catch (err) {
-            success = false;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(message)
+                .then(() => { statusEl.textContent = '📋 주문 내용이 클립보드에 복사되었습니다. 붙여넣기(Ctrl/Cmd+V)만 하면 됩니다.'; })
+                .catch(() => { statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해주세요.'; });
+        } else {
+            statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해주세요.';
         }
-        document.body.removeChild(textarea);
-        return success;
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+    }
+
+    function closeKakaoSendModal() {
+        document.getElementById('kakaoSendModal').style.display = 'none';
     }
 
     function getProductData(index, formData) {
