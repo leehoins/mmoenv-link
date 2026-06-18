@@ -291,7 +291,7 @@ const DEFAULT_MENU_ITEMS = [
         id: 'menu-1',
         title: '모엔브 상품 구경하기',
         subtitle: '바로 구매 가능한 상품 보기',
-        url: 'https://m.blog.naver.com/juul2',
+        url: 'https://blog.naver.com/juul2/224314871649',
         target: '_blank',
         style: 'featured',
         icon: 'M6.3 8.2h11.4l-.8 10.5a1.8 1.8 0 0 1-1.8 1.6H8.9a1.8 1.8 0 0 1-1.8-1.6L6.3 8.2Z M9 8.2V7a3 3 0 0 1 6 0v1.2'
