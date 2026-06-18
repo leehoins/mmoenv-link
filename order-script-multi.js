@@ -706,13 +706,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    async function handleFormSubmit(e) {
+    function handleFormSubmit(e) {
         e.preventDefault();
 
         const submitBtn = form.querySelector('.submit-btn');
         const originalBtnText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '전송 중...';
 
         try {
             const formData = new FormData(form);
@@ -752,22 +750,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('주문 데이터:', orderData);
 
-            // Supabase에 저장 시도 (실패해도 카카오톡 전송은 계속 진행)
-            let orderNumber = null;
-            try {
-                const dbResult = await submitOrderToDatabase(buildDbPayload(orderData, formData));
-                if (dbResult.success) {
-                    orderNumber = dbResult.orderNumber;
-                    console.log(`✅ 데이터베이스 저장 완료: ${orderNumber}`);
-                } else {
-                    console.log('📝 데이터베이스 저장 실패, 카카오톡으로만 전송:', dbResult.error || dbResult.reason);
-                }
-            } catch (dbError) {
-                console.log('📝 데이터베이스 연결 실패, 카카오톡으로만 전송:', dbError);
-            }
+            const message = formatKakaoMessage(orderData, null);
 
-            const message = formatKakaoMessage(orderData, orderNumber);
-            sendToKakao(message, orderNumber, submitBtn, originalBtnText);
+            // 클립보드 복사는 클릭 직후(아무 await 없이) 곧바로 시도해야 함.
+            // window.open이 새 탭 포커스를 가져가버리거나, 그 전에 await로 시간이
+            // 지나버리면 브라우저가 클립보드 쓰기 권한을 막아버림.
+            copyAndOpenKakao(message, submitBtn, originalBtnText);
+
+            // Supabase 저장은 카카오 전송 흐름을 막지 않도록 별도로 진행 (실패해도 무관)
+            submitOrderToDatabase(buildDbPayload(orderData, formData))
+                .then(dbResult => {
+                    if (dbResult.success) {
+                        console.log(`✅ 데이터베이스 저장 완료: ${dbResult.orderNumber}`);
+                    } else {
+                        console.log('📝 데이터베이스 저장 실패:', dbResult.error || dbResult.reason);
+                    }
+                })
+                .catch(dbError => console.log('📝 데이터베이스 연결 실패:', dbError));
         } catch (error) {
             console.error('주문 제출 중 오류:', error);
             alert('주문 제출 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -917,15 +916,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return times[value] || value;
     }
 
-    // 카카오톡 채널로 전송 (채팅창 열기 + 메시지 클립보드 자동 복사)
-    function sendToKakao(message, orderNumber, submitBtn, originalBtnText) {
+    // 클립보드 복사를 먼저 끝내고(포커스/사용자 동작이 살아있을 때), 그 다음에
+    // 카카오 채널 채팅창을 연다. 순서를 바꾸면(특히 window.open을 먼저 하면)
+    // 새 탭으로 포커스가 넘어가면서 클립보드 쓰기가 브라우저에 의해 막힌다.
+    function copyAndOpenKakao(message, submitBtn, originalBtnText) {
         const kakaoUrl = 'https://pf.kakao.com/_wDixjX';
-        window.open(kakaoUrl, '_blank');
 
-        const finish = () => {
-            const successMsg = orderNumber
-                ? `주문번호 ${orderNumber}로 접수되었습니다!\n주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기하여 전송해주세요.`
-                : '주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기하여 전송해주세요.';
+        const finish = (copied) => {
+            window.open(kakaoUrl, '_blank');
+
+            const successMsg = copied
+                ? '주문 내용이 클립보드에 복사되었습니다.\n카카오톡 채널 채팅창에서 붙여넣기(Ctrl/Cmd+V)하여 전송해주세요.'
+                : '클립보드 복사에 실패해 입력창에 주문 내용을 띄워드렸어요.\n전체 선택 후 복사해서 카카오톡 채널 채팅창에 붙여넣어 전송해주세요.';
             alert(`✅ 주문 문의가 접수되었습니다!\n\n${successMsg}\n\n📞 즉시 상담이 필요하시면 010-2719-3467 모엔브로 연락주세요.\n\n빠른 시간 내에 연락드리겠습니다! 🎈`);
 
             if (confirm('새로운 주문을 위해 폼을 초기화하시겠습니까?')) {
@@ -937,27 +939,38 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(message).then(finish).catch(() => {
-                copyWithFallback(message);
-                finish();
+            navigator.clipboard.writeText(message).then(() => finish(true)).catch(() => {
+                const copied = copyWithFallback(message);
+                if (!copied) {
+                    window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
+                }
+                finish(copied);
             });
         } else {
-            copyWithFallback(message);
-            finish();
+            const copied = copyWithFallback(message);
+            if (!copied) {
+                window.prompt('아래 내용을 전체 선택(Ctrl/Cmd+A) 후 복사(Ctrl/Cmd+C)해주세요:', message);
+            }
+            finish(copied);
         }
     }
 
     function copyWithFallback(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
         document.body.appendChild(textarea);
+        textarea.focus();
         textarea.select();
+        let success = false;
         try {
-            document.execCommand('copy');
+            success = document.execCommand('copy');
         } catch (err) {
-            console.error('클립보드 복사 실패:', err);
+            success = false;
         }
         document.body.removeChild(textarea);
+        return success;
     }
 
     function getProductData(index, formData) {
