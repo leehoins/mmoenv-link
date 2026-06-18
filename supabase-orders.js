@@ -84,8 +84,6 @@ class SupabaseOrderManager {
             // 주문 정보
             order_type: formData.orderType,
             balloon_type: formData.balloonType,
-            balloon_quantity: formData.balloonQuantity || null,
-            custom_quantity: formData.customQuantityInput || null,
 
             // 레터링 정보
             lettering_text: formData.letteringText || null,
