@@ -56,7 +56,6 @@ const DEFAULT_MENU_ITEMS = [
 
 document.addEventListener('DOMContentLoaded', function() {
     setupFilterControls();
-    setupSearchControl();
     loadAndRenderMenu();
     setupMenuUpdateListener();
 });
@@ -126,22 +125,14 @@ function setupFilterControls() {
     });
 }
 
-function setupSearchControl() {
-    const search = document.getElementById('linkSearch');
-    if (!search) return;
-    search.addEventListener('input', renderMenuItems);
-}
-
 function renderMenuItems() {
     const linkList = document.querySelector('.link-list');
     const emptyState = document.querySelector('.empty-state');
     if (!linkList) return;
 
-    const query = (document.getElementById('linkSearch')?.value || '').trim().toLowerCase();
     const visibleItems = currentMenuItems.filter(function(item) {
         const matchesCategory = activeFilter === 'all' || item.category === activeFilter;
-        const searchableText = `${item.title} ${item.subtitle} ${CATEGORY_LABELS[item.category] || ''}`.toLowerCase();
-        return matchesCategory && (!query || searchableText.includes(query));
+        return matchesCategory;
     });
 
     linkList.innerHTML = '';
