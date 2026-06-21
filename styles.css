@@ -52,8 +52,8 @@ input {
 
 .site-header {
   display: flex;
-  align-items: flex-start;
-  gap: 82px;
+  align-items: center;
+  min-height: 104px;
 }
 
 .brand-logo {
@@ -64,36 +64,12 @@ input {
 
 .brand-logo-image {
   display: block;
-  width: 162px;
+  width: clamp(220px, 24vw, 268px);
   height: auto;
 }
 
-.brand-text {
-  width: 312px;
-  padding-top: 5px;
-}
-
-.brand-text strong,
-.brand-text span {
-  display: block;
-  text-transform: uppercase;
-}
-
-.brand-text strong {
-  font-size: 14px;
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-.brand-text span {
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1;
-}
-
 .home-main {
-  padding: 170px 0 0;
+  padding: 132px 0 0;
 }
 
 .link-index {
@@ -443,28 +419,15 @@ input {
   }
 
   .site-header {
-    gap: 28px;
+    min-height: 82px;
   }
 
   .brand-logo-image {
-    width: 132px;
-  }
-
-  .brand-text {
-    width: auto;
-    padding-top: 4px;
-  }
-
-  .brand-text strong {
-    font-size: 13px;
-  }
-
-  .brand-text span {
-    font-size: 11px;
+    width: clamp(172px, 32vw, 220px);
   }
 
   .home-main {
-    padding-top: 88px;
+    padding-top: 72px;
   }
 
   .link-index,
@@ -538,15 +501,15 @@ input {
 
 @media (max-width: 520px) {
   .site-header {
-    gap: 20px;
+    min-height: 68px;
   }
 
   .brand-logo-image {
-    width: 118px;
+    width: min(48vw, 190px);
   }
 
   .home-main {
-    padding-top: 70px;
+    padding-top: 58px;
   }
 
   .service-note {

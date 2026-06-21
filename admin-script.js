@@ -300,7 +300,7 @@ const DEFAULT_MENU_ITEMS = [
         id: 'menu-2',
         title: '주문하기',
         subtitle: '픽업·배송 예약과 맞춤 제작 상담',
-        url: 'order.html',
+        url: '/order',
         target: '_self',
         style: 'primary',
         icon: 'M9 11H7v2h2v-2Z M13 11h-2v2h2v-2Z M17 11h-2v2h2v-2Z M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM19 20H5V9h14v11Z'
@@ -317,7 +317,7 @@ const DEFAULT_MENU_ITEMS = [
     {
         id: 'menu-4',
         title: '인스타그램 보기',
-        subtitle: '작업 사진과 최신 소식',
+        subtitle: '작업 사진 보기',
         url: 'https://www.instagram.com/m.moenv',
         target: '_blank',
         style: 'normal',
@@ -419,12 +419,34 @@ function handleLogout() {
 // 메뉴 아이템 로드
 function loadMenuItems() {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-        currentMenuItems = JSON.parse(saved);
-    } else {
-        currentMenuItems = [...DEFAULT_MENU_ITEMS];
+    try {
+        currentMenuItems = saved
+            ? JSON.parse(saved).map(normalizeMenuItem)
+            : DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+    } catch (error) {
+        console.error('메뉴 데이터 파싱 오류:', error);
+        currentMenuItems = DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
     }
     renderMenuList();
+}
+
+function normalizeMenuItem(item) {
+    const title = item.title || '제목 없음';
+    const subtitle = title.includes('인스타그램') && /최신/.test(item.subtitle || '')
+        ? '작업 사진 보기'
+        : item.subtitle || '';
+    const url = item.url === 'order.html' || item.url === './order.html'
+        ? '/order'
+        : item.url || '';
+
+    return {
+        ...item,
+        title,
+        subtitle,
+        url,
+        target: item.target || '_self',
+        style: item.style || 'normal',
+    };
 }
 
 // 메뉴 목록 렌더링

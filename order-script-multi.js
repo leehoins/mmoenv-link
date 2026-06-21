@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 모달 닫기
         closeNoticeBtn.addEventListener('click', function() {
-            window.location.href = 'index.html';
+            window.location.href = '/';
         });
     }
 
@@ -201,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 주문 유형 변경
         orderType.addEventListener('change', function() {
             updateAllProductOptions();
+            updateProductsSummary();
         });
 
         // 상품 추가 버튼
@@ -221,7 +222,17 @@ document.addEventListener('DOMContentLoaded', function() {
             closeKakaoSendModal();
             form.reset();
             toggleDeliveryDetails();
+            refreshAllProductDropdowns();
+            updateProductsSummary();
         });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.product-select')) {
+                closeAllProductDropdowns();
+            }
+        });
+
+        window.addEventListener('resize', closeAllProductDropdowns);
     }
 
     function addProduct() {
@@ -397,7 +408,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // 상품 선택 변경
         const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
         if (balloonTypeSelect) {
+            setupProductDropdown(index);
             balloonTypeSelect.addEventListener('change', function() {
+                syncProductDropdown(index);
                 toggleProductOptions(index);
                 updateProductsSummary();
             });
@@ -456,6 +469,235 @@ document.addEventListener('DOMContentLoaded', function() {
                 balloonTypeSelect.appendChild(option);
             });
         }
+
+        setupProductDropdown(index);
+        syncProductDropdown(index);
+        toggleProductOptions(index);
+    }
+
+    function setupProductDropdown(index) {
+        const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
+        if (!balloonTypeSelect) return;
+
+        let productSelect = balloonTypeSelect.closest('.product-select');
+        if (!productSelect) {
+            productSelect = document.createElement('div');
+            productSelect.className = 'product-select';
+            productSelect.dataset.productSelectIndex = index;
+            balloonTypeSelect.parentNode.insertBefore(productSelect, balloonTypeSelect);
+            productSelect.appendChild(balloonTypeSelect);
+
+            const trigger = document.createElement('button');
+            trigger.type = 'button';
+            trigger.className = 'product-select-trigger';
+            trigger.id = `productSelectTrigger_${index}`;
+            trigger.setAttribute('aria-haspopup', 'listbox');
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.setAttribute('aria-controls', `productSelectMenu_${index}`);
+            trigger.innerHTML = '<span class="product-select-label">상품을 선택해 주세요</span>';
+
+            const menu = document.createElement('div');
+            menu.className = 'product-select-menu';
+            menu.id = `productSelectMenu_${index}`;
+            menu.setAttribute('role', 'listbox');
+            menu.setAttribute('aria-labelledby', trigger.id);
+
+            productSelect.appendChild(trigger);
+            productSelect.appendChild(menu);
+        }
+
+        if (productSelect.dataset.dropdownReady === 'true') {
+            renderProductDropdown(index);
+            return;
+        }
+
+        balloonTypeSelect.classList.add('product-native-select');
+        balloonTypeSelect.tabIndex = -1;
+        balloonTypeSelect.setAttribute('aria-hidden', 'true');
+
+        const trigger = productSelect.querySelector('.product-select-trigger');
+        const menu = productSelect.querySelector('.product-select-menu');
+
+        trigger.addEventListener('click', function() {
+            const isOpen = productSelect.classList.contains('is-open');
+            closeAllProductDropdowns();
+            if (!isOpen) {
+                openProductDropdown(index);
+            }
+        });
+
+        trigger.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openProductDropdown(index);
+                focusProductOption(menu, balloonTypeSelect.value);
+            }
+        });
+
+        menu.addEventListener('click', function(event) {
+            const optionButton = event.target.closest('.product-select-option');
+            if (!optionButton || optionButton.disabled) return;
+            chooseProductDropdownOption(index, optionButton.dataset.value);
+        });
+
+        menu.addEventListener('keydown', function(event) {
+            const optionButton = event.target.closest('.product-select-option');
+            if (!optionButton) return;
+
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const direction = event.key === 'ArrowDown' ? 1 : -1;
+                focusAdjacentProductOption(menu, optionButton, direction);
+            }
+
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeAllProductDropdowns();
+                trigger.focus();
+            }
+        });
+
+        balloonTypeSelect.addEventListener('invalid', function() {
+            productSelect.classList.add('is-invalid');
+            trigger.focus();
+        });
+
+        productSelect.dataset.dropdownReady = 'true';
+        renderProductDropdown(index);
+    }
+
+    function renderProductDropdown(index) {
+        const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
+        const productSelect = balloonTypeSelect && balloonTypeSelect.closest('.product-select');
+        const menu = productSelect && productSelect.querySelector('.product-select-menu');
+        if (!balloonTypeSelect || !productSelect || !menu) return;
+
+        const options = Array.from(balloonTypeSelect.options);
+        menu.innerHTML = '';
+
+        options.forEach((option, optionIndex) => {
+            const optionButton = document.createElement('button');
+            optionButton.type = 'button';
+            optionButton.className = 'product-select-option';
+            optionButton.dataset.value = option.value;
+            optionButton.textContent = option.textContent;
+            optionButton.setAttribute('role', 'option');
+            optionButton.setAttribute('aria-selected', option.selected ? 'true' : 'false');
+            optionButton.tabIndex = -1;
+
+            if (option.disabled || (optionIndex === 0 && !option.value && options.length === 1)) {
+                optionButton.disabled = true;
+            }
+
+            if (option.selected) {
+                optionButton.classList.add('is-selected');
+            }
+
+            menu.appendChild(optionButton);
+        });
+
+        syncProductDropdown(index);
+    }
+
+    function syncProductDropdown(index) {
+        const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
+        const productSelect = balloonTypeSelect && balloonTypeSelect.closest('.product-select');
+        if (!balloonTypeSelect || !productSelect) return;
+
+        const triggerLabel = productSelect.querySelector('.product-select-label');
+        const selectedOption = balloonTypeSelect.options[balloonTypeSelect.selectedIndex];
+        const fallbackOption = balloonTypeSelect.options[0];
+        const labelText = selectedOption ? selectedOption.textContent : (fallbackOption ? fallbackOption.textContent : '상품을 선택해 주세요');
+
+        if (triggerLabel) {
+            triggerLabel.textContent = labelText;
+        }
+
+        productSelect.classList.toggle('has-value', Boolean(balloonTypeSelect.value));
+        productSelect.classList.remove('is-invalid');
+
+        productSelect.querySelectorAll('.product-select-option').forEach(optionButton => {
+            const isSelected = optionButton.dataset.value === balloonTypeSelect.value;
+            optionButton.classList.toggle('is-selected', isSelected);
+            optionButton.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        });
+    }
+
+    function openProductDropdown(index) {
+        const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
+        const productSelect = balloonTypeSelect && balloonTypeSelect.closest('.product-select');
+        const trigger = productSelect && productSelect.querySelector('.product-select-trigger');
+        if (!balloonTypeSelect || !productSelect || !trigger) return;
+
+        productSelect.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        positionProductDropdown(productSelect);
+    }
+
+    function closeAllProductDropdowns() {
+        document.querySelectorAll('.product-select.is-open').forEach(productSelect => {
+            productSelect.classList.remove('is-open', 'is-upward');
+            const trigger = productSelect.querySelector('.product-select-trigger');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    function chooseProductDropdownOption(index, value) {
+        const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
+        const productSelect = balloonTypeSelect && balloonTypeSelect.closest('.product-select');
+        const trigger = productSelect && productSelect.querySelector('.product-select-trigger');
+        if (!balloonTypeSelect) return;
+
+        balloonTypeSelect.value = value;
+        balloonTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        closeAllProductDropdowns();
+
+        if (trigger) {
+            trigger.focus();
+        }
+    }
+
+    function positionProductDropdown(productSelect) {
+        const menu = productSelect.querySelector('.product-select-menu');
+        if (!menu) return;
+
+        productSelect.classList.remove('is-upward');
+        const selectRect = productSelect.getBoundingClientRect();
+        const menuHeight = Math.min(menu.scrollHeight, 360);
+        const spaceBelow = window.innerHeight - selectRect.bottom;
+        const spaceAbove = selectRect.top;
+
+        if (spaceBelow < menuHeight && spaceAbove > spaceBelow) {
+            productSelect.classList.add('is-upward');
+        }
+    }
+
+    function focusProductOption(menu, selectedValue) {
+        const selectedOption = menu.querySelector(`.product-select-option[data-value="${CSS.escape(selectedValue)}"]:not(:disabled)`);
+        const firstOption = menu.querySelector('.product-select-option:not(:disabled)');
+        const targetOption = selectedOption || firstOption;
+        if (targetOption) {
+            targetOption.focus();
+        }
+    }
+
+    function focusAdjacentProductOption(menu, currentOption, direction) {
+        const options = Array.from(menu.querySelectorAll('.product-select-option:not(:disabled)'));
+        const currentIndex = options.indexOf(currentOption);
+        if (currentIndex === -1) return;
+
+        const nextIndex = (currentIndex + direction + options.length) % options.length;
+        options[nextIndex].focus();
+    }
+
+    function refreshAllProductDropdowns() {
+        document.querySelectorAll('.balloon-type-select').forEach(select => {
+            const index = select.dataset.index || 0;
+            syncProductDropdown(index);
+            toggleProductOptions(index);
+        });
     }
 
     function toggleProductOptions(index) {
@@ -758,11 +1000,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const pickupDetails = document.getElementById('pickupDetails');
         const deliveryDetails = document.getElementById('deliveryDetails');
         const directDetails = document.getElementById('directDetails');
+        const selectedMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
         
         // 모든 상세 옵션 숨기기
         [pickupDetails, deliveryDetails, directDetails].forEach(detail => {
             if (detail) detail.style.display = 'none';
         });
+
+        if (selectedMethod !== 'pickup') {
+            const preferredHour = document.getElementById('preferredHour');
+            const preferredMinute = document.getElementById('preferredMinute');
+            if (preferredHour) preferredHour.value = '';
+            if (preferredMinute) preferredMinute.value = '';
+        }
         
         // 선택된 옵션에 따라 상세 옵션 표시
         deliveryRadios.forEach(radio => {
@@ -793,7 +1043,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 delivery: {
                     method: formData.get('deliveryMethod'),
                     pickupLocation: formData.get('pickupLocation'),
-                    pickupTimeSlot: formData.get('pickupTime'),
                     address: formData.get('deliveryAddress') || formData.get('directAddress'),
                     phone: formData.get('deliveryPhone')
                 },
@@ -872,7 +1121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             orderDetails: `[주문 상품]\n${productDetailsText}\n\n[상세 요청사항]\n${orderData.notes || ''}`,
             deliveryMethod: orderData.delivery.method,
             pickupLocation: formData.get('pickupLocation') || null,
-            pickupTime: formData.get('pickupTime') || null,
+            pickupTime: orderData.delivery.method === 'pickup' ? orderData.schedule.pickupTime || null : null,
             deliveryAddress: formData.get('deliveryAddress') || null,
             deliveryPhone: formData.get('deliveryPhone') || null,
             directAddress: formData.get('directAddress') || null,
@@ -924,9 +1173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         message += `\n🚚 수령 방법\n`;
         if (orderData.delivery.method === 'pickup') {
             message += `픽업 (${orderData.delivery.pickupLocation ? getLocationText(orderData.delivery.pickupLocation) : '장소 미선택'})\n`;
-            if (orderData.delivery.pickupTimeSlot) {
-                message += `픽업 희망시간: ${getPickupTimeText(orderData.delivery.pickupTimeSlot)}\n`;
-            }
+            message += `픽업 희망시간: ${orderData.schedule.pickupTime || '영업시간 내 연락 후 조율'}\n`;
         } else if (orderData.delivery.method === 'delivery') {
             message += `택배 배송\n주소: ${orderData.delivery.address}\n`;
             if (orderData.delivery.phone) {
@@ -943,7 +1190,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (orderData.schedule.desiredDate) {
             message += `희망 출고일: ${formatOrderDate(orderData.schedule.desiredDate)}\n`;
         }
-        message += `픽업 시간: ${orderData.schedule.pickupTime ? orderData.schedule.pickupTime : '영업시간 내 연락 후 조율'}\n`;
 
         message += `\n✅ 확인사항\n- 주문 안내사항 확인 및 동의\n- 취소/환불 정책 동의\n- 상담 연락 동의\n`;
 
@@ -973,7 +1219,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getLocationText(value) {
-        const locations = { dongtan: '동탄 지점' };
+        const locations = { dongtan: '동탄 본점', 'dongtan-moenv': '동탄 본점', 'dongtan-main': '동탄 본점' };
         return locations[value] || value;
     }
 
