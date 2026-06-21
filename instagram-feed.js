@@ -79,7 +79,7 @@ function renderInstagramFeed(feed, items, isFallback) {
     if (isFallback) {
         const status = document.createElement('p');
         status.className = 'feed-status feed-status-muted';
-        status.textContent = '자동 피드 설정 전까지 기본 안내를 표시합니다.';
+        status.textContent = '등록된 작업 소식이 아직 없어 기본 안내를 표시합니다.';
         feed.appendChild(status);
     }
 }

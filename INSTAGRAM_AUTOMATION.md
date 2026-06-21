@@ -7,6 +7,28 @@
 - `.github/workflows/sync-instagram-feed.yml`: Edge Function 수동 호출, 설정 완료 후 6시간 주기 호출
 - `instagram-feed.js`: 브라우저에서 공개 캐시만 읽어 카드 그리드 렌더링
 
+## Meta 로그인이 안 될 때
+
+Meta 개발자 로그인이 막혀 `INSTAGRAM_USER_ID`와 `INSTAGRAM_ACCESS_TOKEN`을 받을 수 없으면 공식 자동 동기화는 켤 수 없습니다. 이때는 `instagram_feed` 테이블에 작업 소식을 직접 등록해서 사이트에 노출합니다.
+
+현재 `supabase-config.js`는 `instagramFeed.enabled: true`로 설정되어 있어, `instagram_feed` 테이블에 `is_visible = true` 행이 들어오면 홈 하단에 바로 표시됩니다. 테이블이 비어 있으면 기본 안내 카드만 표시됩니다.
+
+Supabase Dashboard -> Table Editor -> `instagram_feed` -> Insert row에서 아래 필드를 채웁니다.
+
+```text
+id: 20260621-01 같은 고유값
+caption: 카드에 보여줄 작업 설명
+media_type: IMAGE
+media_url: 공개 접근 가능한 이미지 URL
+thumbnail_url: 비워도 됨
+permalink: 연결할 인스타그램 게시물 또는 상담 링크
+timestamp: 2026-06-21T00:00:00+09:00 같은 날짜
+username: m.moenv
+is_visible: true
+```
+
+이미지는 공개 URL이어야 합니다. Supabase Storage, GitHub repo의 `assets/` 이미지, 또는 공개 CDN URL을 사용할 수 있습니다. 브라우저에 서비스 역할 키를 넣지 마세요.
+
 ## 1. Supabase 테이블 생성
 
 Supabase SQL Editor에서 `instagram-feed-schema.sql` 전체를 실행합니다.
