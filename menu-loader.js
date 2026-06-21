@@ -5,7 +5,7 @@ const CATEGORY_LABELS = {
     shop: '상품',
     order: '주문',
     contact: '상담',
-    social: '소식',
+    social: 'SNS',
 };
 
 let activeFilter = 'all';
@@ -45,7 +45,7 @@ const DEFAULT_MENU_ITEMS = [
     {
         id: 'menu-4',
         title: '인스타그램 보기',
-        subtitle: '작업 사진과 최신 소식',
+        subtitle: '작업 사진 보기',
         url: 'https://www.instagram.com/m.moenv',
         target: '_blank',
         style: 'normal',
@@ -85,11 +85,16 @@ function loadMenuItems() {
 }
 
 function normalizeMenuItem(item) {
+    const title = item.title || '제목 없음';
+    const subtitle = title.includes('인스타그램') && /최신/.test(item.subtitle || '')
+        ? '작업 사진 보기'
+        : item.subtitle || '';
+
     return {
         ...item,
         category: item.category || inferCategory(item),
-        title: item.title || '제목 없음',
-        subtitle: item.subtitle || '',
+        title,
+        subtitle,
         target: item.target || '_self',
         style: item.style || 'normal',
     };
