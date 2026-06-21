@@ -1,8 +1,16 @@
 // 메인 페이지 동적 메뉴 로더
 
 const STORAGE_KEY = 'mmoenv_menu_items';
+const CATEGORY_LABELS = {
+    shop: '상품',
+    order: '주문',
+    contact: '상담',
+    social: '소식',
+};
 
-// 기본 메뉴 데이터 (백업용)
+let activeFilter = 'all';
+let currentMenuItems = [];
+
 const DEFAULT_MENU_ITEMS = [
     {
         id: 'menu-1',
@@ -11,6 +19,7 @@ const DEFAULT_MENU_ITEMS = [
         url: 'https://blog.naver.com/juul2/224314871649',
         target: '_blank',
         style: 'featured',
+        category: 'shop',
         icon: 'M6.3 8.2h11.4l-.8 10.5a1.8 1.8 0 0 1-1.8 1.6H8.9a1.8 1.8 0 0 1-1.8-1.6L6.3 8.2Z M9 8.2V7a3 3 0 0 1 6 0v1.2'
     },
     {
@@ -20,6 +29,7 @@ const DEFAULT_MENU_ITEMS = [
         url: 'order.html',
         target: '_self',
         style: 'primary',
+        category: 'order',
         icon: 'M9 11H7v2h2v-2Z M13 11h-2v2h2v-2Z M17 11h-2v2h2v-2Z M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM19 20H5V9h14v11Z'
     },
     {
@@ -29,6 +39,7 @@ const DEFAULT_MENU_ITEMS = [
         url: 'https://pf.kakao.com/_wDixjX',
         target: '_blank',
         style: 'normal',
+        category: 'contact',
         icon: 'M12 4.2c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7l-.7 2.8c-.1.4.3.7.6.4l3.2-2.2c.5.1.9.1 1.4.1 4.7 0 8.5-3 8.5-6.8S16.7 4.2 12 4.2Z'
     },
     {
@@ -38,109 +49,137 @@ const DEFAULT_MENU_ITEMS = [
         url: 'https://www.instagram.com/m.moenv',
         target: '_blank',
         style: 'normal',
+        category: 'social',
         icon: '<rect x="5" y="5" width="14" height="14" rx="4"/> <circle cx="12" cy="12" r="3.2"/> <circle cx="16.3" cy="7.8" r=".8"/>'
     }
 ];
 
-// 페이지 로드시 실행
 document.addEventListener('DOMContentLoaded', function() {
+    setupFilterControls();
+    setupSearchControl();
     loadAndRenderMenu();
     setupMenuUpdateListener();
 });
 
-// 메뉴 로드 및 렌더링
 function loadAndRenderMenu() {
-    let menuItems;
-    
-    // 로컬 스토리지에서 메뉴 데이터 로드
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-        try {
-            menuItems = JSON.parse(saved);
-        } catch (e) {
-            console.error('메뉴 데이터 파싱 오류:', e);
-            menuItems = DEFAULT_MENU_ITEMS;
-        }
-    } else {
-        menuItems = DEFAULT_MENU_ITEMS;
-    }
-    
-    renderMenuItems(menuItems);
+    currentMenuItems = loadMenuItems();
+    renderMenuItems();
 }
 
-// 메뉴 아이템 렌더링
-function renderMenuItems(menuItems) {
-    const linkList = document.querySelector('.link-list');
-    if (!linkList) return;
-    
-    // 기존 메뉴 제거
-    linkList.innerHTML = '';
-    
-    // 새 메뉴 생성
-    menuItems.forEach(item => {
-        const linkCard = createLinkCard(item);
-        linkList.appendChild(linkCard);
+function loadMenuItems() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) {
+        return DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+    }
+
+    try {
+        const parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed)) {
+            return DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+        }
+        return parsed.map(normalizeMenuItem);
+    } catch (error) {
+        console.error('메뉴 데이터 파싱 오류:', error);
+        return DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+    }
+}
+
+function normalizeMenuItem(item) {
+    return {
+        ...item,
+        category: item.category || inferCategory(item),
+        title: item.title || '제목 없음',
+        subtitle: item.subtitle || '',
+        target: item.target || '_self',
+        style: item.style || 'normal',
+    };
+}
+
+function inferCategory(item) {
+    const title = `${item.title || ''} ${item.subtitle || ''}`.toLowerCase();
+    const url = `${item.url || ''}`.toLowerCase();
+
+    if (url.includes('order') || title.includes('주문')) return 'order';
+    if (url.includes('kakao') || title.includes('상담')) return 'contact';
+    if (url.includes('instagram') || title.includes('인스타')) return 'social';
+    return 'shop';
+}
+
+function setupFilterControls() {
+    document.querySelectorAll('.filter-option').forEach(function(button) {
+        button.addEventListener('click', function() {
+            activeFilter = button.dataset.filter || 'all';
+            document.querySelectorAll('.filter-option').forEach(function(option) {
+                option.classList.toggle('is-active', option === button);
+            });
+            renderMenuItems();
+        });
     });
 }
 
-// 링크 카드 생성
-function createLinkCard(item) {
+function setupSearchControl() {
+    const search = document.getElementById('linkSearch');
+    if (!search) return;
+    search.addEventListener('input', renderMenuItems);
+}
+
+function renderMenuItems() {
+    const linkList = document.querySelector('.link-list');
+    const emptyState = document.querySelector('.empty-state');
+    if (!linkList) return;
+
+    const query = (document.getElementById('linkSearch')?.value || '').trim().toLowerCase();
+    const visibleItems = currentMenuItems.filter(function(item) {
+        const matchesCategory = activeFilter === 'all' || item.category === activeFilter;
+        const searchableText = `${item.title} ${item.subtitle} ${CATEGORY_LABELS[item.category] || ''}`.toLowerCase();
+        return matchesCategory && (!query || searchableText.includes(query));
+    });
+
+    linkList.innerHTML = '';
+    visibleItems.forEach(function(item) {
+        linkList.appendChild(createLinkRow(item));
+    });
+
+    if (emptyState) {
+        emptyState.hidden = visibleItems.length > 0;
+    }
+}
+
+function createLinkRow(item) {
     const link = document.createElement('a');
-    link.className = `link-card ${item.style}`;
+    link.className = `link-row ${item.style}`;
+    link.dataset.category = item.category;
     link.href = item.url;
-    
-    // 외부 링크인 경우
+
     if (item.target === '_blank') {
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
     }
-    
-    // 아이콘 처리
-    const iconSvg = renderIcon(item.icon);
-    
-    link.innerHTML = `
-        <span class="icon" aria-hidden="true">
-            ${iconSvg}
-        </span>
-        <span>
-            <strong>${item.title}</strong>
-            <small>${item.subtitle}</small>
-        </span>
-    `;
-    
+
+    const text = document.createElement('span');
+    const title = document.createElement('strong');
+    const meta = document.createElement('small');
+    const arrow = document.createElement('span');
+
+    title.textContent = item.title;
+    meta.textContent = `${CATEGORY_LABELS[item.category] || '링크'} | ${item.subtitle}`;
+    arrow.className = 'link-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = 'OPEN';
+
+    text.append(title, meta);
+    link.append(text, arrow);
     return link;
 }
 
-// 아이콘 렌더링
-function renderIcon(icon) {
-    if (!icon) {
-        // 기본 아이콘
-        return '<svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="10"/></svg>';
-    }
-    
-    // 이미 완전한 SVG 태그인 경우
-    if (icon.includes('<svg')) {
-        return icon;
-    }
-    
-    // SVG 내부 요소들만 있는 경우
-    if (icon.includes('<')) {
-        return `<svg viewBox="0 0 24 24" focusable="false">${icon}</svg>`;
-    }
-    
-    // path 데이터만 있는 경우
-    return `<svg viewBox="0 0 24 24" focusable="false"><path d="${icon}"/></svg>`;
-}
-
-// 관리자 페이지에서 메뉴 업데이트 감지
 function setupMenuUpdateListener() {
     window.addEventListener('message', function(event) {
         if (event.data && event.data.type === 'MENU_UPDATED') {
-            renderMenuItems(event.data.menuItems);
+            currentMenuItems = event.data.menuItems.map(normalizeMenuItem);
+            renderMenuItems();
         }
     });
-    
-    // 스토리지 변경 감지 (다른 탭에서 수정한 경우)
+
     window.addEventListener('storage', function(event) {
         if (event.key === STORAGE_KEY) {
             loadAndRenderMenu();
@@ -148,13 +187,11 @@ function setupMenuUpdateListener() {
     });
 }
 
-// 메뉴 데이터 초기화 (개발용)
 function resetMenuData() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_MENU_ITEMS));
     loadAndRenderMenu();
 }
 
-// 전역으로 노출 (개발자 콘솔에서 사용 가능)
 window.menuLoader = {
     loadAndRenderMenu,
     resetMenuData

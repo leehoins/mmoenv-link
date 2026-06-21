@@ -20,6 +20,7 @@
 2. `database-schema.sql` 파일의 전체 내용을 복사
 3. SQL Editor에 붙여넣고 "Run" 버튼 클릭
 4. 테이블과 함수들이 성공적으로 생성되었는지 확인
+5. 홈 하단 Instagram 자동 피드를 사용할 경우 `instagram-feed-schema.sql`도 실행
 
 ### 3단계: API 키 설정
 
@@ -102,6 +103,10 @@ const subscription = orderManager.subscribeToNewOrders((order) => {
   console.log('새 주문:', order.orderNumber);
 });
 ```
+
+## Instagram 자동 피드
+
+외부 Instagram 위젯 대신 Supabase 캐시 테이블과 Edge Function을 사용합니다. 설정 순서는 `INSTAGRAM_AUTOMATION.md`를 참고하세요. SQL과 함수 배포가 끝난 뒤 `supabase-config.js`의 `instagramFeed.enabled`를 `true`로 바꾸면 홈에서 실제 피드가 켜집니다.
 
 ## 🚀 배포 고려사항
 

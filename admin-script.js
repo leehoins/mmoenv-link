@@ -494,12 +494,14 @@ function getStyleText(style) {
 function renderIcon(icon) {
     if (!icon) return '';
     
-    // SVG 태그가 포함된 경우
     if (icon.includes('<svg')) {
         return icon;
     }
     
-    // path만 있는 경우
+    if (icon.includes('<')) {
+        return `<svg viewBox="0 0 24 24" focusable="false">${icon}</svg>`;
+    }
+
     return `<svg viewBox="0 0 24 24" focusable="false"><path d="${icon}"/></svg>`;
 }
 

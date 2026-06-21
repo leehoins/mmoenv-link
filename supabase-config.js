@@ -4,6 +4,10 @@
 const SUPABASE_CONFIG = {
   url: 'https://dnyuvyompyqcyvvwssvj.supabase.co',
   anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRueXV2eW9tcHlxY3l2dndzc3ZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMjE5MTksImV4cCI6MjA5Njg5NzkxOX0.mkDxXiVfrEkT07q4LIrtFxBhKGV1VrDG-tRVu2V-WGI',
+  instagramFeed: {
+    enabled: false,
+    limit: 9,
+  },
 };
 
 // Supabase 클라이언트 초기화 함수
