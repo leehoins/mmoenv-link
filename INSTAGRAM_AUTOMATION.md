@@ -13,26 +13,30 @@ Supabase SQL Editor에서 `instagram-feed-schema.sql` 전체를 실행합니다.
 
 이 테이블은 `is_visible = true` 행만 공개 읽기를 허용합니다. 서비스 역할 키는 Edge Function에서만 사용하고, 브라우저에는 넣지 않습니다.
 
+현재 프로젝트(`dnyuvyompyqcyvvwssvj`)에는 2026-06-21에 이 스키마를 적용했습니다.
+
 ## 2. Edge Function 배포
 
 Supabase CLI가 로그인된 상태에서 실행합니다.
 
 ```bash
-supabase functions deploy sync-instagram-feed --project-ref <project-ref>
+supabase functions deploy sync-instagram-feed --project-ref <project-ref> --no-verify-jwt
 ```
+
+GitHub Actions가 `x-sync-secret` 헤더로 호출하므로 JWT 검증은 꺼야 합니다. 이 설정은 `supabase/config.toml`에도 반영되어 있습니다.
 
 필요한 시크릿을 설정합니다.
 
 ```bash
 supabase secrets set --project-ref <project-ref> \
-  SUPABASE_URL=https://<project-ref>.supabase.co \
-  SUPABASE_SERVICE_ROLE_KEY=<service-role-key> \
   INSTAGRAM_USER_ID=<instagram-business-or-creator-user-id> \
   INSTAGRAM_ACCESS_TOKEN=<instagram-graph-api-access-token> \
   INSTAGRAM_SYNC_SECRET=<random-sync-secret> \
   INSTAGRAM_GRAPH_VERSION=v25.0 \
   INSTAGRAM_LIMIT=9
 ```
+
+`SUPABASE_URL`과 `SUPABASE_SERVICE_ROLE_KEY`는 Supabase Edge Function 런타임 기본 시크릿으로 제공됩니다. CLI에서 `SUPABASE_`로 시작하는 이름은 직접 등록하지 않습니다.
 
 `INSTAGRAM_ACCESS_TOKEN`은 브라우저에 노출하면 안 됩니다. Meta 앱, Facebook Page와 연결된 Instagram Business/Creator 계정, Instagram Graph API 권한이 필요합니다.
 
@@ -41,11 +45,11 @@ supabase secrets set --project-ref <project-ref> \
 GitHub 저장소 Settings -> Secrets and variables -> Actions에 아래 값을 추가합니다.
 
 ```text
-SUPABASE_INSTAGRAM_SYNC_URL=https://<project-ref>.functions.supabase.co/sync-instagram-feed
+SUPABASE_INSTAGRAM_SYNC_URL=https://<project-ref>.supabase.co/functions/v1/sync-instagram-feed
 INSTAGRAM_SYNC_SECRET=<same-random-sync-secret>
 ```
 
-현재 워크플로는 Supabase 설정 전 배포 실패를 막기 위해 수동 실행만 켜둔 상태입니다. Supabase 함수와 secrets 설정이 끝나면 `.github/workflows/sync-instagram-feed.yml`의 `schedule` 주석을 풀어 6시간 자동 실행을 켭니다.
+현재 워크플로는 Instagram API 토큰 설정 전 배포 실패를 막기 위해 수동 실행만 켜둔 상태입니다. `INSTAGRAM_USER_ID`와 `INSTAGRAM_ACCESS_TOKEN` 설정 후 수동 동기화가 성공하면 `.github/workflows/sync-instagram-feed.yml`의 `schedule` 주석을 풀어 6시간 자동 실행을 켭니다.
 
 ## 4. 수동 동기화 테스트
 
