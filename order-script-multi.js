@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             { 
                 value: 'balloon-bouquet-round', 
-                text: '다발풍선(라운드)', 
+                text: '다발 풍선(라운드)',
                 hasLettering: false, 
                 hasQuantity: true, 
                 price: 4000, 
                 priceText: '4,000원/개',
-                options: '하트 고무풍선 변경시 6,000원/개, 코팅풍선 변경시 8,000원/개',
+                options: '하트 고무 풍선 변경 시 6,000원/개, 코팅 풍선 변경 시 8,000원/개',
                 special: 'bouquet',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc0/MDAxNzgwOTgyNjcwODA0.iDEn30oudByMKY58TGc1RkRmApDTfBFE2GYNE0nZ7Aog.rYy8yfkwllE0Bk64ijzT8ijjUUlrmvA4PBiiHl6z2Y8g.JPEG/SE-3696bf1f-7c7c-42bf-8a1b-abc94676cc36.jpg'
             },
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <label for="balloonType_${index}">상품 선택 <span class="required">*</span></label>
                     <div class="product-selection-container">
                         <select id="balloonType_${index}" name="balloonType_${index}" required class="balloon-type-select" data-index="${index}">
-                            <option value="">먼저 주문 유형을 선택해주세요</option>
+                            <option value="">먼저 주문 유형을 선택해 주세요</option>
                         </select>
                         <div class="product-thumbnail" id="productThumbnail_${index}" style="display: none;">
                             <img id="productImage_${index}" src="" alt="상품 이미지" referrerpolicy="no-referrer" />
@@ -297,22 +297,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="price-display" id="priceDisplay_${index}" style="display: none;">
                             <span class="calculated-price"></span>
                         </div>
-                        <small class="form-hint">10개 이상 주문시 할인 혜택이 있습니다</small>
+                        <small class="form-hint">10개 이상 주문 시 할인 혜택이 있습니다</small>
                     </div>
                 </div>
 
-                <!-- 다발풍선 특별 안내사항 -->
+                <!-- 다발 풍선 특별 안내사항 -->
                 <div class="balloon-bouquet-notice" id="balloonBouquetNotice_${index}" style="display: none;">
                     <div class="warning-box">
-                        <h4>🚨 다발풍선 중요 안내사항</h4>
+                        <h4>다발 풍선 중요 안내사항</h4>
                         <ul>
-                            <li><strong>고무풍선 특성상 채공시간이 매우 짧습니다!</strong></li>
-                            <li>유지용액 넣지 않을경우 최대 <strong>4-5시간 이내</strong></li>
-                            <li>유지용액 넣을경우 최대 <strong>12시간 이내</strong></li>
-                            <li><strong>당일제작, 당일사용</strong> 하셔야 하며, <strong>택배 불가능</strong> 상품입니다</li>
-                            <li>유지용액은 무료로 넣어 드립니다</li>
-                            <li>유지용액 넣을경우 투명 풍선의 경우 얼룩처럼 보일 수 있습니다</li>
-                            <li>코팅풍선 변경 시에만 택배 가능합니다</li>
+                            <li><strong>고무 풍선 특성상 체공 시간이 매우 짧습니다!</strong></li>
+                            <li>유지 용액을 넣지 않을 경우 최대 <strong>4~5시간 이내</strong></li>
+                            <li>유지 용액을 넣을 경우 최대 <strong>12시간 이내</strong></li>
+                            <li><strong>당일 제작, 당일 사용</strong> 하셔야 하며, <strong>택배 불가능</strong> 상품입니다</li>
+                            <li>유지 용액은 무료로 넣어 드립니다</li>
+                            <li>유지 용액을 넣을 경우 투명 풍선은 얼룩처럼 보일 수 있습니다</li>
+                            <li>코팅 풍선 변경 시에만 택배 가능합니다</li>
                         </ul>
                     </div>
                 </div>
@@ -335,10 +335,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <textarea 
                             id="letteringText_${index}" 
                             name="letteringText_${index}" 
-                            placeholder="풍선에 새길 문구를 정확히 입력해주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
+                            placeholder="풍선에 새길 문구를 정확히 입력해 주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
                             rows="3"
                         ></textarea>
-                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해주세요</small>
+                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요</small>
                     </div>
 
                     <div class="form-group">
@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!balloonTypeSelect) return;
         
         // 기존 옵션 제거
-        balloonTypeSelect.innerHTML = '<option value="">상품을 선택해주세요</option>';
+        balloonTypeSelect.innerHTML = '<option value="">상품을 선택해 주세요</option>';
         
         if (orderTypeValue && MMOENV_PRODUCTS[orderTypeValue]) {
             MMOENV_PRODUCTS[orderTypeValue].forEach(product => {
@@ -735,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateDesiredDateBounds();
     }
 
-    // 희망 출고일(픽업/발송일)은 실제사용일보다 늦을 수 없고, 최소 2일 전이어야 함
+    // 희망 출고일(픽업/발송일)은 실제 사용일보다 늦을 수 없고, 최소 2일 전이어야 함
     function updateDesiredDateBounds() {
         const usageDateInput = document.getElementById('usageDate');
         const desiredDateInput = document.getElementById('desiredDate');
@@ -749,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (desiredDateInput.value && desiredDateInput.value > maxStr) {
             desiredDateInput.value = '';
-            alert('희망 출고일은 실제사용일보다 최소 2일 전이어야 합니다. 출고일을 다시 선택해주세요.');
+            alert('희망 출고일은 실제 사용일보다 최소 2일 전이어야 합니다. 출고일을 다시 선택해 주세요.');
         }
     }
 
@@ -933,7 +933,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 message += `받을 분 연락처: ${orderData.delivery.phone}\n`;
             }
         } else if (orderData.delivery.method === 'direct') {
-            message += `직접배송\n주소: ${orderData.delivery.address}\n`;
+            message += `직접 배송\n주소: ${orderData.delivery.address}\n`;
         }
 
         message += `\n📅 일정\n`;
@@ -1002,9 +1002,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(message)
                 .then(() => { statusEl.textContent = '📋 주문 내용이 클립보드에 복사되었습니다. 붙여넣기(Ctrl/Cmd+V)만 하면 됩니다.'; })
-                .catch(() => { statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해주세요.'; });
+                .catch(() => { statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해 주세요.'; });
         } else {
-            statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해주세요.';
+            statusEl.textContent = '아래 내용을 직접 선택해 복사(Ctrl/Cmd+C)한 뒤 전송해 주세요.';
         }
 
         submitBtn.disabled = false;
