@@ -256,6 +256,62 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProductsSummary();
     }
 
+    const MIN_LETTERING_LINES = 3;
+    const MAX_LETTERING_LINES = 6;
+
+    function letteringLineRowHTML(index, lineNumber) {
+        return `
+            <div class="lettering-line-row" data-index="${index}" data-line="${lineNumber}">
+                <span class="lettering-line-badge">${lineNumber}줄</span>
+                <input
+                    type="text"
+                    class="lettering-line-input"
+                    data-index="${index}"
+                    data-line="${lineNumber}"
+                    ${lineNumber === 1 ? `id="letteringText_${index}" name="letteringText_${index}" required` : ''}
+                    placeholder="${lineNumber}줄에 들어갈 문구"
+                >
+            </div>
+        `;
+    }
+
+    function letteringLinesHTML(index, count) {
+        let html = '';
+        for (let i = 1; i <= count; i++) {
+            html += letteringLineRowHTML(index, i);
+        }
+        return html;
+    }
+
+    function addLetteringLine(index) {
+        const container = document.getElementById(`letteringLines_${index}`);
+        if (!container) return;
+
+        const currentCount = container.querySelectorAll('.lettering-line-row').length;
+        if (currentCount >= MAX_LETTERING_LINES) return;
+
+        const nextLine = currentCount + 1;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = letteringLineRowHTML(index, nextLine).trim();
+        const newRow = wrapper.firstElementChild;
+        container.appendChild(newRow);
+        newRow.querySelector('input').focus();
+
+        const addBtn = document.querySelector(`.add-lettering-line-btn[data-index="${index}"]`);
+        if (addBtn && nextLine >= MAX_LETTERING_LINES) {
+            addBtn.disabled = true;
+            addBtn.textContent = `최대 ${MAX_LETTERING_LINES}줄까지 입력 가능합니다`;
+        }
+    }
+
+    function collectLetteringText(index) {
+        const inputs = document.querySelectorAll(`.lettering-line-input[data-index="${index}"]`);
+        return Array.from(inputs)
+            .map(input => input.value.trim())
+            .filter(value => value.length > 0)
+            .join('\n');
+    }
+
     function createProductHTML(index) {
         return `
             <div class="product-section" data-product-index="${index}">
@@ -342,14 +398,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <!-- 레터링 관련 옵션 -->
                 <div class="lettering-options" id="letteringOptions_${index}" style="display: none;">
                     <div class="form-group">
-                        <label for="letteringText_${index}">레터링 문구 <span class="required">*</span></label>
-                        <textarea 
-                            id="letteringText_${index}" 
-                            name="letteringText_${index}" 
-                            placeholder="풍선에 새길 문구를 정확히 입력해 주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
-                            rows="3"
-                        ></textarea>
-                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요</small>
+                        <label>레터링 문구 <span class="required">*</span></label>
+                        <div class="lettering-lines" id="letteringLines_${index}">
+                            ${letteringLinesHTML(index, MIN_LETTERING_LINES)}
+                        </div>
+                        <button type="button" class="add-lettering-line-btn" data-index="${index}">+ 줄 추가</button>
+                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요 (최대 ${MAX_LETTERING_LINES}줄)</small>
                     </div>
 
                     <div class="form-group">
@@ -430,6 +484,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (customQuantityInput) {
             customQuantityInput.addEventListener('input', function() {
                 updateProductsSummary();
+            });
+        }
+
+        // 레터링 줄 추가 버튼
+        const addLetteringLineBtn = document.querySelector(`.add-lettering-line-btn[data-index="${index}"]`);
+        if (addLetteringLineBtn) {
+            addLetteringLineBtn.addEventListener('click', function() {
+                addLetteringLine(index);
             });
         }
     }
@@ -908,8 +970,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
         const quantitySelect = document.getElementById(`balloonQuantity_${index}`);
         const customQuantityInput = document.getElementById(`customQuantityInput_${index}`);
-        const letteringText = document.getElementById(`letteringText_${index}`);
-        
+
         if (!balloonTypeSelect || !balloonTypeSelect.value) return null;
         
         const orderTypeValue = orderType.value;
@@ -945,8 +1006,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        if (selectedProduct.hasLettering && letteringText && letteringText.value) {
-            details += `<br>레터링: "${letteringText.value}"`;
+        if (selectedProduct.hasLettering) {
+            const letteringText = collectLetteringText(index);
+            if (letteringText) {
+                details += `<br>레터링: "${letteringText.replace(/\n/g, ' / ')}"`;
+            }
         }
         
         return {
@@ -1290,7 +1354,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedProduct.hasLettering) {
             productData.lettering = {
-                text: formData.get(`letteringText_${index}`),
+                text: collectLetteringText(index),
                 font: formData.get(`fontType_${index}`),
                 color: formData.get(`fontColor_${index}`)
             };

@@ -451,6 +451,57 @@
   line-height: 1.4;
 }
 
+/* 레터링 문구 줄 단위 입력 */
+.lettering-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lettering-line-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lettering-line-badge {
+  flex: 0 0 auto;
+  min-width: 2.25rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #999;
+}
+
+.lettering-line-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.add-lettering-line-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1rem;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-lettering-line-btn:hover {
+  background: #f0f0f0;
+}
+
+.add-lettering-line-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* 라디오 버튼 커스텀 스타일 */
 .radio-group {
   display: flex;
@@ -1024,6 +1075,16 @@
   margin-bottom: 0;
 }
 
+/* .form-group label { display: block } 의 우선순위가 더 높아 위 flex 선언을
+   덮어쓰면서 .color-preview(인라인 span)가 width/height를 무시하고 찌그러지던
+   문제 수정. 부모 클래스를 더해 specificity를 높여 명시적으로 되살림 */
+.color-options .color-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+}
+
 .color-option:hover {
   background: #f0f0f0;
 }
@@ -1033,8 +1094,10 @@
 }
 
 .color-preview {
+  display: inline-block;
   width: 2rem;
   height: 2rem;
+  flex-shrink: 0;
   border-radius: 50%;
   border: 2px solid transparent;
   transition: border-color 0.2s ease;

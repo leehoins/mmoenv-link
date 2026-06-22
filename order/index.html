@@ -33,7 +33,7 @@
     <meta name="twitter:image" content="https://link.mmoenv.com/assets/og-moenv-modern-info-20260622.jpg">
     <link rel="icon" href="/favicon.png?v=2026062119" type="image/png">
     <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/order-styles.css?v=2026062203">
+    <link rel="stylesheet" href="/order-styles.css?v=2026062204">
   </head>
   <body>
     <!-- 주문 전 안내사항 모달 -->
@@ -258,14 +258,23 @@
               <!-- 레터링 관련 옵션 -->
               <div class="lettering-options" id="letteringOptions_0" style="display: none;">
                 <div class="form-group">
-                  <label for="letteringText_0">레터링 문구 <span class="required">*</span></label>
-                  <textarea 
-                    id="letteringText_0" 
-                    name="letteringText_0" 
-                    placeholder="풍선에 새길 문구를 정확히 입력해 주세요.&#10;예: Happy Birthday, 사랑해, 축하합니다"
-                    rows="3"
-                  ></textarea>
-                  <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요</small>
+                  <label>레터링 문구 <span class="required">*</span></label>
+                  <div class="lettering-lines" id="letteringLines_0">
+                    <div class="lettering-line-row" data-index="0" data-line="1">
+                      <span class="lettering-line-badge">1줄</span>
+                      <input type="text" class="lettering-line-input" id="letteringText_0" name="letteringText_0" data-index="0" data-line="1" required placeholder="1줄에 들어갈 문구">
+                    </div>
+                    <div class="lettering-line-row" data-index="0" data-line="2">
+                      <span class="lettering-line-badge">2줄</span>
+                      <input type="text" class="lettering-line-input" data-index="0" data-line="2" placeholder="2줄에 들어갈 문구">
+                    </div>
+                    <div class="lettering-line-row" data-index="0" data-line="3">
+                      <span class="lettering-line-badge">3줄</span>
+                      <input type="text" class="lettering-line-input" data-index="0" data-line="3" placeholder="3줄에 들어갈 문구">
+                    </div>
+                  </div>
+                  <button type="button" class="add-lettering-line-btn" data-index="0">+ 줄 추가</button>
+                  <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요 (최대 6줄)</small>
                 </div>
 
                 <div class="form-group">
@@ -486,34 +495,28 @@
                   <tr>
                     <th>사용 요일</th>
                     <th>발송일</th>
-                    <th>배송 예정</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><strong>월~수요일</strong> 사용</td>
                     <td>상담 후 결정</td>
-                    <td>95% 도착</td>
                   </tr>
                   <tr>
                     <td><strong>목요일</strong> 사용</td>
                     <td>월요일 발송</td>
-                    <td>5% 도착</td>
                   </tr>
                   <tr>
                     <td><strong>금요일</strong> 사용</td>
                     <td>화요일 발송</td>
-                    <td>목요일 도착</td>
                   </tr>
                   <tr>
                     <td><strong>토요일</strong> 사용</td>
                     <td>수요일 발송</td>
-                    <td>금요일 도착</td>
                   </tr>
                   <tr>
                     <td><strong>일요일</strong> 사용</td>
                     <td>목요일 발송</td>
-                    <td>토요일 도착</td>
                   </tr>
                 </tbody>
               </table>
@@ -667,6 +670,6 @@
     <script src="/supabase-orders.js?v=2026061814"></script>
 
     <!-- 메인 주문 스크립트 -->
-    <script src="/order-script-multi.js?v=2026062120"></script>
+    <script src="/order-script-multi.js?v=2026062205"></script>
   </body>
 </html>
