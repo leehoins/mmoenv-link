@@ -300,7 +300,7 @@ const DEFAULT_MENU_ITEMS = [
         id: 'menu-2',
         title: '주문하기',
         subtitle: '픽업·배송 예약과 맞춤 제작 상담',
-        url: '/order',
+        url: '/order/',
         target: '_self',
         style: 'primary',
         icon: 'M9 11H7v2h2v-2Z M13 11h-2v2h2v-2Z M17 11h-2v2h2v-2Z M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM19 20H5V9h14v11Z'
@@ -436,7 +436,7 @@ function normalizeMenuItem(item) {
         ? '작업 사진 보기'
         : item.subtitle || '';
     const url = item.url === 'order.html' || item.url === './order.html'
-        ? '/order'
+        ? '/order/'
         : item.url || '';
 
     return {

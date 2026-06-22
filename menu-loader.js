@@ -26,7 +26,7 @@ const DEFAULT_MENU_ITEMS = [
         id: 'menu-2',
         title: '주문하기',
         subtitle: '픽업·배송 예약과 맞춤 제작 상담',
-        url: '/order',
+        url: '/order/',
         target: '_self',
         style: 'primary',
         category: 'order',
@@ -89,7 +89,7 @@ function normalizeMenuItem(item) {
         ? '작업 사진 보기'
         : item.subtitle || '';
     const url = item.url === 'order.html' || item.url === './order.html'
-        ? '/order'
+        ? '/order/'
         : item.url || '';
 
     return {
