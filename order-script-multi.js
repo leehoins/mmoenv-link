@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc3/MDAxNzgwOTgxMzAwMjI2.1iBuIAdH7cTPjwKiZ3U6-Ht5hNjUl5YzRe8BgQUwYJgg.P6xQr2qceh0qgWRrBpvpDXep3iRGp4-zRZ7GsREhZG0g.JPEG/SE-b767c894-43f1-49f7-b86c-28c53cd4b7fe.jpg'
             },
             { 
-                value: 'mini-shape-24', 
-                text: '24인치 미니쉐입', 
-                hasLettering: false, 
+                value: 'mini-shape-24',
+                text: '24인치 미니쉐입',
+                hasLettering: true,
                 hasQuantity: false, 
                 price: 37000, 
                 priceText: '37,000원',
@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjQw/MDAxNzgwOTgzNTYxOTQ5.tPi3-yD77GpWjiS5u-aIAD8CrbPxJFxgz0JBMppV9AIg.AuBoKDWj_8Ltgx7mgQ1OdiZqr4n0CNMLhe4G9aSeQ70g.JPEG/SE-b8e86e0c-25d4-43ee-992a-2510e52331c1.jpg'
             },
             { 
-                value: 'balloon-bouquet-round', 
+                value: 'balloon-bouquet-round',
                 text: '다발 풍선(라운드)',
-                hasLettering: false, 
+                hasLettering: true,
                 hasQuantity: true, 
                 price: 4000, 
                 priceText: '4,000원/개',
@@ -60,9 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfNzEg/MDAxNzgyMDkxMTk5Mzg3.5F0Gweg_QW8Kw_CrbWyYkc6WQC424uF98I24fq1j-kQg.YnanvQI9qyRY4vNgrGa2t6UtQqr2yDkzdKiUM7vk7i8g.JPEG/SE-41f2c173-d75e-4ea2-af4d-153ff4c23984.jpg'
             },
             { 
-                value: 'heart-in-heart-20', 
-                text: '20인치 하트인하트', 
-                hasLettering: false, 
+                value: 'heart-in-heart-20',
+                text: '20인치 하트인하트',
+                hasLettering: true,
                 hasQuantity: false, 
                 price: 33000, 
                 priceText: '33,000원',
@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTky/MDAxNzgxNDE3ODU2MDAx.SY5vjaDXUnr6tKZKzh-5fGz8t_pmXyhFfHJUxyI82Acg.jkpS3mbNSd4uxdROSUxycpgXoP8meO6WDQ3vj2kslFcg.JPEG/E51587FE-A00D-451A-B6C9-80189C00A38E.JPG'
             },
             { 
-                value: 'number-foil-large', 
-                text: '숫자은박(대형)', 
-                hasLettering: false, 
+                value: 'number-foil-large',
+                text: '숫자은박(대형)',
+                hasLettering: true,
                 hasQuantity: true, 
                 price: 31000, 
                 priceText: '31,000원/개 (헬륨)',
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
             },
             { 
-                value: 'clear-balloon', 
-                text: '클리어 풍선', 
-                hasLettering: false, 
+                value: 'clear-balloon',
+                text: '클리어 풍선',
+                hasLettering: true,
                 hasQuantity: true, 
                 price: 8000, 
                 priceText: '8,000원/개',
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {
                 value: 'circus-balloon',
                 text: '서커스풍선',
-                hasLettering: false,
+                hasLettering: true,
                 hasQuantity: false,
                 price: 20000,
                 priceText: '20,000원',
