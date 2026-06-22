@@ -403,54 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${letteringLinesHTML(index, MIN_LETTERING_LINES)}
                         </div>
                         <button type="button" class="add-lettering-line-btn" data-index="${index}">+ 줄 추가</button>
-                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요 (최대 ${MAX_LETTERING_LINES}줄)</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fontType_${index}">폰트 선택</label>
-                        <select id="fontType_${index}" name="fontType_${index}">
-                            <option value="">기본 폰트</option>
-                            <option value="elegant">고급형 폰트</option>
-                            <option value="cute">귀여운 폰트</option>
-                            <option value="bold">굵은 폰트</option>
-                            <option value="script">필기체 폰트</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fontColor_${index}">폰트 색상</label>
-                        <div class="color-options">
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="black">
-                                <span class="color-preview" style="background: #000;"></span>
-                                블랙
-                            </label>
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="white">
-                                <span class="color-preview" style="background: #fff; border: 1px solid #ddd;"></span>
-                                화이트
-                            </label>
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="gold">
-                                <span class="color-preview" style="background: #ffd700;"></span>
-                                골드
-                            </label>
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="silver">
-                                <span class="color-preview" style="background: #c0c0c0;"></span>
-                                실버
-                            </label>
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="pink">
-                                <span class="color-preview" style="background: #ff69b4;"></span>
-                                핑크
-                            </label>
-                            <label class="color-option">
-                                <input type="radio" name="fontColor_${index}" value="blue">
-                                <span class="color-preview" style="background: #1e90ff;"></span>
-                                블루
-                            </label>
-                        </div>
+                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요 (최대 ${MAX_LETTERING_LINES}줄). 폰트와 색상은 상담을 통해 정해 드립니다</small>
                     </div>
                 </div>
 
@@ -1163,7 +1116,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .filter(p => p.lettering && p.lettering.text)
             .map(p => `[${p.type}] ${p.lettering.text}`)
             .join('\n');
-        const firstLettering = orderData.products.find(p => p.lettering && p.lettering.text);
         const productDetailsText = orderData.products
             .map((p, i) => {
                 let line = `${i + 1}. ${p.type}`;
@@ -1179,8 +1131,6 @@ document.addEventListener('DOMContentLoaded', function() {
             orderType: orderType.value,
             balloonType: productSummary.slice(0, 100),
             letteringText: letteringSummary || null,
-            fontType: firstLettering ? firstLettering.lettering.font : null,
-            fontColor: firstLettering ? firstLettering.lettering.color : null,
             extraOptions: orderData.products,
             orderDetails: `[주문 상품]\n${productDetailsText}\n\n[상세 요청사항]\n${orderData.notes || ''}`,
             deliveryMethod: orderData.delivery.method,
@@ -1221,10 +1171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             message += line + '\n';
             if (p.lettering && p.lettering.text) {
-                message += `   ✏️ 레터링: "${p.lettering.text}"`;
-                if (p.lettering.font) message += ` / 폰트: ${getFontTypeText(p.lettering.font)}`;
-                if (p.lettering.color) message += ` / 색상: ${getFontColorText(p.lettering.color)}`;
-                message += '\n';
+                message += `   ✏️ 레터링: "${p.lettering.text}"\n`;
             }
         });
 
@@ -1270,16 +1217,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function getOrderTypeText(value) {
         const types = { helium: '헬륨 풍선', air: '공기 풍선', consultation: '상담 후 결정' };
         return types[value] || value;
-    }
-
-    function getFontTypeText(value) {
-        const types = { '': '기본 폰트', elegant: '고급형 폰트', cute: '귀여운 폰트', bold: '굵은 폰트', script: '필기체 폰트' };
-        return types[value] || value;
-    }
-
-    function getFontColorText(value) {
-        const colors = { black: '블랙', white: '화이트', gold: '골드', silver: '실버', pink: '핑크', blue: '블루' };
-        return colors[value] || value;
     }
 
     function getLocationText(value) {
@@ -1354,9 +1291,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedProduct.hasLettering) {
             productData.lettering = {
-                text: collectLetteringText(index),
-                font: formData.get(`fontType_${index}`),
-                color: formData.get(`fontColor_${index}`)
+                text: collectLetteringText(index)
             };
         }
 
