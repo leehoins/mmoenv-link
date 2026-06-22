@@ -979,36 +979,9 @@ document.addEventListener('DOMContentLoaded', function() {
         threeDaysLater.setDate(today.getDate() + 3);
 
         const usageDateInput = document.getElementById('usageDate');
-        const desiredDateInput = document.getElementById('desiredDate');
 
         if (usageDateInput) {
             usageDateInput.min = threeDaysLater.toISOString().split('T')[0];
-            usageDateInput.addEventListener('change', updateDesiredDateBounds);
-        }
-
-        if (desiredDateInput) {
-            desiredDateInput.min = today.toISOString().split('T')[0];
-            desiredDateInput.addEventListener('change', updateDesiredDateBounds);
-        }
-
-        updateDesiredDateBounds();
-    }
-
-    // 희망 출고일(픽업/발송일)은 실제 사용일보다 늦을 수 없고, 최소 2일 전이어야 함
-    function updateDesiredDateBounds() {
-        const usageDateInput = document.getElementById('usageDate');
-        const desiredDateInput = document.getElementById('desiredDate');
-        if (!usageDateInput || !desiredDateInput || !usageDateInput.value) return;
-
-        const maxDesiredDate = new Date(usageDateInput.value);
-        maxDesiredDate.setDate(maxDesiredDate.getDate() - 2);
-        const maxStr = maxDesiredDate.toISOString().split('T')[0];
-
-        desiredDateInput.max = maxStr;
-
-        if (desiredDateInput.value && desiredDateInput.value > maxStr) {
-            desiredDateInput.value = '';
-            alert('희망 출고일은 실제 사용일보다 최소 2일 전이어야 합니다. 출고일을 다시 선택해 주세요.');
         }
     }
 
@@ -1065,7 +1038,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 schedule: {
                     usageDate: formData.get('usageDate'),
-                    desiredDate: formData.get('desiredDate'),
+                    // 희망 출고일 입력란은 폼에서 제거됨. DB의 desired_date가
+                    // NOT NULL이라 실제 사용일 값을 그대로 채워 넣음
+                    desiredDate: formData.get('usageDate'),
                     pickupTime: formData.get('preferredHour') && formData.get('preferredMinute')
                         ? `${formData.get('preferredHour')}:${formData.get('preferredMinute')}`
                         : ''
@@ -1197,9 +1172,6 @@ document.addEventListener('DOMContentLoaded', function() {
         message += `\n📅 일정\n`;
         if (orderData.schedule.usageDate) {
             message += `사용/수령일: ${formatOrderDate(orderData.schedule.usageDate)}\n`;
-        }
-        if (orderData.schedule.desiredDate) {
-            message += `희망 출고일: ${formatOrderDate(orderData.schedule.desiredDate)}\n`;
         }
 
         message += `\n✅ 확인사항\n- 주문 안내사항 확인 및 동의\n- 취소/환불 정책 동의\n- 상담 연락 동의\n`;
