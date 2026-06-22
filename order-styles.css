@@ -1864,6 +1864,19 @@
   font-size: 13px;
 }
 
+.faq-answer ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.faq-answer li {
+  margin-bottom: 0.4rem;
+}
+
+.faq-answer li:last-child {
+  margin-bottom: 0;
+}
+
 .form-actions {
   padding: 42px 10px 0;
   text-align: left;
