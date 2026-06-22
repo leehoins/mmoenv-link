@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 priceText: '4,000원/개',
                 options: '하트 고무 풍선 변경 시 6,000원/개, 코팅 풍선 변경 시 8,000원/개',
                 special: 'bouquet',
-                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc0/MDAxNzgwOTgyNjcwODA0.iDEn30oudByMKY58TGc1RkRmApDTfBFE2GYNE0nZ7Aog.rYy8yfkwllE0Bk64ijzT8ijjUUlrmvA4PBiiHl6z2Y8g.JPEG/SE-3696bf1f-7c7c-42bf-8a1b-abc94676cc36.jpg'
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfNzEg/MDAxNzgyMDkxMTk5Mzg3.5F0Gweg_QW8Kw_CrbWyYkc6WQC424uF98I24fq1j-kQg.YnanvQI9qyRY4vNgrGa2t6UtQqr2yDkzdKiUM7vk7i8g.JPEG/SE-41f2c173-d75e-4ea2-af4d-153ff4c23984.jpg'
             },
             { 
                 value: 'heart-in-heart-20', 
@@ -91,13 +91,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTg3/MDAxNzgxNDE3OTE0NjM1.BqzT9b39V24Efr1GG7HHMqHnUjJXMpK2G6HRfsIGTGcg.Wb_xj6hA_HfJB9PgSEnQudPR1CmCgnXPcUilCvSgGIQg.JPEG/SE-f463a61b-9c15-417d-b58d-2d10339f72e7.jpg'
             },
             { 
-                value: 'mini-ombre', 
-                text: '미니옹브레', 
-                hasLettering: true, 
-                hasQuantity: true, 
-                price: 6000, 
+                value: 'mini-ombre',
+                text: '미니옹브레',
+                hasLettering: true,
+                hasQuantity: true,
+                price: 6000,
                 priceText: '6,000원/개',
-                options: '레터링 추가시 7,500원/개'
+                options: '레터링 추가시 7,500원/개',
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfMjM4/MDAxNzgyMDkzNTE0MDAz.439vUKubs7IPV-cTDxPmT3hT4ssHZRo71kPkfD_fc4Eg.ApzoJmbQBTpKcy-IZ8DkldBYvvTh1g2JCgoI-ZS7EgUg.PNG/SE-85772596-6763-4635-b64c-7ced47c4499d.png'
             },
             {
                 value: 'circus-balloon',
@@ -106,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 hasQuantity: false,
                 price: 20000,
                 priceText: '20,000원',
-                options: '숫자풍선 개당 3,000원 추가'
+                options: '숫자풍선 개당 3,000원 추가',
+                imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfMTgw/MDAxNzgyMDkzNDkwODYy.ICjpHTP86WVhP8eiOoQ6QK9dP9ZACgQVqcXhv6QtiWcg.fdt24GrlTtr7zO_aW9dLKQDHiukRf081nhRZ4ZOJoqIg.JPEG/SE-98b7af5a-830c-47b4-90bc-a39511fe51c2.jpg'
             }
         ],
         air: [
