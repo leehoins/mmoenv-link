@@ -510,6 +510,7 @@
 }
 
 .radio-label {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -528,7 +529,15 @@
 }
 
 .radio-label input[type="radio"] {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
 
 .radio-custom {
@@ -894,6 +903,7 @@
 
 /* 체크박스 커스텀 스타일 */
 .checkbox-label {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -904,7 +914,15 @@
 }
 
 .checkbox-label input[type="checkbox"] {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
 
 .checkbox-custom {
