@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     class="lettering-line-input"
                     data-index="${index}"
                     data-line="${lineNumber}"
-                    ${lineNumber === 1 ? `id="letteringText_${index}" name="letteringText_${index}" required` : ''}
+                    ${lineNumber === 1 ? `id="letteringText_${index}" name="letteringText_${index}"` : ''}
                     placeholder="${lineNumber}줄에 들어갈 문구"
                 >
             </div>
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <!-- 레터링 관련 옵션 -->
                 <div class="lettering-options" id="letteringOptions_${index}" style="display: none;">
                     <div class="form-group">
-                        <label>레터링 문구 <span class="required">*</span></label>
+                        <label>레터링 문구 (선택)</label>
                         <div class="lettering-lines" id="letteringLines_${index}">
                             ${letteringLinesHTML(index, MIN_LETTERING_LINES)}
                         </div>
