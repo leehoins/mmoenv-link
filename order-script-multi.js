@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 4000, 
                 priceText: '4,000원/개',
                 options: '하트 고무 풍선 변경 시 6,000원/개, 코팅 풍선 변경 시 8,000원/개',
-                special: 'bouquet',
+                hideQuantityHint: true,
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfNzEg/MDAxNzgyMDkxMTk5Mzg3.5F0Gweg_QW8Kw_CrbWyYkc6WQC424uF98I24fq1j-kQg.YnanvQI9qyRY4vNgrGa2t6UtQqr2yDkzdKiUM7vk7i8g.JPEG/SE-41f2c173-d75e-4ea2-af4d-153ff4c23984.jpg'
             },
             { 
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 5000, 
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
+                hideQuantityHint: true,
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjA5/MDAxNzgwOTg3MjI3MTcz.9pKnBnRz_B8QlhYzDGUwPWEKCc_vidGJrYBQxmI5qAkg.XHPd7oKjOQDCLDsVn71MWuHP9fnalQ0WzuA4uTb2pY4g.JPEG/IMG_9731.JPG'
             },
             {
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 5000,
                 priceText: '5,000원/송이',
                 options: '3송이 14,000원, 5송이 23,000원, 7송이까지 택배 가능',
+                hideQuantityHint: true,
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjE4/MDAxNzgwOTg3MjgyOTAz.D6WCByBlq56k4MNQ4YOH9vaBsyy0EILIg_WaH5PaW9cg.aOHhsXh_2ZOs8sYjuE3y0f586l6RU6Gbweio0P0Y1dQg.JPEG/SE-2913a741-17f4-4291-96c3-d08f258d2ba3.jpg'
             },
             {
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: 9000,
                 priceText: '9,000원/개',
                 options: '높이 약 90cm, DIY 택배 가능',
+                hideQuantityHint: true,
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
             }
         ]
@@ -366,23 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="price-display" id="priceDisplay_${index}" style="display: none;">
                             <span class="calculated-price"></span>
                         </div>
-                        <small class="form-hint">10개 이상 주문 시 할인 혜택이 있습니다</small>
-                    </div>
-                </div>
-
-                <!-- 다발 풍선 특별 안내사항 -->
-                <div class="balloon-bouquet-notice" id="balloonBouquetNotice_${index}" style="display: none;">
-                    <div class="warning-box">
-                        <h4>다발 풍선 중요 안내사항</h4>
-                        <ul>
-                            <li><strong>고무 풍선 특성상 체공 시간이 매우 짧습니다!</strong></li>
-                            <li>유지 용액을 넣지 않을 경우 최대 <strong>4~5시간 이내</strong></li>
-                            <li>유지 용액을 넣을 경우 최대 <strong>12시간 이내</strong></li>
-                            <li><strong>당일 제작, 당일 사용</strong> 하셔야 하며, <strong>택배 불가능</strong> 상품입니다</li>
-                            <li>유지 용액은 무료로 넣어 드립니다</li>
-                            <li>유지 용액을 넣을 경우 투명 풍선은 얼룩처럼 보일 수 있습니다</li>
-                            <li>코팅 풍선 변경 시에만 택배 가능합니다</li>
-                        </ul>
+                        <small class="form-hint" id="quantityHint_${index}">10개 이상 주문 시 할인 혜택이 있습니다</small>
                     </div>
                 </div>
 
@@ -392,7 +379,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h4>💎 클리어풍선 안내사항</h4>
                         <ul>
                             <li><strong>택배 불가, 픽업 및 퀵 가능</strong></li>
-                            <li>투명하고 맑지만 대략 최소 <strong>3-7일 정도 유지</strong> 가능합니다</li>
                         </ul>
                     </div>
                 </div>
@@ -405,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${letteringLinesHTML(index, MIN_LETTERING_LINES)}
                         </div>
                         <button type="button" class="add-lettering-line-btn" data-index="${index}">+ 줄 추가</button>
-                        <small class="form-hint">정확한 맞춤법과 띄어쓰기로 입력해 주세요 (최대 ${MAX_LETTERING_LINES}줄). 폰트와 색상은 상담을 통해 정해 드립니다</small>
+                        <small class="form-hint">정확한 맞춤법과 띄어쓰기, 대소문자를 구분하여 입력해 주세요 (최대 ${MAX_LETTERING_LINES}줄). 폰트와 색상은 상담을 통해 결정됩니다</small>
                     </div>
                 </div>
 
@@ -720,45 +706,43 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleProductOptions(index) {
         const balloonTypeSelect = document.getElementById(`balloonType_${index}`);
         const quantityOptions = document.getElementById(`quantityOptions_${index}`);
+        const quantityHint = document.getElementById(`quantityHint_${index}`);
         const letteringOptions = document.getElementById(`letteringOptions_${index}`);
-        const balloonBouquetNotice = document.getElementById(`balloonBouquetNotice_${index}`);
         const clearBalloonNotice = document.getElementById(`clearBalloonNotice_${index}`);
         const productThumbnail = document.getElementById(`productThumbnail_${index}`);
-        
+
         if (!balloonTypeSelect) return;
-        
+
         const selectedValue = balloonTypeSelect.value;
         const orderTypeValue = orderType.value;
-        
+
         // 모든 옵션 숨기기
         if (quantityOptions) quantityOptions.style.display = 'none';
         if (letteringOptions) letteringOptions.style.display = 'none';
-        if (balloonBouquetNotice) balloonBouquetNotice.style.display = 'none';
         if (clearBalloonNotice) clearBalloonNotice.style.display = 'none';
         if (productThumbnail) productThumbnail.style.display = 'none';
-        
+
         if (selectedValue && orderTypeValue && MMOENV_PRODUCTS[orderTypeValue]) {
             const selectedProduct = MMOENV_PRODUCTS[orderTypeValue].find(p => p.value === selectedValue);
-            
+
             if (selectedProduct) {
                 // 상품 섬네일 표시
                 showProductThumbnail(index, selectedProduct);
-                
+
                 // 수량 옵션 표시
                 if (selectedProduct.hasQuantity && quantityOptions) {
                     quantityOptions.style.display = 'block';
+                    if (quantityHint) {
+                        quantityHint.style.display = selectedProduct.hideQuantityHint ? 'none' : 'block';
+                    }
                 }
-                
+
                 // 레터링 옵션 표시
                 if (selectedProduct.hasLettering && letteringOptions) {
                     letteringOptions.style.display = 'block';
                 }
-                
+
                 // 특별 안내사항 표시
-                if (selectedProduct.special === 'bouquet' && balloonBouquetNotice) {
-                    balloonBouquetNotice.style.display = 'block';
-                }
-                
                 if (selectedProduct.special === 'clear' && clearBalloonNotice) {
                     clearBalloonNotice.style.display = 'block';
                 }
