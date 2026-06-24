@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             { 
                 value: 'heart-in-heart-20',
-                text: '20인치 하트인하트',
+                text: '22인치 하트인하트',
                 hasLettering: true,
                 hasQuantity: false, 
                 price: 33000, 
