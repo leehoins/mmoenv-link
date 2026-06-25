@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '24인치 버블인버블 레터링풍선', 
                 hasLettering: true, 
                 hasQuantity: false, 
-                price: 37000, 
-                priceText: '37,000원',
+                price: 35000,
+                priceText: '35,000원',
                 options: '리본 + 무게추 포함, 추가 리본 2개에 1,000원',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTk2/MDAxNzgwOTgyMDEwOTYw.11C5e6zfiXVmwdPaJVRtDU_1Ei9I1RpAothB6omtJxwg.DarqQVPbxpASdALAl2mGZlW2fbvrGNgintqZey4ayzwg.JPEG/SE-bcd6b9d4-cfb6-4ba1-8c59-bb4581d75f70.jpg'
             },
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '24인치 마카롱 레터링 풍선', 
                 hasLettering: true, 
                 hasQuantity: false, 
-                price: 35000, 
-                priceText: '35,000원',
+                price: 33000,
+                priceText: '33,000원',
                 options: '리본 + 무게추 포함',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTc3/MDAxNzgwOTgxMzAwMjI2.1iBuIAdH7cTPjwKiZ3U6-Ht5hNjUl5YzRe8BgQUwYJgg.P6xQr2qceh0qgWRrBpvpDXep3iRGp4-zRZ7GsREhZG0g.JPEG/SE-b767c894-43f1-49f7-b86c-28c53cd4b7fe.jpg'
             },
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '24인치 미니쉐입',
                 hasLettering: true,
                 hasQuantity: false, 
-                price: 37000, 
-                priceText: '37,000원',
+                price: 35000,
+                priceText: '35,000원',
                 options: '컨페티 + 리본 + 무게추 포함, 이너종류: 베이비/반지',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjQw/MDAxNzgwOTgzNTYxOTQ5.tPi3-yD77GpWjiS5u-aIAD8CrbPxJFxgz0JBMppV9AIg.AuBoKDWj_8Ltgx7mgQ1OdiZqr4n0CNMLhe4G9aSeQ70g.JPEG/SE-b8e86e0c-25d4-43ee-992a-2510e52331c1.jpg'
             },
@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '22인치 하트인하트',
                 hasLettering: true,
                 hasQuantity: false, 
-                price: 33000, 
-                priceText: '33,000원',
+                price: 32000,
+                priceText: '32,000원',
                 options: '리본 + 무게추 포함',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MTRfMTky/MDAxNzgxNDE3ODU2MDAx.SY5vjaDXUnr6tKZKzh-5fGz8t_pmXyhFfHJUxyI82Acg.jkpS3mbNSd4uxdROSUxycpgXoP8meO6WDQ3vj2kslFcg.JPEG/E51587FE-A00D-451A-B6C9-80189C00A38E.JPG'
             },
@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '숫자은박(대형)',
                 hasLettering: true,
                 hasQuantity: true, 
-                price: 31000, 
-                priceText: '31,000원/개 (헬륨)',
-                options: '높이 약 90cm, 공기 9,000원/개 (DIY 택배가능)',
+                price: 29000,
+                priceText: '29,000원/개 (헬륨)',
+                options: '높이 약 90cm, 공기 8,000원/개 (DIY 택배가능)',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
             },
             { 
@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '서커스풍선',
                 hasLettering: true,
                 hasQuantity: false,
-                price: 20000,
-                priceText: '20,000원',
+                price: 19000,
+                priceText: '19,000원',
                 options: '숫자풍선 개당 3,000원 추가',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjJfMTgw/MDAxNzgyMDkzNDkwODYy.ICjpHTP86WVhP8eiOoQ6QK9dP9ZACgQVqcXhv6QtiWcg.fdt24GrlTtr7zO_aW9dLKQDHiukRf081nhRZ4ZOJoqIg.JPEG/SE-98b7af5a-830c-47b4-90bc-a39511fe51c2.jpg'
             }
@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '풍선케이크(기본)',
                 hasLettering: false,
                 hasQuantity: false,
-                price: 21000,
-                priceText: '21,000원',
+                price: 19000,
+                priceText: '19,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMTUx/MDAxNzgwOTgzMTc5MDE4.JqHScV-AJypD9HP5uTEpoQbVLgx7gbOsID3Q9f7bUFog.EHn2_xsIqLAVtL9U_j0wH8-1SWGvcIfAH44qz5XGdHog.JPEG/SE-e19c8ba8-9ec0-40ad-82bc-08300042aa76.jpg'
             },
@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '풍선케이크(미니)',
                 hasLettering: false,
                 hasQuantity: false,
-                price: 14000,
-                priceText: '14,000원',
+                price: 13000,
+                priceText: '13,000원',
                 options: '촛대에 리본1개 포함, 추가2개 추가금 1,000원',
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjAg/MDAxNzgwOTgzMjEzNjM5.LwXFuNkaCPmxUO8w6gOvoUoYn2hCUlEXrYLbfiBbsiIg.m__200fJ9PSobJtHrD8vsLG1l5Y8U521MpE3L3vE_3Ig.JPEG/SE-2eb3d341-bbd1-48ad-ba97-1e8767f162b7.jpg'
             },
@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '숫자은박(공기)',
                 hasLettering: false,
                 hasQuantity: true,
-                price: 9000,
-                priceText: '9,000원/개',
+                price: 8000,
+                priceText: '8,000원/개',
                 options: '높이 약 90cm, DIY 택배 가능',
                 hideQuantityHint: true,
                 imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MDlfMjU4/MDAxNzgwOTg0NjMxMTc0.U3EJ0A3W-sObE2suLG8nwvKCNpaBt4yoeOC0fj6j_fEg.tGYI9KwuUW_BhKHP43aWtJ0fv89abZnY5v5iiXVjf1Ig.JPEG/SE-9c2ebb78-e15f-45b9-aea5-202f59ef5371.jpg'
