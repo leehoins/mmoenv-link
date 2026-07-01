@@ -288,6 +288,15 @@ const STORAGE_KEY = 'mmoenv_menu_items';
 // 기본 메뉴 데이터
 const DEFAULT_MENU_ITEMS = [
     {
+        id: 'menu-3',
+        title: '카카오 상담하기',
+        subtitle: '자유로운 상담 및 특별 제작 문의',
+        url: 'https://pf.kakao.com/_wDixjX',
+        target: '_blank',
+        style: 'normal',
+        icon: 'M12 4.2c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7l-.7 2.8c-.1.4.3.7.6.4l3.2-2.2c.5.1.9.1 1.4.1 4.7 0 8.5-3 8.5-6.8S16.7 4.2 12 4.2Z'
+    },
+    {
         id: 'menu-1',
         title: '모엔브 상품 구경하기',
         subtitle: '바로 구매 가능한 상품 보기',
@@ -304,15 +313,6 @@ const DEFAULT_MENU_ITEMS = [
         target: '_self',
         style: 'primary',
         icon: 'M9 11H7v2h2v-2Z M13 11h-2v2h2v-2Z M17 11h-2v2h2v-2Z M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM19 20H5V9h14v11Z'
-    },
-    {
-        id: 'menu-3',
-        title: '카카오 상담하기',
-        subtitle: '자유로운 상담 및 특별 제작 문의',
-        url: 'https://pf.kakao.com/_wDixjX',
-        target: '_blank',
-        style: 'normal',
-        icon: 'M12 4.2c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7l-.7 2.8c-.1.4.3.7.6.4l3.2-2.2c.5.1.9.1 1.4.1 4.7 0 8.5-3 8.5-6.8S16.7 4.2 12 4.2Z'
     },
     {
         id: 'menu-4',
@@ -421,11 +421,11 @@ function loadMenuItems() {
     const saved = localStorage.getItem(STORAGE_KEY);
     try {
         currentMenuItems = saved
-            ? JSON.parse(saved).map(normalizeMenuItem)
-            : DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+            ? prioritizeKakaoConsult(JSON.parse(saved).map(normalizeMenuItem))
+            : prioritizeKakaoConsult(DEFAULT_MENU_ITEMS.map(normalizeMenuItem));
     } catch (error) {
         console.error('메뉴 데이터 파싱 오류:', error);
-        currentMenuItems = DEFAULT_MENU_ITEMS.map(normalizeMenuItem);
+        currentMenuItems = prioritizeKakaoConsult(DEFAULT_MENU_ITEMS.map(normalizeMenuItem));
     }
     renderMenuList();
 }
@@ -447,6 +447,24 @@ function normalizeMenuItem(item) {
         target: item.target || '_self',
         style: item.style || 'normal',
     };
+}
+
+function prioritizeKakaoConsult(items) {
+    const kakaoIndex = items.findIndex(isKakaoConsultItem);
+    if (kakaoIndex <= 0) return items;
+
+    const kakaoItem = items[kakaoIndex];
+    return [
+        kakaoItem,
+        ...items.slice(0, kakaoIndex),
+        ...items.slice(kakaoIndex + 1),
+    ];
+}
+
+function isKakaoConsultItem(item) {
+    const title = `${item.title || ''}`;
+    const url = `${item.url || ''}`.toLowerCase();
+    return title.includes('카카오') || title.includes('카톡') || url.includes('pf.kakao.com');
 }
 
 // 메뉴 목록 렌더링
