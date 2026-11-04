@@ -299,8 +299,10 @@
       return { x: r.left - b.left + r.width * ax, y: r.top - b.top + r.height * ay };
     }
     function shown(el) { return el && el.offsetParent !== null && getComputedStyle(el).display !== 'none'; }
+    function clampP(p) { return { x: Math.max(4, Math.min(p.x, board.clientWidth - 78)), y: Math.max(4, Math.min(p.y, board.clientHeight - 40)) }; }
     function place(cur, p) { cur.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)'; cur._p = p; }
     function move(cur, p, dur) {
+      p = clampP(p);
       var from = cur._p || p;
       place(cur, p);
       var a = cur.animate([{ transform: 'translate(' + from.x + 'px,' + from.y + 'px)' }, { transform: 'translate(' + p.x + 'px,' + p.y + 'px)' }], { duration: dur, easing: EASE });
