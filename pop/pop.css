@@ -289,9 +289,9 @@ ul, ol { list-style: none; }
 .c-island:hover img { transform: translateY(-8px); }
 .c-island figcaption { position: absolute; font-family: var(--font-serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); line-height: .95; color: var(--serif); text-align: center; text-shadow: 0 0 10px var(--bg), 0 0 4px var(--bg); }
 .c-island--1 { left: 4%; top: 14%; }
-.c-island--1 figcaption { left: -4%; bottom: 18%; }
+.c-island--1 figcaption { left: -6%; bottom: 4%; }
 .c-island--2 { left: 35%; top: 0; }
-.c-island--2 figcaption { right: 2%; top: -6%; }
+.c-island--2 figcaption { left: -12%; right: auto; top: 4%; }
 .c-island--3 { right: 2%; top: 10%; }
 .c-island--3 figcaption { left: auto; right: 4%; bottom: -2%; }
 .c-island--4 { left: 20%; top: 50%; }
