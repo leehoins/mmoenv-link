@@ -12,7 +12,7 @@
   --teal: #2c5b76;
   --orange: #e59d7b;
   --font: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  --font-serif: "Instrument Serif", "Gowun Batang", Georgia, serif;
+  --font-serif: "Fraunces", "Hahmlet", Georgia, serif;
   --font-hand: "Gaegu", "Pretendard Variable", sans-serif;
   --ease: cubic-bezier(.2, .7, .2, 1);
   --wrap: 1300px;
@@ -758,5 +758,61 @@ ul, ol { list-style: none; }
   .c-hub__labels li::before { transform: none !important; }
   .s-core__cta .c-quote-serif--big { clip-path: none !important; }
   .c-float-layer, .s-band__puff, .c-hub__pulse { display: none; }
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+   Fibery pairs a heavy grotesk with a soft italic serif (Fraunces).
+   Korean: Pretendard for text, Hahmlet as the serif partner
+   (upright — no fake italics on Hangul).
+   ========================================================= */
+body { font-weight: 450; letter-spacing: -.012em; }
+.s-hero__title, .c-h2, .s-teal__title, .s-band__title, .s-support__title, .s-final__title { text-wrap: balance; }
+p, blockquote, .c-card__text, .c-route__body { text-wrap: pretty; }
+
+.s-hero__title { font-weight: 820; line-height: 1.1; letter-spacing: -.035em; }
+.s-hero__lead { font-weight: 500; line-height: 1.5; color: #3d332e; }
+.c-h2 { font-size: clamp(28px, 3.1vw, 42px); font-weight: 720; line-height: 1.22; letter-spacing: -.028em; }
+.c-h2--xl { font-size: clamp(34px, 4.2vw, 54px); font-weight: 820; line-height: 1.12; letter-spacing: -.035em; }
+.s-teal__title, .s-band__title, .s-support__title { font-weight: 820; letter-spacing: -.032em; line-height: 1.12; }
+.s-final__title { font-weight: 840; letter-spacing: -.038em; line-height: 1.12; }
+.s-care__pre, .s-core__lead, .s-insta__head p { font-weight: 500; }
+
+.c-btn, .c-note, .c-tab, .c-chip, .c-vchip, .c-pill { font-weight: 650; }
+.l-header__nav, .l-header__actions { font-weight: 550; }
+.c-bubble blockquote { font-weight: 500; letter-spacing: -.016em; line-height: 1.45; }
+.c-bubble blockquote b, .c-note-card b { font-weight: 780; }
+.c-note-card { font-weight: 600; }
+.c-panel__title, .c-mini__title, .c-card__title, .c-route__title { font-weight: 750; letter-spacing: -.02em; }
+.c-table, .c-life b, .c-board__meta span { font-variant-numeric: tabular-nums; }
+
+/* serif accents */
+.c-quote-serif, .c-serif-tag, .c-bubble figcaption i, .c-island figcaption, .c-note-card__by i {
+  font-family: var(--font-serif);
+  font-synthesis: none;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "WONK" 0;
+}
+.c-quote-serif { font-weight: 400; line-height: 1.08; letter-spacing: -.022em; }
+.c-quote-serif small { font-family: var(--font-serif); font-size: 17px; font-weight: 500; letter-spacing: -.01em; opacity: .9; }
+.c-quote-serif--big { font-weight: 400; letter-spacing: -.03em; }
+.c-serif-tag { font-size: 20px; font-weight: 400; }
+.c-bubble figcaption i, .c-note-card__by i { font-size: 16px; font-weight: 500; letter-spacing: -.02em; }
+.c-island figcaption { font-weight: 400; line-height: 1; letter-spacing: -.01em; }
+
+/* Korean-only accent lines: Hahmlet sits larger than Fraunces italic, so tune per block */
+.s-islands__dog .c-quote-serif, .c-hub__dog .c-quote-serif, .s-core__dog .c-quote-serif {
+  font-weight: 500; letter-spacing: -.05em; line-height: 1.22;
+}
+.s-islands__dog .c-quote-serif { font-size: 23px; }
+.c-hub__dog .c-quote-serif { font-size: 28px; }
+.s-core__dog .c-quote-serif { font-size: 23px; }
+.s-core__cta .c-quote-serif--big small { font-size: 19px; letter-spacing: -.04em; }
+
+@media (max-width: 760px) {
+  .s-hero__title { font-size: 42px; }
+  .c-hub__dog .c-quote-serif { font-size: 22px; }
+  .s-islands__dog .c-quote-serif, .s-core__dog .c-quote-serif { font-size: 20px; }
 }
 
