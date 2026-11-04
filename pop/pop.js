@@ -57,8 +57,8 @@
   };
 
   var CHIPS = {
-    a: [['🎂', 'HAPPY BIRTHDAY'], ['💍', 'Will you marry me?'], ['🎓', '합격 축하해!'], ['💐', '엄마 아빠 사랑해요'], ['👶', 'Welcome Baby'], ['🥂', '결혼 축하해'], ['🎉', 'Grand Open'], ['💌', '우리 100일'], ['🏆', '수고했어 오늘도']],
-    b: [['✨', 'HAPPY 30th'], ['👰', 'Bride to be'], ['🍰', '서윤아 생일 축하해'], ['🎈', 'Congratulations'], ['🌷', '선생님 감사합니다'], ['💪', '퇴사 축하해'], ['🐶', '두부야 생일 축하해'], ['💗', 'Love you forever'], ['🍾', '전역 축하해']]
+    a: [['cake', 'HAPPY BIRTHDAY'], ['ring', 'Will you marry me?'], ['gradcap', '합격 축하해!'], ['bouquet', '엄마 아빠 사랑해요'], ['rattle', 'Welcome Baby'], ['cheers', '결혼 축하해'], ['popper', 'Grand Open'], ['letter', '우리 100일'], ['trophy', '수고했어 오늘도']],
+    b: [['sparkle', 'HAPPY 30th'], ['dress', 'Bride to be'], ['cake', '서윤아 생일 축하해'], ['balloon', 'Congratulations'], ['tulip', '선생님 감사합니다'], ['star', '퇴사 축하해'], ['paw', '두부야 생일 축하해'], ['heart', 'Love you forever'], ['bottle', '전역 축하해']]
   };
 
   function won(n) { return n.toLocaleString('ko-KR') + '원'; }
@@ -68,7 +68,7 @@
     var tb = document.querySelector('[data-product-rows]');
     if (!tb) return;
     tb.innerHTML = PRODUCTS.map(function (p, i) {
-      var tag = p[1] === 'he' ? '<span class="c-tag c-tag--he">🎈 헬륨</span>' : '<span class="c-tag c-tag--air">✿ 공기</span>';
+      var tag = p[1] === 'he' ? '<span class="c-tag c-tag--he">' + window.mmIcons.icon('balloon') + '헬륨</span>' : '<span class="c-tag c-tag--air">' + window.mmIcons.icon('flower') + '공기</span>';
       return '<tr><td><span class="n">' + (i + 1) + '</span>' + esc(p[0]) + '</td><td>' + tag + '</td><td>' + won(p[2]) + '</td><td class="c-memo">' + esc(p[3]) + '</td></tr>';
     }).join('');
   }
@@ -113,7 +113,7 @@
   function renderChips() {
     document.querySelectorAll('[data-chips]').forEach(function (row) {
       var list = CHIPS[row.dataset.chips] || [];
-      var unit = list.map(function (c) { return '<span class="c-chip"><i>' + c[0] + '</i>' + esc(c[1]) + '</span>'; }).join('');
+      var unit = list.map(function (c) { return '<span class="c-chip">' + window.mmIcons.icon(c[0]) + esc(c[1]) + '</span>'; }).join('');
       row.innerHTML = unit + unit;
     });
   }
@@ -436,6 +436,7 @@
 
 
   function init() {
+    if (window.mmIcons) window.mmIcons.renderAll();
     renderProducts();
     setupMotion();
     setupViews();
