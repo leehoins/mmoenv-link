@@ -1,361 +1,147 @@
-// m.moenv /pop/ — balloon pop link page
+// m.moenv /pop/ — Fibery-style landing interactions
 (function () {
   'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var STORAGE_KEY = 'mmoenv_menu_items';
-  var OPENING_KEY = 'mmoenv_pop_opening';
-  var root = document.documentElement;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ------------------------------------------------------------------
-   * Link data (same defaults + normalisation as /menu-loader.js)
-   * ------------------------------------------------------------------ */
-  var CATEGORY = {
-    shop: { label: '상품', en: 'SHOP', color: '#5684fe', thumb: 'ch-gift' },
-    order: { label: '주문', en: 'ORDER', color: '#ff96ff', thumb: 'ch-star' },
-    contact: { label: '상담', en: 'CONTACT', color: '#caff97', thumb: 'ch-round' },
-    social: { label: 'SNS', en: 'SNS', color: '#d0b9ff', thumb: 'ch-dog' }
-  };
-  var EXTRA_THUMBS = ['ch-heart', 'ch-ride', 'ch-gift', 'ch-star'];
-
-  var DEFAULT_MENU_ITEMS = [
-    { id: 'menu-3', title: '카카오 상담하기', subtitle: '자유로운 상담 및 특별 제작 문의', url: 'https://pf.kakao.com/_wDixjX', target: '_blank', category: 'contact' },
-    { id: 'menu-1', title: '모엔브 상품 구경하기', subtitle: '바로 구매 가능한 상품 보기', url: 'https://blog.naver.com/juul2/224314871649', target: '_blank', category: 'shop' },
-    { id: 'menu-2', title: '주문하기', subtitle: '픽업·배송 예약과 맞춤 제작 상담', url: '/order/', target: '_self', category: 'order' },
-    { id: 'menu-4', title: '인스타그램 보기', subtitle: '작업 사진 보기', url: 'https://www.instagram.com/m.moenv', target: '_blank', category: 'social' }
+  // Real catalogue from /order-script-multi.js
+  var PRODUCTS = [
+    ['24인치 버블인버블 레터링풍선', 'he', 35000, '레터링 · 유지 약 7~10일'],
+    ['24인치 마카롱 레터링 풍선', 'he', 33000, '레터링 · 유지 약 7~10일'],
+    ['24인치 미니쉐입', 'he', 35000, '레터링 가능'],
+    ['22인치 하트인하트', 'he', 32000, '레터링 가능'],
+    ['숫자은박(대형)', 'he', 29000, '생일·기념일 숫자'],
+    ['서커스풍선', 'he', 19000, '레터링 가능'],
+    ['클리어 풍선', 'he', 8000, '택배 불가 · 픽업·퀵 가능'],
+    ['미니옹브레', 'he', 6000, '레터링 가능'],
+    ['다발 풍선(라운드)', 'he', 4000, '개당 · 제작 후 10시간 이내'],
+    ['풍선케이크(기본)', 'air', 19000, '유지 1~3일'],
+    ['풍선케이크(미니)', 'air', 13000, '유지 1~3일'],
+    ['숫자은박(공기)', 'air', 8000, '뜨지 않는 숫자'],
+    ['데이지 꽃풍선', 'air', 5000, '유지 1~3일'],
+    ['튤립 꽃풍선', 'air', 5000, '유지 1~3일']
   ];
 
-  function inferCategory(item) {
-    var title = ((item.title || '') + ' ' + (item.subtitle || '')).toLowerCase();
-    var url = (item.url || '').toLowerCase();
-    if (url.indexOf('order') > -1 || title.indexOf('주문') > -1) return 'order';
-    if (url.indexOf('kakao') > -1 || title.indexOf('상담') > -1) return 'contact';
-    if (url.indexOf('instagram') > -1 || title.indexOf('인스타') > -1) return 'social';
-    return 'shop';
-  }
-
-  function normalizeMenuItem(item) {
-    var title = item.title || '제목 없음';
-    var subtitle = title.indexOf('인스타그램') > -1 && /최신/.test(item.subtitle || '') ? '작업 사진 보기' : item.subtitle || '';
-    var url = item.url === 'order.html' || item.url === './order.html' ? '/order/' : item.url || '';
-    var category = CATEGORY[item.category] ? item.category : inferCategory(item);
-    return { id: item.id, title: title, subtitle: subtitle, url: url, target: item.target || '_self', category: category };
-  }
-
-  function isKakao(item) {
-    return /카카오|카톡/.test(item.title || '') || (item.url || '').toLowerCase().indexOf('pf.kakao.com') > -1;
-  }
-
-  function prioritizeKakao(items) {
-    var i = items.findIndex(isKakao);
-    if (i <= 0) return items;
-    return [items[i]].concat(items.slice(0, i), items.slice(i + 1));
-  }
-
-  function loadMenuItems() {
-    var list = DEFAULT_MENU_ITEMS;
-    try {
-      var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (Array.isArray(saved) && saved.length) list = saved;
-    } catch (e) { /* fall back to defaults */ }
-    return prioritizeKakao(list.map(normalizeMenuItem));
-  }
-
-  function hostLabel(url) {
-    if (/pf\.kakao\.com/.test(url)) return 'Kakao Channel';
-    if (/blog\.naver\.com/.test(url)) return 'Naver Blog';
-    if (/smartstore\.naver\.com/.test(url)) return 'Smart Store';
-    if (/instagram\.com/.test(url)) return 'Instagram';
-    if (/^\/|link\.mmoenv\.com/.test(url)) return 'm.moenv';
-    try { return new URL(url, location.href).hostname.replace(/^www\./, ''); } catch (e) { return 'Link'; }
-  }
-
-  /* ------------------------------------------------------------------
-   * Brand logo (original hand-drawn m.moenv mark)
-   * ------------------------------------------------------------------ */
-  var LOGO_SRC = 'assets/logo-mmoenv.png';
-  function logoHTML() {
-    return '<img class="c-logo__img" src="' + LOGO_SRC + '" alt="m.moenv" width="936" height="371">';
-  }
-  function renderLogos() {
-    document.querySelectorAll('[data-logo]').forEach(function (slot) { slot.innerHTML = logoHTML(); });
-  }
-
-  /* ------------------------------------------------------------------
-   * Pixel stickers (SVG, crisp edges)
-   * ------------------------------------------------------------------ */
-  var PIXELS = {
-    heart: ['.DDD...DDD.', 'DXXXD.DXXXD', 'DXWXXDXXXXD', 'DXWXXXXXXXD', 'DXXXXXXXXXD', '.DXXXXXXXD.', '..DXXXXXD..', '...DXXXD...', '....DXD....', '.....D.....'],
-    star: ['.....D.....', '....DXD....', '....DXD....', 'DDDDXXXDDDD', 'DXXXXWXXXXD', '.DXXXXXXXD.', '..DXXXXXD..', '..DXXDXXD..', '.DXXD.DXXD.', '.DXD...DXD.', '.DD.....DD.'],
-    balloon: ['..DDDDD..', '.DXXXXXD.', 'DXWWXXXXD', 'DXWXXXXXD', 'DXXXXXXXD', 'DXXXXXXXD', '.DXXXXXD.', '..DXXXD..', '...DDD...', '....D....', '.....D...', '....D....', '...D.....'],
-    sparkle: ['...D...', '...D...', '..DXD..', 'DDXWXDD', '..DXD..', '...D...', '...D...']
+  var VIEWS = {
+    pickup: { title: '동탄 픽업', rows: [
+      ['장소', '동탄 본점 · 비대면 픽업'],
+      ['시간', '09:00–20:00, 30분 단위로 고르기'],
+      ['날짜', '상담을 통해 실제 날짜와 시간을 정해요', 'state'],
+      ['주의', '픽업 1시간 이후 생긴 파손은 책임지기 어려워요']
+    ] },
+    parcel: { title: '전국 택배', rows: [
+      ['도착', '보통 다음 날 도착 95% · 상황에 따라 2일'],
+      ['출고', '행사일 기준 2~3일 전 출고', 'state'],
+      ['지정', '도착 날짜와 시간은 지정할 수 없어요'],
+      ['비용', '택배비 별도 · 클리어 풍선은 택배 불가']
+    ] },
+    direct: { title: '동탄·오산 직접배송', rows: [
+      ['지역', '동탄 · 오산'],
+      ['비용', '7만 원 이상 구매 시 무료', 'state'],
+      ['시간', '받는 시간은 상담 후 확정돼요'],
+      ['주소', '주문서에 받을 분 연락처와 주소를 적어 주세요']
+    ] },
+    schedule: { title: '택배 발송 요일표', rows: [
+      ['월~수요일 사용', '목요일 사용분부터 아래처럼 발송'],
+      ['목요일 사용', '월요일 발송', 'state'],
+      ['금요일 사용', '화요일 발송'],
+      ['토요일 사용', '수요일 발송'],
+      ['일요일 사용', '목요일 발송']
+    ] }
   };
-  function renderPixels() {
-    document.querySelectorAll('[data-pixel]').forEach(function (el) {
-      var grid = PIXELS[el.dataset.pixel];
-      if (!grid) return;
-      var h = grid.length, w = grid[0].length, rects = '';
-      grid.forEach(function (row, y) {
-        row.split('').forEach(function (ch, x) {
-          if (ch === '.') return;
-          var fill = ch === 'D' ? '#17141f' : ch === 'W' ? '#ffffff' : 'var(--c, #ff96ff)';
-          rects += '<rect x="' + x + '" y="' + y + '" width="1.02" height="1.02" fill="' + fill + '"/>';
-        });
-      });
-      el.innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '" shape-rendering="crispEdges" aria-hidden="true">' + rects + '</svg>';
-      el.style.aspectRatio = w + ' / ' + h;
-    });
-  }
 
-  /* ------------------------------------------------------------------
-   * Marquees
-   * ------------------------------------------------------------------ */
-  var MARQUEES = {
-    opening: { items: ['풍선으로 마음을 전해요!', 'MAKE YOUR MOMENTS LOVELY!', '用气球传递心意!', '風船で想いを届けよう!'], icons: ['ch-heart', 'ch-star'] },
-    info: { items: ['동탄 픽업', '전국 택배', '동탄/오산 직접배송', '맞춤 제작 상담'], icons: ['ch-round', 'ch-heart', 'ch-star', 'ch-dog'] },
-    band: { items: ['작은 사랑으로 큰 행복을.', 'A LITTLE LOVE, A LOT OF HAPPINESS.'], icons: [] }
+  var OCCASIONS = {
+    birthday: '숫자은박(대형)에 이름을 넣은 버블인버블 레터링 풍선을 더하면, 사진 한 장에 나이와 이름이 다 담겨요.',
+    anniv: '하트인하트나 마카롱 레터링 풍선에 “우리 100일”처럼 짧은 문구를 넣어 보세요. 풍선케이크를 곁들여도 좋아요.',
+    propose: '헬륨 풍선은 미리 주문해도 사용일 직전에 만들어요. 문구는 “Will you marry me?”처럼 대소문자까지 그대로 적어 주세요.',
+    event: '개수가 많은 행사라면 10개 이상 주문 할인이 있어요. 동탄·오산이면 7만 원 이상 직접배송이 무료예요.'
   };
-  function renderMarquees() {
-    document.querySelectorAll('[data-marquee]').forEach(function (track) {
-      var conf = MARQUEES[track.dataset.marquee];
-      if (!conf) return;
-      var unit = '';
-      for (var r = 0; r < 2; r++) {
-        conf.items.forEach(function (text, i) {
-          unit += '<span class="c-marquee__text">' + text + '</span>';
-          if (conf.icons.length) unit += '<img class="c-marquee__icon" src="assets/' + conf.icons[i % conf.icons.length] + '.webp" alt="" width="40" height="40">';
+
+  var CHIPS = {
+    a: [['🎂', 'HAPPY BIRTHDAY'], ['💍', 'Will you marry me?'], ['🎓', '합격 축하해!'], ['💐', '엄마 아빠 사랑해요'], ['👶', 'Welcome Baby'], ['🥂', '결혼 축하해'], ['🎉', 'Grand Open'], ['💌', '우리 100일'], ['🏆', '수고했어 오늘도']],
+    b: [['✨', 'HAPPY 30th'], ['👰', 'Bride to be'], ['🍰', '서윤아 생일 축하해'], ['🎈', 'Congratulations'], ['🌷', '선생님 감사합니다'], ['💪', '퇴사 축하해'], ['🐶', '두부야 생일 축하해'], ['💗', 'Love you forever'], ['🍾', '전역 축하해']]
+  };
+
+  function won(n) { return n.toLocaleString('ko-KR') + '원'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function renderProducts() {
+    var tb = document.querySelector('[data-product-rows]');
+    if (!tb) return;
+    tb.innerHTML = PRODUCTS.map(function (p, i) {
+      var tag = p[1] === 'he' ? '<span class="c-tag c-tag--he">🎈 헬륨</span>' : '<span class="c-tag c-tag--air">✿ 공기</span>';
+      return '<tr><td><span class="n">' + (i + 1) + '</span>' + esc(p[0]) + '</td><td>' + tag + '</td><td>' + won(p[2]) + '</td><td class="c-memo">' + esc(p[3]) + '</td></tr>';
+    }).join('');
+  }
+
+  function setView(key) {
+    var v = VIEWS[key];
+    if (!v) return;
+    document.querySelectorAll('[data-view]').forEach(function (b) { b.classList.toggle('is-on', b.dataset.view === key); });
+    var t = document.querySelector('[data-view-title]');
+    var tb = document.querySelector('[data-view-rows]');
+    if (t) t.textContent = v.title;
+    if (tb) tb.innerHTML = v.rows.map(function (r) {
+      var val = r[2] === 'state' ? '<span class="c-state">' + esc(r[1]) + '</span>' : esc(r[1]);
+      return '<tr' + (r[2] === 'state' ? ' class="hl"' : '') + '><td>' + esc(r[0]) + '</td><td>' + val + '</td></tr>';
+    }).join('');
+  }
+
+  function setupViews() {
+    document.querySelectorAll('[data-view]').forEach(function (b) {
+      b.addEventListener('click', function () { setView(b.dataset.view); });
+    });
+    document.querySelectorAll('[data-jump-view]').forEach(function (a) {
+      a.addEventListener('click', function () { setView(a.dataset.jumpView); });
+    });
+    setView('pickup');
+  }
+
+  function setupOccasions() {
+    var note = document.querySelector('[data-occasion-note]');
+    document.querySelectorAll('[data-occasion]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('[data-occasion]').forEach(function (x) {
+          x.classList.toggle('is-on', x === b);
+          x.setAttribute('aria-selected', x === b ? 'true' : 'false');
         });
-      }
-      track.innerHTML = '<div class="c-marquee__group">' + unit + '</div><div class="c-marquee__group">' + unit + '</div>';
-    });
-  }
-
-  /* ------------------------------------------------------------------
-   * Link cards + filters
-   * ------------------------------------------------------------------ */
-  var items = [];
-  var activeFilter = 'all';
-  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
-  }
-
-  function cardHTML(item, index) {
-    var cat = CATEGORY[item.category];
-    var thumb = index < 4 ? cat.thumb : EXTRA_THUMBS[index % EXTRA_THUMBS.length];
-    var blank = item.target === '_blank';
-    var pix = ['heart', 'star', 'sparkle', 'balloon'][index % 4];
-    return '<a class="c-card" data-category="' + item.category + '" href="' + esc(item.url) + '"' + (blank ? ' target="_blank" rel="noopener noreferrer"' : '') + ' style="--cat:' + cat.color + '">' +
-      '<span class="c-card__thumb"><img src="assets/' + thumb + '.webp" alt="" width="360" height="360" loading="lazy">' +
-      '<span class="c-pixel c-card__pixel" data-pixel="' + pix + '" style="--c:#fff"></span>' +
-      '<span class="c-card__no u-mono">No.' + String(index + 1).padStart(2, '0') + '</span></span>' +
-      '<span class="c-card__meta u-mono"><span>' + cat.en + ' — ' + (blank ? 'NEW TAB' : 'THIS PAGE') + '</span><span class="c-card__status">OPEN</span></span>' +
-      '<strong class="c-card__title">' + esc(item.title) + '</strong>' +
-      '<span class="c-card__sub">' + esc(item.subtitle) + '</span>' +
-      '<span class="c-card__foot"><span class="c-card__tags"><span class="c-tag c-tag--cat">' + cat.label + '</span><span class="c-tag c-tag--host u-mono">' + esc(hostLabel(item.url)) + '</span></span>' +
-      '<span class="c-card__go">' + ARROW + '</span></span>' +
-      '</a>';
-  }
-
-  function renderLinks() {
-    var grid = document.querySelector('[data-link-grid]');
-    var empty = document.querySelector('[data-link-empty]');
-    var count = document.querySelector('[data-link-count]');
-    if (!grid) return;
-    var visible = items.map(function (it, i) { return [it, i]; }).filter(function (p) {
-      return activeFilter === 'all' || p[0].category === activeFilter;
-    });
-    grid.innerHTML = visible.map(function (p) { return cardHTML(p[0], p[1]); }).join('');
-    if (empty) empty.hidden = visible.length > 0;
-    if (count) count.textContent = String(visible.length).padStart(2, '0');
-    renderPixels();
-    grid.querySelectorAll('.c-card').forEach(function (card, i) {
-      card.style.setProperty('--d', (i * 70) + 'ms');
-    });
-  }
-
-  function syncSideNav() {
-    document.querySelectorAll('[data-side]').forEach(function (a) {
-      var hit = items.find(function (it) { return it.category === a.dataset.side; });
-      if (!hit) return;
-      a.href = hit.url;
-      if (hit.target === '_blank') { a.target = '_blank'; a.rel = 'noopener noreferrer'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
-    });
-    var kakao = items.find(isKakao);
-    var kakaoBtn = document.querySelector('.p-header__kakao');
-    if (kakao && kakaoBtn) kakaoBtn.href = kakao.url;
-  }
-
-  function setupFilters() {
-    document.querySelectorAll('[data-filter]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        activeFilter = btn.dataset.filter;
-        document.querySelectorAll('[data-filter]').forEach(function (b) {
-          b.classList.toggle('is-current', b === btn);
-          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-        });
-        renderLinks();
-        var target = document.getElementById('links');
-        if (target) scrollToEl(target);
+        if (note) note.textContent = OCCASIONS[b.dataset.occasion] || '';
       });
     });
   }
 
-  /* ------------------------------------------------------------------
-   * Clock, smooth scroll, parallax, cursor
-   * ------------------------------------------------------------------ */
-  function setupClock() {
-    var el = document.querySelector('[data-clock]');
-    if (!el) return;
-    var fmt = new Intl.DateTimeFormat('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
-    var tick = function () { el.textContent = fmt.format(new Date()); };
-    tick();
-    setInterval(tick, 15000);
-  }
-
-  function scrollToEl(el) {
-    var y = el.getBoundingClientRect().top + window.scrollY - (window.innerWidth <= 1000 ? 70 : 24);
-    window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
-  }
-
-  function setupScrollLinks() {
-    document.querySelectorAll('.js-scroll').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        var id = (a.getAttribute('href') || '').slice(1);
-        var el = id && document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        if (id === 'top') window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-        else scrollToEl(el);
-      });
+  function renderChips() {
+    document.querySelectorAll('[data-chips]').forEach(function (row) {
+      var list = CHIPS[row.dataset.chips] || [];
+      var unit = list.map(function (c) { return '<span class="c-chip"><i>' + c[0] + '</i>' + esc(c[1]) + '</span>'; }).join('');
+      row.innerHTML = unit + unit;
     });
   }
 
-  function setupParallax() {
-    if (reduceMotion) return;
-    var els = Array.prototype.slice.call(document.querySelectorAll('[data-speed]'));
-    var ticking = false;
-    var update = function () {
-      var y = window.scrollY;
-      els.forEach(function (el) {
-        var sp = parseFloat(el.dataset.speed) || 0;
-        el.style.setProperty('--py', (y * sp).toFixed(1) + 'px');
-      });
-      root.classList.toggle('is-scrolled', y > window.innerHeight * 0.6);
-      ticking = false;
-    };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    update();
-  }
-
-  function setupCursor() {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    var cursor = document.querySelector('.c-cursor');
-    if (!cursor) return;
-    root.classList.add('has-cursor');
-    var x = -100, y = -100, cx = -100, cy = -100;
-    window.addEventListener('pointermove', function (e) {
-      x = e.clientX; y = e.clientY;
-      var hit = e.target.closest && e.target.closest('a, button');
-      cursor.classList.toggle('is-pointer', !!hit);
-      cursor.classList.add('is-visible');
-    });
-    document.addEventListener('pointerleave', function () { cursor.classList.remove('is-visible'); });
-    var loop = function () {
-      cx += (x - cx) * (reduceMotion ? 1 : 0.35);
-      cy += (y - cy) * (reduceMotion ? 1 : 0.35);
-      cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-      requestAnimationFrame(loop);
-    };
-    loop();
-  }
-
-  function setupInview() {
-    var targets = document.querySelectorAll('.p-intro, .p-links, .p-footer');
-    if (!('IntersectionObserver' in window) || reduceMotion) {
-      targets.forEach(function (t) { t.classList.add('is-inview'); });
-      return;
-    }
+  function setupReveal() {
+    var els = document.querySelectorAll('.c-panel, .c-mini, .c-card, .c-bubble, .c-note-card, .c-route, .s-support__card, .c-island, .c-hub__city, .s-final__title');
+    els.forEach(function (el) { el.classList.add('js-reveal'); });
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('is-inview'); io.unobserve(en.target); }
-      });
-    }, { threshold: 0.12 });
-    targets.forEach(function (t) { io.observe(t); });
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ------------------------------------------------------------------
-   * Opening: big hand-drawn logo draws in → flies into the hero slot
-   * ------------------------------------------------------------------ */
-  function setupOpening() {
-    var overlay = document.querySelector('.l-opening');
-    if (!overlay) return;
-    if (!root.classList.contains('is-opening')) { overlay.remove(); return; }
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-    try { sessionStorage.setItem(OPENING_KEY, '1'); } catch (e) {}
-
-    var timers = [], anims = [], done = false;
-    var finish = function () {
-      if (done) return;
-      done = true;
-      timers.forEach(clearTimeout);
-      anims.forEach(function (a) { try { a.cancel(); } catch (e) {} });
-      root.classList.remove('is-opening');
-      root.classList.add('is-opened');
-      overlay.remove();
-    };
-    overlay.addEventListener('click', finish);
-    root.classList.add('is-opening-in');
-
-    timers.push(setTimeout(function () {
-      var hero = document.querySelector('.p-fv__heading .c-logo__img');
-      var big = overlay.querySelector('.p-opening__logo');
-      if (hero && big) {
-        var a = big.getBoundingClientRect(), h = hero.getBoundingClientRect();
-        anims.push(big.animate([
-          { transform: 'translate(0,0) scale(1)' },
-          { transform: 'translate(' + (h.left - a.left) + 'px,' + (h.top - a.top) + 'px) scale(' + (h.width / a.width) + ')' }
-        ], { duration: 820, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' }));
-      }
-      var card = overlay.querySelector('.p-opening__visual');
-      var mv = document.querySelector('.p-fv__mv-image');
-      if (card && mv) {
-        var c = card.getBoundingClientRect(), m = mv.getBoundingClientRect();
-        anims.push(card.animate([
-          { transform: 'translate(0,0) scale(1,1)', borderRadius: '24px' },
-          { transform: 'translate(' + (m.left - c.left) + 'px,' + (m.top - c.top) + 'px) scale(' + (m.width / c.width) + ',' + (m.height / c.height) + ')', borderRadius: '0px', opacity: 0.0 }
-        ], { duration: 900, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' }));
-      }
-      root.classList.add('is-opening-out');
-    }, 1500));
-
-    timers.push(setTimeout(finish, 2500));
+  function setupHeader() {
+    var h = document.querySelector('.l-header');
+    if (!h) return;
+    var on = function () { h.classList.toggle('is-stuck', window.scrollY > 10); };
+    window.addEventListener('scroll', on, { passive: true });
+    on();
   }
 
-  /* ------------------------------------------------------------------ */
   function init() {
-    renderLogos();
-    renderPixels();
-    renderMarquees();
-    items = loadMenuItems();
-    renderLinks();
-    syncSideNav();
-    setupFilters();
-    setupClock();
-    setupScrollLinks();
-    setupParallax();
-    setupCursor();
-    setupInview();
-    setupOpening();
-    window.addEventListener('storage', function (e) {
-      if (e.key === STORAGE_KEY) { items = loadMenuItems(); renderLinks(); syncSideNav(); }
-    });
+    renderProducts();
+    setupViews();
+    setupOccasions();
+    renderChips();
+    setupReveal();
+    setupHeader();
   }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
