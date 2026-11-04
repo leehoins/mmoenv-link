@@ -13,6 +13,7 @@
   --orange: #e59d7b;
   --font: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
   --font-serif: "Fraunces", "Hahmlet", Georgia, serif;
+  --font-display: "Maplestory", "Pretendard Variable", sans-serif;
   --font-hand: "Gaegu", "Pretendard Variable", sans-serif;
   --ease: cubic-bezier(.2, .7, .2, 1);
   --wrap: 1300px;
@@ -814,5 +815,39 @@ p, blockquote, .c-card__text, .c-route__body { text-wrap: pretty; }
   .s-hero__title { font-size: 42px; }
   .c-hub__dog .c-quote-serif { font-size: 22px; }
   .s-islands__dog .c-quote-serif, .s-core__dog .c-quote-serif { font-size: 20px; }
+}
+
+
+/* =========================================================
+   DISPLAY FONT — 메이플스토리 (Nexon, free for commercial use)
+   Headings only; body/table/buttons stay Pretendard.
+   ========================================================= */
+@font-face { font-family: "Maplestory"; font-weight: 700; font-display: swap;
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff") format("woff"); }
+@font-face { font-family: "Maplestory"; font-weight: 300; font-display: swap;
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff") format("woff"); }
+
+.s-hero__title, .c-h2, .c-h2--xl, .s-teal__title, .s-band__title, .s-support__title, .s-final__title,
+.c-panel__title, .c-mini__title, .c-card__title, .c-route__title, .c-hub__labels, .c-views__head {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-synthesis: none;
+}
+.s-hero__title { font-size: clamp(40px, 4.3vw, 62px); line-height: 1.14; letter-spacing: -.02em; }
+.c-h2 { font-size: clamp(26px, 2.9vw, 39px); line-height: 1.28; letter-spacing: -.02em; }
+.c-h2--xl { font-size: clamp(32px, 3.9vw, 50px); line-height: 1.16; letter-spacing: -.02em; }
+.s-teal__title { font-size: clamp(34px, 4.1vw, 54px); line-height: 1.16; letter-spacing: -.02em; }
+.s-band__title { font-size: clamp(30px, 3.4vw, 43px); letter-spacing: -.02em; }
+.s-support__title { font-size: clamp(30px, 3.2vw, 43px); line-height: 1.16; letter-spacing: -.02em; }
+.s-support__title span { font-weight: 300; }
+.s-final__title { font-size: clamp(32px, 4.6vw, 60px); line-height: 1.16; letter-spacing: -.025em; }
+.c-panel__title, .c-mini__title, .c-card__title, .c-route__title { letter-spacing: -.01em; }
+.c-hub__labels { letter-spacing: -.01em; }
+/* the serif tags inside display-font titles keep their own face */
+.c-panel__title .c-serif-tag, .c-mini__title .c-serif-tag, .c-card__title .c-serif-tag { font-family: var(--font-serif); font-weight: 400; }
+
+@media (max-width: 760px) {
+  .s-hero__title { font-size: 39px; }
+  .s-final__title { font-size: 32px; }
 }
 
